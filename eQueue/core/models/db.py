@@ -40,7 +40,7 @@ class DatabaseSetup:
 			yield session
 
 
-db = DatabaseSetup(
+db_helper = DatabaseSetup(
 	url=str(settings.db.url),
 	echo=settings.db.echo,
 	echo_pool=settings.db.echo_pool,
