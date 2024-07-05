@@ -1,5 +1,7 @@
 from .db import db_helper
+from .base import Base
 
 __all__ = (
-	db_helper
+	"db_helper",
+	"Base"
 )
