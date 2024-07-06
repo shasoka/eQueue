@@ -13,17 +13,17 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
+from core.config import settings
+
 # revision identifiers, used by Alembic.
 revision: str = "514bd7502c50"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-TIMETABLE_API_URL = "https://edu.sfu-kras.ru/api/timetable/get_insts"
-
 
 def _fetch_raw_groups() -> list[dict]:
-    response = requests.get(TIMETABLE_API_URL)
+    response = requests.get(settings.moodle.timetable_url)
     response.raise_for_status()
     raw_data = response.json()
 

@@ -18,6 +18,11 @@ class APIPrefix(BaseModel):
     v1: APIv1Prefix = APIv1Prefix()
 
 
+class MoodleAPI(BaseModel):
+    timetable_url: str = "https://edu.sfu-kras.ru/api/timetable/get_insts"
+    ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php?"
+
+
 class DatabaseConfig(BaseModel):
     url: PostgresDsn
     echo: bool = False
@@ -44,6 +49,7 @@ class Settings(BaseSettings):
 
     run: RunConfig = RunConfig()
     api: APIPrefix = APIPrefix()
+    moodle: MoodleAPI = MoodleAPI()
     db: DatabaseConfig
 
 
