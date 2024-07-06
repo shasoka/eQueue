@@ -8,7 +8,7 @@ from .base import Base
 class User(Base):
     moodle_token: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
     ecourses_user_id: Mapped[int] = mapped_column(nullable=False, unique=True)
-    assigned_group_id: Mapped[int] = mapped_column(nullable=False)
+    assigned_group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"), nullable=False)
     first_name: Mapped[str] = mapped_column(String(50))
     second_name: Mapped[str] = mapped_column(String(50))
     status: Mapped[str] = mapped_column(String(100), default="Привет! Я использую eQueue! 🎫")
@@ -30,7 +30,7 @@ class User(Base):
     )
 
 
-class Achievment(Base):
+class Achievement(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
 
     user_achievements: Mapped[list["UserAchievement"]] = relationship(
@@ -41,10 +41,10 @@ class Achievment(Base):
 
 class UserAchievement(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False, unique=True)
-    achievment_id: Mapped[int] = mapped_column(nullable=False, unique=True)
+    achievement_id: Mapped[int] = mapped_column(ForeignKey('achievements.id'), nullable=False, unique=True)
 
     user: Mapped["User"] = relationship("User", back_populates="achievements")
-    achievment: Mapped["Achievment"] = relationship(
+    achievement: Mapped["Achievement"] = relationship(
         "Achievement",
         back_populates="user_achievements"
     )

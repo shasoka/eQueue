@@ -2,7 +2,7 @@ from .db import db_helper
 from .base import Base
 from .entities import (
 	User,
-	Achievment,
+	Achievement,
 	UserAchievement,
 	UserSubmission,
 	Group,
@@ -11,4 +11,15 @@ from .entities import (
 	Subject
 )
 
-__all__ = ("db_helper", "Base")
+__all__ = (
+	"db_helper",
+	"Base",
+	"User",
+	"Achievement",
+	"UserAchievement",
+	"UserSubmission",
+	"Group",
+	"Workspace",
+	"WorkspaceSubject",
+	"Subject"
+)
