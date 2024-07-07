@@ -1,9 +1,11 @@
+import datetime
+
 from pydantic import BaseModel
 
+from core.schemas.moodle import MoodleLogin
 
-class UserMoodleLogin(BaseModel):
-	login: str
-	password: str
+
+class UserMoodleLogin(MoodleLogin):
 	group_id: int
 
 
@@ -13,7 +15,7 @@ class UserBase(BaseModel):
 	assigned_group_id: int
 	first_name: str
 	second_name: str
-	status: str
+	status: str | None = None
 	talon: str
 	user_picture_url: str
 
@@ -24,4 +26,4 @@ class UserCreate(UserBase):
 
 class UserRead(UserBase):
 	id: int
-	created_at: str
+	created_at: datetime.datetime

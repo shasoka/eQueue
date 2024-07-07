@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class RunConfig(BaseModel):
-    host: str = "0.0.0.0"
+    host: str = "127.0.0.1"
     port: int = 8000
 
 
@@ -19,6 +19,7 @@ class APIPrefix(BaseModel):
 
 
 class MoodleAPI(BaseModel):
+    auth_url: str = "https://e.sfu-kras.ru/login/token.php?service=moodle_mobile_app&username=%s&password=%s"
     timetable_url: str = "https://edu.sfu-kras.ru/api/timetable/get_insts"
     ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php?"
 
