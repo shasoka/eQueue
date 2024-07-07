@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 
 from fastapi import FastAPI
+from fastapi.responses import ORJSONResponse
 
 from api import router as api_router
 from core.config import settings
@@ -20,6 +21,7 @@ async def lifespan(_app: FastAPI) -> None:
 
 # noinspection PyTypeChecker
 app = FastAPI(
+    default_response_class=ORJSONResponse,
     lifespan=lifespan,
 )
 
