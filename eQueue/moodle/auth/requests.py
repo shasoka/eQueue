@@ -4,9 +4,8 @@ from core.schemas.moodle import MoodleLogin
 from utils import (
 	build_auth_url,
 	build_user_info_url,
-	hash_from_str
+	validate
 )
-from .token_validator import validate
 
 
 async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
@@ -44,7 +43,7 @@ async def get_moodle_user_info(
 	}
 
 
-async def token_persistence(token: str = None) -> None:
-	response = requests.get(build_user_info_url("123456"))
+async def token_persistence(token: str) -> None:
+	response = requests.get(build_user_info_url(token))
 	response = response.json()
 	await validate(response)

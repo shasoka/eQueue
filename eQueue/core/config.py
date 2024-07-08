@@ -11,19 +11,21 @@ class RunConfig(BaseModel):
 class APIv1Prefix(BaseModel):
     prefix: str = "/v1"
     users: str = "/users"
-    token_persistence: str = "/token_persistence"
     moodle_auth: str = "/moodle_auth"
+    token_persistence: str = "/token_persistence"
 
 
 class APIPrefix(BaseModel):
     prefix: str = "/api"
     v1: APIv1Prefix = APIv1Prefix()
+    token_url: str = "/api/v1/users/moodle_auth"
 
 
 class MoodleAPI(BaseModel):
     auth_url: str = "https://e.sfu-kras.ru/login/token.php?service=moodle_mobile_app&username=%s&password=%s"
     timetable_url: str = "https://edu.sfu-kras.ru/api/timetable/get_insts"
-    ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php?"
+    ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php"
+    upload_new_image_url: str = "https://e.sfu-kras.ru/webservice/upload.php?token=%s&filearea=draft"
 
 
 class DatabaseConfig(BaseModel):

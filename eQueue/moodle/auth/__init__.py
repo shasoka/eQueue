@@ -9,5 +9,5 @@ __all__ = (
 	"auth_by_moodle_credentials",
 	"get_moodle_user_info",
 	"token_persistence",
-	"get_current_user"
+	"get_current_user",
 )
