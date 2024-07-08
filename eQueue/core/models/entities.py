@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -6,15 +8,23 @@ from .base import Base
 
 
 class User(Base):
-    moodle_token: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
+    access_token: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
     ecourses_user_id: Mapped[int] = mapped_column(nullable=False, unique=True)
-    assigned_group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"), nullable=False)
+    assigned_group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"), nullable=True)
     first_name: Mapped[str] = mapped_column(String(50))
     second_name: Mapped[str] = mapped_column(String(50))
-    status: Mapped[str] = mapped_column(String(100), default="Привет! Я использую eQueue! 🎫")
+    status: Mapped[str] = mapped_column(
+        String(100),
+        default="Привет! Я использую eQueue! 🎫",
+        server_default="Привет! Я использую eQueue! 🎫"
+    )
     talon: Mapped[str] = mapped_column(String(50), nullable=True, unique=True)
     user_picture_url: Mapped[str] = mapped_column(String(255), nullable=False)
-    created_at: Mapped[str] = mapped_column(TIMESTAMP(timezone=True), server_default=func.now())
+    created_at: Mapped[str] = mapped_column(
+        TIMESTAMP(timezone=True),
+        default=datetime.now(timezone.utc),
+        server_default=func.now()
+    )
 
     achievements: Mapped[list["UserAchievement"]] = relationship(
         "UserAchievement",
@@ -66,8 +76,16 @@ class Group(Base):
 class Workspace(Base):
     group_id: Mapped[int] = mapped_column(ForeignKey('groups.id'), nullable=False, unique=True)
     chief_id: Mapped[int] = mapped_column(nullable=False)
-    semester: Mapped[int] = mapped_column(default=1, nullable=False)
-    about: Mapped[str] = mapped_column(nullable=False, default='Рабочее пространство группы %s')
+    semester: Mapped[int] = mapped_column(
+        default=1,
+        server_default="1",
+        nullable=False
+    )
+    about: Mapped[str] = mapped_column(
+        nullable=False,
+        default='Рабочее пространство группы %s',
+        server_default='Рабочее пространство группы %s'
+    )
 
     group: Mapped["Group"] = relationship(
         "Group",
@@ -99,12 +117,12 @@ class Subject(Base):
 class WorkspaceSubject(Base):
     workspace_id: Mapped[int] = mapped_column(ForeignKey('workspaces.id'), nullable=False)
     subject_id: Mapped[int] = mapped_column(ForeignKey('subjects.id'), nullable=False)
-    scoped_name: Mapped[str] = mapped_column(String(50), default=None)
-    professor: Mapped[str] = mapped_column(String(255), default=None)
-    professor_contact: Mapped[str] = mapped_column(default=None)
-    requirements: Mapped[str] = mapped_column(String(255), default=None)
-    additional_fields: Mapped[dict] = mapped_column(JSONB, default={})
-    queue: Mapped[list[int]] = mapped_column(ARRAY(Integer), default=[])
+    scoped_name: Mapped[str] = mapped_column(String(50), default=None, server_default="")
+    professor: Mapped[str] = mapped_column(String(255), default=None, server_default="")
+    professor_contact: Mapped[str] = mapped_column(String(255), default=None, server_default="")
+    requirements: Mapped[str] = mapped_column(String(255), default=None, server_default="")
+    additional_fields: Mapped[dict] = mapped_column(JSONB, default={}, server_default="{}")
+    queue: Mapped[list[int]] = mapped_column(ARRAY(Integer), default=[], server_default="ARRAY[]::integer[]")
 
     workspace: Mapped["Workspace"] = relationship(
         "Workspace",
@@ -120,8 +138,16 @@ class UserSubmission(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False)
     workspace_id: Mapped[int] = mapped_column(ForeignKey('workspaces.id'), nullable=False)
     subject_id: Mapped[int] = mapped_column(ForeignKey('subjects.id'), nullable=False)
-    submitted_works: Mapped[int] = mapped_column(default=0, nullable=False)
-    total_required_works: Mapped[int] = mapped_column(default=0, nullable=False)
+    submitted_works: Mapped[int] = mapped_column(
+        default=0,
+        server_default="0",
+        nullable=False
+    )
+    total_required_works: Mapped[int] = mapped_column(
+        default=0,
+        server_default="0",
+        nullable=False
+    )
 
     user: Mapped["User"] = relationship(
         "User",

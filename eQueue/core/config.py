@@ -11,6 +11,8 @@ class RunConfig(BaseModel):
 class APIv1Prefix(BaseModel):
     prefix: str = "/v1"
     users: str = "/users"
+    token_persistence: str = "/token_persistence"
+    moodle_auth: str = "/moodle_auth"
 
 
 class APIPrefix(BaseModel):

@@ -16,7 +16,7 @@ async def lifespan(_app: FastAPI) -> None:
     # After __aenter__ yield
     yield
     # On __aexit__ dispose
-    await db_helper.dispsose()
+    await db_helper.dispose()
 
 
 # noinspection PyTypeChecker

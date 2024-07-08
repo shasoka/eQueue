@@ -1,18 +1,20 @@
 import datetime
 
+from fastapi import Form
 from pydantic import BaseModel
+from pydantic.dataclasses import dataclass
 
-from core.schemas.moodle import MoodleLogin
+from core.schemas.moodle import MoodleTokenMixin
 
 
-class UserMoodleLogin(MoodleLogin):
-	group_id: int
+@dataclass
+class AdditionalLoginFormFields:
+	group_id: int = Form()
 
 
 class UserBase(BaseModel):
-	moodle_token: str
 	ecourses_user_id: int
-	assigned_group_id: int
+	assigned_group_id: int | None = None
 	first_name: str
 	second_name: str
 	status: str | None = None
@@ -20,10 +22,14 @@ class UserBase(BaseModel):
 	user_picture_url: str
 
 
-class UserCreate(UserBase):
+class UserCreate(UserBase, MoodleTokenMixin):
 	pass
 
 
 class UserRead(UserBase):
 	id: int
 	created_at: datetime.datetime
+
+
+class UserAuth(UserRead, MoodleTokenMixin):
+	token_type: str = "Bearer"
