@@ -24,6 +24,7 @@ from crud.workspaces import (
     get_available_workspace,
     update_pending_users,
     create_workspace,
+    update_workspace,
 )
 from moodle.auth import (
     auth_by_moodle_credentials,
@@ -59,7 +60,9 @@ async def create_new_workspace(
             status_code=403,
             detail="Вы не можете создать рабочее пространство в этой группе",
         )
-    if workspace := await create_workspace(workspace_in=workspace_in, session=session):
+    if workspace := await create_workspace(
+        workspace_in=workspace_in, session=session, user=current_user
+    ):
         return workspace
     raise HTTPException(
         409, detail="Нарушено ограничение на создание рабочего пространства"
@@ -72,11 +75,21 @@ async def update_workspace_data(
     session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
     current_user: Annotated[User, Depends(get_current_user)],
 ):
-    if not current_user.assigned_workspace or not current_user.workspace_chief:
+    if not current_user.assigned_workspace_id or not current_user.workspace_chief:
         raise HTTPException(
             status_code=403,
             detail="Вы не можете обновить данные рабочего пространства",
         )
+    if workspace := await update_workspace(
+        workspace_upd=workspace_upd,
+        session=session,
+        user=current_user,
+    ):
+        return workspace
+    raise HTTPException(
+        status_code=404,
+        detail="Не найдено ни одно рабочее пространство или пользователь уже подал заявку на вступление в группу",
+    )
 
 
 @router.patch("/join", response_model=WorkspaceRead)
@@ -97,6 +110,6 @@ async def join_workspace(
     )
 
 
-# TODO: Обновление пространства
 # TODO: Удаление пространства (учесть зависимости от воркспейса)
 # TODO: выход из пространства (учесть что чел может быть шефом)
+# TODO: accept users from pending

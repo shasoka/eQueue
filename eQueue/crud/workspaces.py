@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-
+from fastapi import HTTPException
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -71,6 +71,7 @@ async def get_workspace_by_name(
 async def create_workspace(
     workspace_in: WorkspaceCreate,
     session: AsyncSession,
+    user: User,
 ) -> Workspace | None:
     if await get_group(session, workspace_in.group_id):
         if not await get_workspace_by_group_id(workspace_in.group_id, session):
@@ -79,10 +80,20 @@ async def create_workspace(
                 "name" in workspace_in
                 and not await get_workspace_by_name(workspace_in["name"], session)
             ) or "name" not in workspace_in:
+                # Creatin new workspace via ORM model
                 workspace = Workspace(**workspace_in)
                 session.add(workspace)
+                await session.flush()  # Getting new workspace id
+
+                # Updating user
+                user.workspace_chief = True
+                user.assigned_workspace_id = workspace.id
+                await session.flush()
+
+                # Commit and refresh objects to return
                 await session.commit()
                 await session.refresh(workspace)
+
                 return workspace
     return None
 
@@ -106,6 +117,11 @@ async def update_workspace(
             await session.commit()
             await session.refresh(workspace)
             return workspace
+        else:
+            raise HTTPException(
+                status_code=409,
+                detail="Нарушено ограничение на обновление пространства",
+            )
     return None
 
 
@@ -115,7 +131,10 @@ async def update_pending_users(
     user: User,
 ) -> Workspace | None:
     if (
-        workspace := await get_workspace_by_id(workspace_upd.workspace_id, session)
+        workspace := await get_workspace_by_id(
+            workspace_upd.workspace_id,
+            session,
+        )
     ) is not None:
         if user.id not in workspace.pending_users:
             workspace.pending_users = func.array_append(
