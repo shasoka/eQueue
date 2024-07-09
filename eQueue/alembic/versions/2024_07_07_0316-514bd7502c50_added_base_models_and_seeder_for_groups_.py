@@ -29,9 +29,11 @@ def _fetch_raw_groups() -> list[dict]:
 
     unique_groups = []
     for group in raw_data:
-        base_name = group['name'].split(' (')[0]
+        base_name = group['name'].split(' (')[0] + " (Глобальная группа)"
         if base_name not in unique_groups:
             unique_groups.append(base_name)
+        if group['name'] not in unique_groups:
+            unique_groups.append(group['name'])
     return [{'name': group} for group in unique_groups]
 
 
@@ -46,7 +48,7 @@ def upgrade() -> None:
     )
     groups_t = op.create_table(
         "groups",
-        sa.Column("name", sa.String(length=50), nullable=False),
+        sa.Column("name", sa.String(length=100), nullable=False),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_groups")),
         sa.UniqueConstraint("name", name=op.f("uq_groups_name")),

@@ -1,8 +1,6 @@
 import datetime
 
-from fastapi import Form
 from pydantic import BaseModel
-from pydantic.dataclasses import dataclass
 
 from core.schemas.moodle import MoodleTokenMixin
 

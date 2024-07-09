@@ -13,8 +13,7 @@ from moodle.auth import auth_by_moodle_credentials, get_moodle_user_info, token_
 from moodle.users import patch_profile_picture
 
 router = APIRouter(
-	tags=["users"],
-	# responses={404: {"description": "Not found"}},  # TODO
+	tags=["Users"],
 )
 
 

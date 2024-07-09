@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer
+from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -16,7 +16,7 @@ class User(Base):
     status: Mapped[str] = mapped_column(
         String(100),
         default="Привет! Я использую eQueue! 🎫",
-        server_default="Привет! Я использую eQueue! 🎫"
+        server_default=text("Привет! Я использую eQueue! 🎫")
     )
     talon: Mapped[str] = mapped_column(String(50), nullable=True, unique=True)
     user_picture_url: Mapped[str] = mapped_column(String(255), nullable=False)
@@ -61,7 +61,7 @@ class UserAchievement(Base):
 
 
 class Group(Base):
-    name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
 
     users: Mapped[list["User"]] = relationship(
         "User",
@@ -75,21 +75,19 @@ class Group(Base):
 
 class Workspace(Base):
     group_id: Mapped[int] = mapped_column(ForeignKey('groups.id'), nullable=False, unique=True)
-    chief_id: Mapped[int] = mapped_column(nullable=False)
+    chief_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False)
     semester: Mapped[int] = mapped_column(
         default=1,
-        server_default="1",
-        nullable=False
+        server_default=text("1"),
     )
-    about: Mapped[str] = mapped_column(
-        nullable=False,
-        default='Рабочее пространство группы %s',
-        server_default='Рабочее пространство группы %s'
-    )
+    about: Mapped[str] = mapped_column(nullable=True)
 
     group: Mapped["Group"] = relationship(
         "Group",
         back_populates="workspace"
+    )
+    chief: Mapped["User"] = relationship(
+        "User"
     )
     subjects: Mapped[list["WorkspaceSubject"]] = relationship(
         "WorkspaceSubject",
@@ -101,52 +99,37 @@ class Workspace(Base):
     )
 
 
-class Subject(Base):
-    name: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
+class WorkspaceSubject(Base):
+    workspace_id: Mapped[int] = mapped_column(ForeignKey('workspaces.id'), nullable=False)
+    scoped_name: Mapped[str] = mapped_column(String(50), unique=True)
+    professor: Mapped[str] = mapped_column(String(255), nullable=True)
+    professor_contact: Mapped[str] = mapped_column(String(255), nullable=True)
+    requirements: Mapped[str] = mapped_column(String(255), nullable=True)
+    additional_fields: Mapped[dict] = mapped_column(JSONB, default={}, server_default=func. text("{}"))
+    queue: Mapped[list[int]] = mapped_column(ARRAY(Integer), default=[], server_default=text("ARRAY[]::integer[]"))
 
-    workspace_subjects: Mapped[list["WorkspaceSubject"]] = relationship(
-        "WorkspaceSubject",
-        back_populates="subject"
+    workspace: Mapped["Workspace"] = relationship(
+        "Workspace",
+        back_populates="subjects"
     )
+
     submissions: Mapped[list["UserSubmission"]] = relationship(
         "UserSubmission",
         back_populates="subject"
     )
 
 
-class WorkspaceSubject(Base):
-    workspace_id: Mapped[int] = mapped_column(ForeignKey('workspaces.id'), nullable=False)
-    subject_id: Mapped[int] = mapped_column(ForeignKey('subjects.id'), nullable=False)
-    scoped_name: Mapped[str] = mapped_column(String(50), default=None, server_default="")
-    professor: Mapped[str] = mapped_column(String(255), default=None, server_default="")
-    professor_contact: Mapped[str] = mapped_column(String(255), default=None, server_default="")
-    requirements: Mapped[str] = mapped_column(String(255), default=None, server_default="")
-    additional_fields: Mapped[dict] = mapped_column(JSONB, default={}, server_default="{}")
-    queue: Mapped[list[int]] = mapped_column(ARRAY(Integer), default=[], server_default="ARRAY[]::integer[]")
-
-    workspace: Mapped["Workspace"] = relationship(
-        "Workspace",
-        back_populates="subjects"
-    )
-    subject: Mapped["Subject"] = relationship(
-        "Subject",
-        back_populates="workspace_subjects"
-    )
-
-
 class UserSubmission(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=False)
     workspace_id: Mapped[int] = mapped_column(ForeignKey('workspaces.id'), nullable=False)
-    subject_id: Mapped[int] = mapped_column(ForeignKey('subjects.id'), nullable=False)
+    subject_id: Mapped[int] = mapped_column(ForeignKey('workspace_subjects.id'), nullable=False)
     submitted_works: Mapped[int] = mapped_column(
         default=0,
-        server_default="0",
-        nullable=False
+        server_default=text("0")
     )
     total_required_works: Mapped[int] = mapped_column(
         default=0,
-        server_default="0",
-        nullable=False
+        server_default=text("0")
     )
 
     user: Mapped["User"] = relationship(
@@ -157,7 +140,7 @@ class UserSubmission(Base):
         "Workspace",
         back_populates="submissions"
     )
-    subject: Mapped["Subject"] = relationship(
-        "Subject",
+    subject: Mapped["WorkspaceSubject"] = relationship(
+        "WorkspaceSubject",
         back_populates="submissions"
     )

@@ -8,7 +8,6 @@ from .entities import (
 	Group,
 	Workspace,
 	WorkspaceSubject,
-	Subject
 )
 
 __all__ = (
@@ -21,5 +20,4 @@ __all__ = (
 	"Group",
 	"Workspace",
 	"WorkspaceSubject",
-	"Subject"
 )
