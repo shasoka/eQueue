@@ -42,7 +42,5 @@ def downgrade() -> None:
         ),
     )
     op.drop_constraint(op.f("uq_users_access_token"), "users", type_="unique")
-    op.create_unique_constraint(
-        "uq_users_moodle_token", "users", ["moodle_token"]
-    )
+    op.create_unique_constraint("uq_users_moodle_token", "users", ["moodle_token"])
     op.drop_column("users", "access_token")

@@ -29,12 +29,12 @@ def _fetch_raw_groups() -> list[dict]:
 
     unique_groups = []
     for group in raw_data:
-        base_name = group['name'].split(' (')[0] + " (Глобальная группа)"
+        base_name = group["name"].split(" (")[0] + " (Глобальная группа)"
         if base_name not in unique_groups:
             unique_groups.append(base_name)
-        if group['name'] not in unique_groups:
-            unique_groups.append(group['name'])
-    return [{'name': group} for group in unique_groups]
+        if group["name"] not in unique_groups:
+            unique_groups.append(group["name"])
+    return [{"name": group} for group in unique_groups]
 
 
 def upgrade() -> None:
@@ -53,10 +53,7 @@ def upgrade() -> None:
         sa.PrimaryKeyConstraint("id", name=op.f("pk_groups")),
         sa.UniqueConstraint("name", name=op.f("uq_groups_name")),
     )
-    op.bulk_insert(
-        groups_t,
-        _fetch_raw_groups()
-    )
+    op.bulk_insert(groups_t, _fetch_raw_groups())
     op.create_table(
         "subjects",
         sa.Column("name", sa.String(length=50), nullable=False),
@@ -87,12 +84,8 @@ def upgrade() -> None:
             name=op.f("fk_users_assigned_group_id_groups"),
         ),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_users")),
-        sa.UniqueConstraint(
-            "ecourses_user_id", name=op.f("uq_users_ecourses_user_id")
-        ),
-        sa.UniqueConstraint(
-            "moodle_token", name=op.f("uq_users_moodle_token")
-        ),
+        sa.UniqueConstraint("ecourses_user_id", name=op.f("uq_users_ecourses_user_id")),
+        sa.UniqueConstraint("moodle_token", name=op.f("uq_users_moodle_token")),
         sa.UniqueConstraint("talon", name=op.f("uq_users_talon")),
     )
     op.create_table(
@@ -129,9 +122,7 @@ def upgrade() -> None:
         sa.UniqueConstraint(
             "achievement_id", name=op.f("uq_user_achievements_achievement_id")
         ),
-        sa.UniqueConstraint(
-            "user_id", name=op.f("uq_user_achievements_user_id")
-        ),
+        sa.UniqueConstraint("user_id", name=op.f("uq_user_achievements_user_id")),
     )
     op.create_table(
         "user_submissions",

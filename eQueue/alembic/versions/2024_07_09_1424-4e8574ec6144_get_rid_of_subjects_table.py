@@ -38,24 +38,22 @@ def upgrade() -> None:
         type_="foreignkey",
     )
     op.drop_column("workspace_subjects", "subject_id")
-    op.drop_table("subjects", )
+    op.drop_table(
+        "subjects",
+    )
 
 
 def downgrade() -> None:
     op.create_table(
         "subjects",
-        sa.Column(
-            "name", sa.VARCHAR(length=50), autoincrement=False, nullable=False
-        ),
+        sa.Column("name", sa.VARCHAR(length=50), autoincrement=False, nullable=False),
         sa.Column("id", sa.INTEGER(), autoincrement=True, nullable=False),
         sa.PrimaryKeyConstraint("id", name="pk_subjects"),
         sa.UniqueConstraint("name", name="uq_subjects_name"),
     )
     op.add_column(
         "workspace_subjects",
-        sa.Column(
-            "subject_id", sa.INTEGER(), autoincrement=False, nullable=False
-        ),
+        sa.Column("subject_id", sa.INTEGER(), autoincrement=False, nullable=False),
     )
     op.create_foreign_key(
         "fk_workspace_subjects_subject_id_subjects",

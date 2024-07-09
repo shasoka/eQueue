@@ -23,10 +23,14 @@ class APIPrefix(BaseModel):
 
 
 class MoodleAPI(BaseModel):
-    auth_url: str = "https://e.sfu-kras.ru/login/token.php?service=moodle_mobile_app&username=%s&password=%s"
+    auth_url: str = (
+        "https://e.sfu-kras.ru/login/token.php?service=moodle_mobile_app&username=%s&password=%s"
+    )
     timetable_url: str = "https://edu.sfu-kras.ru/api/timetable/get_insts"
     ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php"
-    upload_new_image_url: str = "https://e.sfu-kras.ru/webservice/upload.php?token=%s&filearea=draft"
+    upload_new_image_url: str = (
+        "https://e.sfu-kras.ru/webservice/upload.php?token=%s&filearea=draft"
+    )
 
 
 class DatabaseConfig(BaseModel):
