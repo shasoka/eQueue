@@ -19,6 +19,7 @@ class APIv1Prefix(BaseModel):
     join_workspace: str = "/join"
     accept_pending: str = "/accept/{user_id}"
     leave_workspace: str = "/leave/{user_id}"
+    raise_user: str = "/raise/{user_id}"
 
 
 class APIPrefix(BaseModel):

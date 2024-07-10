@@ -275,3 +275,50 @@ async def workspace_safe_delete(session: AsyncSession, user: User) -> Workspace 
         status_code=404,
         detail="Не найдено ни одно рабочее пространство",
     )
+
+
+async def raise_user(
+    session: AsyncSession,
+    user_id: int,
+    user: User,
+) -> User | None:
+    # если айди равны, то нахуй
+    # если айди разные проверить что юзер админ или нет
+    # если айди разные проверить что юзер с юзер_айди есть в воркспейсе
+    if not user.id == user_id:
+        if user.workspace_chief:
+            if inheritor := await get_user_by_id(session, user_id):
+                if workspace := await get_workspace_with_assignees(
+                    session, user.assigned_group_id
+                ):
+                    if inheritor in workspace.users:
+                        inheritor.workspace_chief = True
+                        user.workspace_chief = False
+                        await session.commit()
+                        await session.refresh(inheritor)
+                        return inheritor
+                    else:
+                        raise HTTPException(
+                            status_code=409,
+                            detail="Пользователь не прикреплен к рабочему пространству",
+                        )
+                else:
+                    raise HTTPException(
+                        status_code=404,
+                        detail="Не найдено ни одно рабочее пространство",
+                    )
+            else:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Не найден пользователь с таким id",
+                )
+        else:
+            raise HTTPException(
+                status_code=403,
+                detail="Вы не являетесь руководителем рабочего пространства",
+            )
+    else:
+        raise HTTPException(
+            status_code=403,
+            detail="Вы уже являетесь руководителем рабочего пространства",
+        )

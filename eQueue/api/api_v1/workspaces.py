@@ -23,6 +23,7 @@ from crud.workspaces import (
     accept_pending,
     leave_workspace,
     workspace_safe_delete,
+    raise_user,
 )
 from moodle.auth import (
     get_current_user,
@@ -97,6 +98,15 @@ async def join_workspace(
         workspace_upd=workspace_upd,
         user=current_user,
     )
+
+
+@router.patch(settings.api.v1.raise_user, response_model=UserRead)
+async def make_user_workspace_chief(
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+    user_id: int,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    return await raise_user(session=session, user=current_user, user_id=user_id)
 
 
 @router.post(settings.api.v1.accept_pending, response_model=UserRead)
