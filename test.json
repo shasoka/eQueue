@@ -1,0 +1,1077 @@
+[
+  {
+    "id": 116868,
+    "name": "Общее",
+    "visible": 1,
+    "summary": "",
+    "summaryformat": 1,
+    "section": 0,
+    "hiddenbynumsections": 0,
+    "uservisible": true,
+    "modules": [
+      {
+        "id": 366881,
+        "name": "Электронный обучающий курс «Разработка интернет пр...",
+        "instance": 33102,
+        "description": "\u003Cdiv class=\"no-overflow\"\u003E\u003Cp\u003EЭлектронный обучающий курс «Разработка интернет приложений на CSP и ZEN» предназначен  для обучения и контроля знаний студентов - бакалавров 3-го курса, обучающихся по направлению «\u003Cem\u003EПрограммная инженерия\u003C/em\u003E».\u003C/p\u003E\r\n\u003Cp\u003EПредставленные информационно-методические материалы должны помочь студентам получить знания по курсу, служить навигатором на всем протяжении изучения курса, помочь наиболее результативно организовать работу по овладению изучаемого языка программирования, а также помочь в освоении платформы \u003Cem\u003EIntersystems Cache\u003C/em\u003E и используемых в ней подходов.\u003C/p\u003E\u003C/div\u003E",
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/label/1720310408/icon",
+        "modname": "label",
+        "modplural": "Пояснения",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": true,
+        "completion": 0
+      },
+      {
+        "id": 834576,
+        "name": "--------------------------------------------------...",
+        "instance": 68766,
+        "description": "\u003Cdiv class=\"no-overflow\"\u003E\u003Cp\u003E\u003Cstrong\u003E-------------------------------------------------------------------------------\u003Cbr /\u003EВНИМАНИЕ\u003C/strong\u003E\u003Cbr /\u003E\u003Cspan\u003EНа время удалённого обучения лекции и защиты практических работ проходят на канале дискорда:\u003Cbr /\u003E\u003Cbr /\u003E\u003Cstrong\u003EДля групп проходящих курс в 2022\u003C/strong\u003E\u003Cbr /\u003E\u003Cspan\u003E\u003Ca href=\"https://discord.gg/MMTaYJ9UNK\" title=\"https://discord.gg/MMTaYJ9UNK\"\u003E\u003Cspan\u003Ehttps://discord.gg/MMTaYJ9UNK\u003C/span\u003E\u003C/a\u003E\u003C/span\u003E\u003C/span\u003E\u003C/p\u003E\r\n\u003Cp\u003E\u003Cspan\u003E\u003Cbr /\u003E\u003Cspan style=\"color: #808080;\"\u003E\u003Cstrong\u003EДля групп проходивших курс в 2021\u003C/strong\u003E\u003C/span\u003E\u003C/span\u003E\u003Cbr /\u003E\u003Ca href=\"https://vk.com/away.php?to=https%3A%2F%2Fdiscord.gg%2FA88uVRg&amp;cc_key=\" target=\"_blank\" rel=\"nofollow noopener\"\u003E\u003Cspan style=\"color: #808080;\"\u003Ehttps://discord.gg/A88uVRg\u003C/span\u003E\u003Cbr /\u003E\u003Cbr /\u003E\u003C/a\u003E\u003Cstrong\u003EСсылка актуальна и для проведения экзамена\u003Cbr /\u003E-------------------------------------------------------------------------------\u003C/strong\u003E\u003C/p\u003E\u003C/div\u003E",
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/label/1720310408/icon",
+        "modname": "label",
+        "modplural": "Пояснения",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": true,
+        "completion": 0
+      },
+      {
+        "id": 366945,
+        "url": "https://e.sfu-kras.ru/mod/glossary/view.php?id=366945",
+        "name": "Электронный терминологический словарь",
+        "instance": 6022,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/glossary/1720310408/icon",
+        "modname": "glossary",
+        "modplural": "Глоссарии",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": false,
+        "completion": 0
+      },
+      {
+        "id": 366948,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=366948",
+        "name": "Справочник",
+        "instance": 118828,
+        "description": "\u003Cdiv class=\"no-overflow\"\u003E\u003Cp\u003E\u003Cspan\u003EДокумент-подсказка, для быстрого поиска методов и вариантов синтаксиса\u003C/span\u003E\u003C/p\u003E\u003C/div\u003E",
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/document-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "file",
+            "filename": "cheat (4).docx",
+            "filepath": "/",
+            "filesize": 2633259,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/872271/mod_resource/content/2/cheat%20%284%29.docx?forcedownload=1",
+            "timecreated": 1507624004,
+            "timemodified": 1507624007,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": "Погребников Александр Константинович",
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 2633259,
+          "lastmodified": 1507624007,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 366950,
+        "url": "https://e.sfu-kras.ru/mod/url/view.php?id=366950",
+        "name": "Youtube канал Intersystems(RU)",
+        "instance": 28548,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/url/1720310408/icon",
+        "modname": "url",
+        "modplural": "Гиперссылки",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "url",
+            "filename": "Youtube канал Intersystems(RU)",
+            "filepath": null,
+            "filesize": 0,
+            "fileurl": "https://www.youtube.com/user/InterSystemsRUS",
+            "timecreated": null,
+            "timemodified": 1507624325,
+            "sortorder": null,
+            "userid": null,
+            "author": null,
+            "license": null
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 0,
+          "lastmodified": 1507624325,
+          "mimetypes": [],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 647071,
+        "url": "https://e.sfu-kras.ru/mod/forum/view.php?id=647071",
+        "name": "Новостной форум",
+        "instance": 37876,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/forum/1720310408/icon",
+        "modname": "forum",
+        "modplural": "Форумы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": false,
+        "completion": 0
+      },
+      {
+        "id": 366880,
+        "url": "https://e.sfu-kras.ru/mod/forum/view.php?id=366880",
+        "name": "Объявления",
+        "instance": 22432,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/forum/1720310408/icon",
+        "modname": "forum",
+        "modplural": "Форумы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": false,
+        "completion": 0
+      },
+      {
+        "id": 367908,
+        "name": "Рабочие программы",
+        "instance": 14075,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/folder/1720310408/icon",
+        "modname": "folder",
+        "modplural": "Папки",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"showexpanded\":\"1\",\"showdownloadfolder\":\"1\",\"id\":14075,\"course\":9882,\"display\":1,\"name\":\"\\u0420\\u0430\\u0431\\u043e\\u0447\\u0438\\u0435 \\u043f\\u0440\\u043e\\u0433\\u0440\\u0430\\u043c\\u043c\\u044b\",\"intro\":\"\",\"introformat\":\"0\"}",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Разработка интернет приложений на CSP и ZEN 2015.pdf",
+            "filepath": "/",
+            "filesize": 560581,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/874127/mod_folder/content/3/%D0%A0%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82%20%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9%20%D0%BD%D0%B0%20CSP%20%D0%B8%20ZEN%202015.pdf?forcedownload=1",
+            "timecreated": 1519709611,
+            "timemodified": 1519709614,
+            "sortorder": 0,
+            "mimetype": "application/pdf",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": "Погребников Александр Константинович",
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 560581,
+          "lastmodified": 1519709614,
+          "mimetypes": [
+            "application/pdf"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1410461,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1410461",
+        "name": "Фонд оценочных средств - Web",
+        "instance": 472046,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/document-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130380,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Б1.В.ДВ.02.02 Web-программирование.doc",
+            "filepath": "/",
+            "filesize": 53248,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2740494/mod_resource/content/1/%D0%911.%D0%92.%D0%94%D0%92.02.02%20Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.doc?forcedownload=1",
+            "timecreated": 1655382163,
+            "timemodified": 1655382168,
+            "sortorder": 1,
+            "mimetype": "application/msword",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": "Погребников Александр Константинович",
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 53248,
+          "lastmodified": 1655382168,
+          "mimetypes": [
+            "application/msword"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 647069,
+        "url": "https://e.sfu-kras.ru/mod/url/view.php?id=647069",
+        "name": "Фонд оценочных средств - CSP",
+        "instance": 44501,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/url/1720310408/icon",
+        "modname": "url",
+        "modplural": "Гиперссылки",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "url",
+            "filename": "Фонд оценочных средств - CSP",
+            "filepath": null,
+            "filesize": 0,
+            "fileurl": "https://drive.google.com/file/d/1gFEPiDFjXu09iLMBG4mEJVLgZo9zz_65/view?usp=sharing",
+            "timecreated": null,
+            "timemodified": 1655381516,
+            "sortorder": null,
+            "userid": null,
+            "author": null,
+            "license": null
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 0,
+          "lastmodified": 1655381516,
+          "mimetypes": [],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 470112,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=470112",
+        "name": "cache.key",
+        "instance": 158258,
+        "description": "\u003Cdiv class=\"no-overflow\"\u003E\u003Cp\u003E\u003Cspan\u003EЛицензионный ключ cache для студентов СФУ\u003C/span\u003E\u003C/p\u003E\u003C/div\u003E",
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/text-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "file",
+            "filename": "cache.key",
+            "filepath": "/",
+            "filesize": 377,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/1024938/mod_resource/content/1/cache.key?forcedownload=1",
+            "timecreated": 1519034249,
+            "timemodified": 1519034267,
+            "sortorder": 1,
+            "mimetype": "text/plain",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": "Погребников Александр Константинович",
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 377,
+          "lastmodified": 1519034267,
+          "mimetypes": [
+            "text/plain"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 647074,
+        "url": "https://e.sfu-kras.ru/mod/quiz/view.php?id=647074",
+        "name": "Входное тестирование",
+        "instance": 50212,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/quiz/1720310408/icon",
+        "modname": "quiz",
+        "modplural": "Тесты",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"\"",
+        "noviewlink": false,
+        "completion": 0
+      }
+    ]
+  },
+  {
+    "id": 400477,
+    "name": "Web-программирование",
+    "visible": 1,
+    "summary": "",
+    "summaryformat": 1,
+    "section": 1,
+    "hiddenbynumsections": 0,
+    "uservisible": true,
+    "modules": [
+      {
+        "id": 1353255,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1353255",
+        "name": "Web-программирование - Подходы",
+        "instance": 454314,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Подходы.pptx",
+            "filepath": "/",
+            "filesize": 780982,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2653786/mod_resource/content/1/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20%D0%9F%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8B.pptx?forcedownload=1",
+            "timecreated": 1644035720,
+            "timemodified": 1644035720,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 780982,
+          "lastmodified": 1644035720,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1351262,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1351262",
+        "name": "Практическое задание №1 (Серверная генерация)",
+        "instance": 230973,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714648416,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1360842,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1360842",
+        "name": "Web-программирование - Аутентификация",
+        "instance": 456715,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 0,
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Аутентификация.pptx",
+            "filepath": "/",
+            "filesize": 786700,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2664708/mod_resource/content/1/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20%D0%90%D1%83%D1%82%D0%B5%D0%BD%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F.pptx?forcedownload=1",
+            "timecreated": 1644640418,
+            "timemodified": 1644640418,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 786700,
+          "lastmodified": 1644640418,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1351263,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1351263",
+        "name": "Практическое задание №2 (Сессии)",
+        "instance": 230974,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714648429,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1364881,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1364881",
+        "name": "Web-программирование - REST API",
+        "instance": 457786,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130383,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - REST.pptx",
+            "filepath": "/",
+            "filesize": 699087,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2670630/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20REST.pptx?forcedownload=1",
+            "timecreated": 1645243833,
+            "timemodified": 1645243833,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 699087,
+          "lastmodified": 1645243833,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1351264,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1351264",
+        "name": "Практическое задание №3 (REST API)",
+        "instance": 230975,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714128977,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1367975,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1367975",
+        "name": "Web-программирование - CORS",
+        "instance": 458821,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130385,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - CORS.pptx",
+            "filepath": "/",
+            "filesize": 3887761,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2675102/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20CORS.pptx?forcedownload=1",
+            "timecreated": 1645848059,
+            "timemodified": 1645848059,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 3887761,
+          "lastmodified": 1645848059,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1372178,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1372178",
+        "name": "Web-программирование - GraphQL",
+        "instance": 460112,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130385,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - GraphQL.pptx",
+            "filepath": "/",
+            "filesize": 1174918,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2681122/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20GraphQL.pptx?forcedownload=1",
+            "timecreated": 1646470550,
+            "timemodified": 1646470550,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 1174918,
+          "lastmodified": 1646470550,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1351266,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1351266",
+        "name": "Практическое задание №4 (Использование API)",
+        "instance": 230977,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714128926,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1374265,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1374265",
+        "name": "Web-программирование - Web Socket",
+        "instance": 460717,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1713459991,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Web Socket.pptx",
+            "filepath": "/",
+            "filesize": 921728,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2684280/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20Web%20Socket.pptx?forcedownload=1",
+            "timecreated": 1647058669,
+            "timemodified": 1647058669,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 921728,
+          "lastmodified": 1647058669,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1351265,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1351265",
+        "name": "Практическое задание №5 (Настройка web-socket)",
+        "instance": 230976,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714735302,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1351268,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1351268",
+        "name": "Практическое задание №6 (Чат с комнатами)",
+        "instance": 230978,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714735318,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1377567,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1377567",
+        "name": "Web-программирование - Push",
+        "instance": 461688,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130386,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Push.pptx",
+            "filepath": "/",
+            "filesize": 226459,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2689373/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20Push.pptx?forcedownload=1",
+            "timecreated": 1647663504,
+            "timemodified": 1647663504,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 226459,
+          "lastmodified": 1647663504,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1185000,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1185000",
+        "name": "Практическое задание №7 (Настройка Push уведомлений)",
+        "instance": 196176,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714735333,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1380748,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1380748",
+        "name": "Web-программирование - Server workers",
+        "instance": 462737,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130387,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Server workers.pptx",
+            "filepath": "/",
+            "filesize": 671899,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2693859/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20Server%20workers.pptx?forcedownload=1",
+            "timecreated": 1648268479,
+            "timemodified": 1648268479,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 671899,
+          "lastmodified": 1648268479,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1185004,
+        "url": "https://e.sfu-kras.ru/mod/assign/view.php?id=1185004",
+        "name": "Практическое задание №8 (Триггерные сценарии)",
+        "instance": 196177,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/assign/1720310408/icon",
+        "modname": "assign",
+        "modplural": "Задания",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "{\"customcompletionrules\":{\"completionsubmit\":\"0\"}}",
+        "noviewlink": false,
+        "completion": 2,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714737041,
+          "overrideby": null,
+          "valueused": false
+        }
+      },
+      {
+        "id": 1389723,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1389723",
+        "name": "Web-программирование - Безопасность ч1",
+        "instance": 465531,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130387,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Безопасность ч1.pptx",
+            "filepath": "/",
+            "filesize": 1216318,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2707087/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20%D0%91%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%20%D1%871.pptx?forcedownload=1",
+            "timecreated": 1650083565,
+            "timemodified": 1650083565,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 1216318,
+          "lastmodified": 1650083565,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      },
+      {
+        "id": 1392931,
+        "url": "https://e.sfu-kras.ru/mod/resource/view.php?id=1392931",
+        "name": "Web-программирование - Безопасность ч2",
+        "instance": 466334,
+        "visible": 1,
+        "uservisible": true,
+        "visibleoncoursepage": 1,
+        "modicon": "https://e.sfu-kras.ru/theme/image.php/moove/core/1720310408/f/powerpoint-24",
+        "modname": "resource",
+        "modplural": "Файлы",
+        "indent": 0,
+        "onclick": "",
+        "afterlink": null,
+        "customdata": "\"a:1:{s:10:\\\"printintro\\\";i:1;}\"",
+        "noviewlink": false,
+        "completion": 1,
+        "completiondata": {
+          "state": 1,
+          "timecompleted": 1714130388,
+          "overrideby": null,
+          "valueused": false
+        },
+        "contents": [
+          {
+            "type": "file",
+            "filename": "Web-программирование - Безопасность ч2.pptx",
+            "filepath": "/",
+            "filesize": 912698,
+            "fileurl": "https://e.sfu-kras.ru/webservice/pluginfile.php/2712596/mod_resource/content/0/Web-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5%20-%20%D0%91%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%20%D1%872.pptx?forcedownload=1",
+            "timecreated": 1650686900,
+            "timemodified": 1650686900,
+            "sortorder": 1,
+            "mimetype": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            "isexternalfile": false,
+            "userid": 6785,
+            "author": null,
+            "license": "allrightsreserved"
+          }
+        ],
+        "contentsinfo": {
+          "filescount": 1,
+          "filessize": 912698,
+          "lastmodified": 1650686900,
+          "mimetypes": [
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+          ],
+          "repositorytype": ""
+        }
+      }
+    ]
+  }
+]

@@ -1,7 +1,7 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
 
 from datetime import datetime, timezone
-from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text
+from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text, Text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -120,25 +120,51 @@ class Workspace(Base):
 
 class WorkspaceSubject(Base):
     workspace_id: Mapped[int] = mapped_column(
-        ForeignKey("workspaces.id"), nullable=False
+        ForeignKey("workspaces.id"),
+        nullable=False,
     )
-    scoped_name: Mapped[str] = mapped_column(String(50), unique=True)
-    professor: Mapped[str] = mapped_column(String(255), nullable=True)
-    professor_contact: Mapped[str] = mapped_column(String(255), nullable=True)
-    requirements: Mapped[str] = mapped_column(String(255), nullable=True)
+    ecourses_id: Mapped[int] = mapped_column(
+        nullable=True,
+        unique=True,
+    )
+    name: Mapped[str] = mapped_column(
+        String(255),
+        unique=True,
+    )
+    ecourses_link: Mapped[str] = mapped_column(
+        Text,
+        nullable=True,
+    )
+    professor: Mapped[str] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+    professor_contact: Mapped[str] = mapped_column(
+        String(255),
+        nullable=True,
+    )
+    requirements: Mapped[str] = mapped_column(
+        String(255),
+        nullable=True,
+    )
     additional_fields: Mapped[dict] = mapped_column(
-        JSONB, default={}, server_default=func.text("{}")
+        JSONB,
+        default={},
+        server_default=func.text("{}"),
     )
     queue: Mapped[list[int]] = mapped_column(
-        ARRAY(Integer), default=[], server_default=text("ARRAY[]::integer[]")
+        ARRAY(Integer),
+        default=[],
+        server_default=text("ARRAY[]::integer[]"),
     )
 
     workspace: Mapped["Workspace"] = relationship(
-        "Workspace", back_populates="subjects"
+        "Workspace",
+        back_populates="subjects",
     )
-
     submissions: Mapped[list["UserSubmission"]] = relationship(
-        "UserSubmission", back_populates="subject"
+        "UserSubmission",
+        back_populates="subject",
     )
 
 

@@ -14,12 +14,15 @@ class APIv1Prefix(BaseModel):
     prefix: str = "/v1"
     users_prefix: str = "/users"
     workspaces_prefix: str = "/workspaces"
+    subjects_prefix: str = "/subjects"
+
     moodle_auth: str = "/moodle_auth"
     token_persistence: str = "/token_persistence"
     join_workspace: str = "/join"
     accept_pending: str = "/accept/{user_id}"
     leave_workspace: str = "/leave/{user_id}"
     raise_user: str = "/raise/{user_id}"
+    ecourses_enrolled: str = "/enrolled"
 
 
 class APIPrefix(BaseModel):
@@ -30,12 +33,29 @@ class APIPrefix(BaseModel):
 
 class MoodleAPI(BaseModel):
     auth_url: str = (
-        "https://e.sfu-kras.ru/login/token.php?service=moodle_mobile_app&username=%s&password=%s"
+        "https://e.sfu-kras.ru/login/token.php"
+        "?service=moodle_mobile_app"
+        "&username=%s"
+        "&password=%s"
     )
     timetable_url: str = "https://edu.sfu-kras.ru/api/timetable/get_insts"
     ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php"
     upload_new_image_url: str = (
-        "https://e.sfu-kras.ru/webservice/upload.php?token=%s&filearea=draft"
+        "https://e.sfu-kras.ru/webservice/upload.php" "?token=%s" "&filearea=draft"
+    )
+    enrolled_courses_url: str = (
+        "https://e.sfu-kras.ru/webservice/rest/server.php"
+        "?wstoken=%s"
+        "&wsfunction=core_enrol_get_users_courses"
+        "&moodlewsrestformat=json"
+        "&userid=%d"
+    )
+    course_structure: str = (
+        "https://e.sfu-kras.ru/webservice/rest/server.php"
+        "?wstoken=%s"
+        "&wsfunction=core_course_get_contents"
+        "&moodlewsrestformat=json"
+        "&courseid=%d"
     )
 
 
