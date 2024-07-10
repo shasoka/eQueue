@@ -16,13 +16,13 @@ async def create_workspace_subject(
     subject_in: WorkspaceSubjectCreate,
 ) -> WorkspaceSubject | None:
     if subject_in.workspace_id == user.assigned_workspace_id:
-        if check_course_availability(
+        if await check_course_availability(
             course_id=subject_in.ecourses_id,
             token=user.access_token,
         ):
-            if subject_in.id not in await get_workspace_subject_ids(
+            if subject_in.ecourses_id not in await get_workspace_subject_ids(
                 session,
-                user.assigned_group_id,
+                user.assigned_workspace_id,
             ):
                 subject = WorkspaceSubject(**subject_in.model_dump())
                 session.add(subject)

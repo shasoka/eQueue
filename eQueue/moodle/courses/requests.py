@@ -31,7 +31,7 @@ async def user_enrolled_courses(
         if course["lastaccess"] is None:
             course["lastaccess"] = -1
         if course["id"] not in await get_workspace_subject_ids(
-            session, user.assigned_group_id
+            session, user.assigned_workspace_id
         ):
             courses.append(EcoursesSubjectDescription.model_validate(course))
 
@@ -53,7 +53,7 @@ async def user_enrolled_courses(
                 name=course.shortname,
                 ecourses_link=settings.moodle.course_url % course.id,
                 professor=None,
-                prefessor_contact=None,
+                professor_contact=None,
                 requirements=None,
             )
         )

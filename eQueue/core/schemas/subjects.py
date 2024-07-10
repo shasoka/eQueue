@@ -9,7 +9,7 @@ class WorkspaceSubjectBase(BaseModel):
     name: str
     ecourses_link: str | None
     professor: str | None
-    prefessor_contact: str | None
+    professor_contact: str | None
     requirements: str | None
     additional_fields: dict
     queue: list[int]
@@ -25,5 +25,5 @@ class WorkspaceSubjectCreate(BaseModel):
     name: str | None = None
     ecourses_link: str | None = None
     professor: str | None = None
-    prefessor_contact: str | None = None
+    professor_contact: str | None = None
     requirements: str | None = None

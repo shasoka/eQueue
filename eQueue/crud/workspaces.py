@@ -329,11 +329,12 @@ async def raise_user(
 async def get_workspace_subject_ids(
     session: AsyncSession,
     workspace_id: int,
-) -> list[WorkspaceSubject]:
+) -> list[int | None]:
     stmt = (
         select(Workspace)
         .options(selectinload(Workspace.subjects))
         .where(Workspace.id == workspace_id)
     )
     result = await session.scalars(stmt)
-    return list(result.all())
+    workspace = result.first()
+    return [subj.ecourses_id for subj in workspace.subjects]
