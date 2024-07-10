@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-
+#
 from pydantic import BaseModel
 
 
@@ -29,3 +29,7 @@ class EcourseSubjectModule(BaseModel):
 
 class EcoursesSubjectStructure(BaseModel):
     assign_modules: list[EcourseSubjectModule]
+
+
+class SelectedCourses(BaseModel):
+    courses: list[int]

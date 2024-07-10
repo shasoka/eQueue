@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-
+#
 from datetime import datetime, timezone
 from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text, Text
 from sqlalchemy.dialects.postgresql import JSONB
@@ -116,6 +116,10 @@ class Workspace(Base):
         "User",
         back_populates="assigned_workspace",
     )
+    assignments: Mapped[list["SubjectAssignment"]] = relationship(
+        "SubjectAssignment",
+        cascade="all, delete-orphan",
+    )
 
 
 class WorkspaceSubject(Base):
@@ -165,6 +169,30 @@ class WorkspaceSubject(Base):
     submissions: Mapped[list["UserSubmission"]] = relationship(
         "UserSubmission",
         back_populates="subject",
+    )
+    assignments: Mapped[list["SubjectAssignment"]] = relationship(
+        "SubjectAssignment",
+        cascade="all, delete-orphan",
+    )
+
+
+class SubjectAssignment(Base):
+    workspace_id: Mapped[int] = mapped_column(
+        ForeignKey("workspaces.id"),
+        nullable=False,
+    )
+    subject_id: Mapped[int] = mapped_column(
+        ForeignKey("workspace_subjects.id"),
+        nullable=False,
+    )
+    name: Mapped[str] = mapped_column(
+        String(255),
+        nullable=False,
+        unique=True,
+    )
+    url: Mapped[str] = mapped_column(
+        Text,
+        nullable=True,
     )
 
 

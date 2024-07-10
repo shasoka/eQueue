@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-
+#
 from pydantic import BaseModel
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -23,6 +23,7 @@ class APIv1Prefix(BaseModel):
     leave_workspace: str = "/leave/{user_id}"
     raise_user: str = "/raise/{user_id}"
     ecourses_enrolled: str = "/enrolled"
+    fill_workspace_ecourses: str = "/fill"
 
 
 class APIPrefix(BaseModel):
@@ -57,6 +58,7 @@ class MoodleAPI(BaseModel):
         "&moodlewsrestformat=json"
         "&courseid=%d"
     )
+    course_url: str = "https://e.sfu-kras.ru/course/view.php?id=%s"
 
 
 class DatabaseConfig(BaseModel):

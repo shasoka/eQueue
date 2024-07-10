@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+#
 from contextlib import asynccontextmanager
 
 import uvicorn
@@ -37,7 +39,7 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 if __name__ == "__main__":

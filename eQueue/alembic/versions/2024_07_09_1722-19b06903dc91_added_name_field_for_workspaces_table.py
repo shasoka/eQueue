@@ -6,6 +6,8 @@ Create Date: 2024-07-09 17:22:26.874028
 
 """
 
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+#
 from typing import Sequence, Union
 
 from alembic import op
@@ -20,7 +22,8 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def trigger_up() -> None:
-    op.execute("""
+    op.execute(
+        """
         CREATE OR REPLACE FUNCTION set_default_name()
         RETURNS TRIGGER AS $$
         BEGIN
@@ -30,14 +33,17 @@ def trigger_up() -> None:
             RETURN NEW;
         END;
         $$ LANGUAGE plpgsql;
-        """)
+        """
+    )
 
-    op.execute("""
+    op.execute(
+        """
         CREATE TRIGGER set_default_name_trigger
         BEFORE INSERT ON workspaces
         FOR EACH ROW
         EXECUTE FUNCTION set_default_name();
-        """)
+        """
+    )
 
 
 def trigger_down() -> None:
@@ -46,18 +52,12 @@ def trigger_down() -> None:
 
 
 def upgrade() -> None:
-    op.add_column(
-        "workspaces", sa.Column("name", sa.String(length=35), nullable=True)
-    )
-    op.create_unique_constraint(
-        op.f("uq_workspaces_name"), "workspaces", ["name"]
-    )
+    op.add_column("workspaces", sa.Column("name", sa.String(length=35), nullable=True))
+    op.create_unique_constraint(op.f("uq_workspaces_name"), "workspaces", ["name"])
     trigger_up()
 
 
 def downgrade() -> None:
     trigger_down()
-    op.drop_constraint(
-        op.f("uq_workspaces_name"), "workspaces", type_="unique"
-    )
+    op.drop_constraint(op.f("uq_workspaces_name"), "workspaces", type_="unique")
     op.drop_column("workspaces", "name")

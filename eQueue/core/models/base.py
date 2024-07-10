@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+#
 from sqlalchemy import MetaData, ARRAY, Integer
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
@@ -19,9 +21,7 @@ class Base(AsyncAttrs, DeclarativeBase):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
 
     # Annotations
-    type_annotation_map = {
-        list[int]: ARRAY(Integer)
-    }
+    type_annotation_map = {list[int]: ARRAY(Integer)}
 
     def dict(self):
         return {

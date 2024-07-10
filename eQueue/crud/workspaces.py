@@ -1,10 +1,11 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+#
 from fastapi import HTTPException
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from core.models import User, Workspace, Group
+from core.models import User, Workspace, Group, WorkspaceSubject
 from core.schemas.workspace import WorkspaceJoin, WorkspaceCreate, WorkspaceUpdate
 from crud.groups import get_group
 from crud.users import get_user_by_id
@@ -322,3 +323,17 @@ async def raise_user(
             status_code=403,
             detail="Вы уже являетесь руководителем рабочего пространства",
         )
+
+
+# noinspection PyTypeChecker
+async def get_workspace_subject_ids(
+    session: AsyncSession,
+    workspace_id: int,
+) -> list[WorkspaceSubject]:
+    stmt = (
+        select(Workspace)
+        .options(selectinload(Workspace.subjects))
+        .where(Workspace.id == workspace_id)
+    )
+    result = await session.scalars(stmt)
+    return list(result.all())
