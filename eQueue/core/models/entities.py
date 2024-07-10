@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+
 from datetime import datetime, timezone
 from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text
 from sqlalchemy.dialects.postgresql import JSONB
@@ -74,7 +76,9 @@ class Group(Base):
 
 class Workspace(Base):
     group_id: Mapped[int] = mapped_column(
-        ForeignKey("groups.id"), nullable=False, unique=True
+        ForeignKey("groups.id"),
+        nullable=False,
+        unique=True,
     )
     semester: Mapped[int] = mapped_column(
         default=1,
@@ -91,20 +95,26 @@ class Workspace(Base):
 
     pending_users: Mapped[list[int]] = mapped_column(
         default=[],
-        server_default=text("ARRAY[]::integer[]")
+        server_default=text("ARRAY[]::integer[]"),
     )
 
-    group: Mapped["Group"] = relationship("Group", back_populates="workspace")
-
+    group: Mapped["Group"] = relationship(
+        "Group",
+        back_populates="workspace",
+    )
     subjects: Mapped[list["WorkspaceSubject"]] = relationship(
-        "WorkspaceSubject", back_populates="workspace"
+        "WorkspaceSubject",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
     )
     submissions: Mapped[list["UserSubmission"]] = relationship(
-        "UserSubmission", back_populates="workspace"
+        "UserSubmission",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
     )
-
     users: Mapped[list["User"]] = relationship(
-        "User", back_populates="assigned_workspace"
+        "User",
+        back_populates="assigned_workspace",
     )
 
 

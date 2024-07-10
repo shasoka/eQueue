@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+
 from pydantic import BaseModel
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -14,6 +16,9 @@ class APIv1Prefix(BaseModel):
     workspaces_prefix: str = "/workspaces"
     moodle_auth: str = "/moodle_auth"
     token_persistence: str = "/token_persistence"
+    join_workspace: str = "/join"
+    accept_pending: str = "/accept/{user_id}"
+    leave_workspace: str = "/leave/{user_id}"
 
 
 class APIPrefix(BaseModel):
