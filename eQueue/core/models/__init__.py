@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+
 from .db import db_helper
 from .base import Base
 from .entities import (

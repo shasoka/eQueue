@@ -7,7 +7,7 @@ Create Date: 2024-07-10 14:29:01.156897
 """
 
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-#
+
 from typing import Sequence, Union
 
 from alembic import op

@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+
 import requests
 
 from core.schemas.moodle import MoodleLogin

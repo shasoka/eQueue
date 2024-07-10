@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-#
+
 from contextlib import asynccontextmanager
 
 import uvicorn

@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-#
+
 from fastapi import HTTPException
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession

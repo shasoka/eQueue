@@ -1,3 +1,5 @@
+#  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import (

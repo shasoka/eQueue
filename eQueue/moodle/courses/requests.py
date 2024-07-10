@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-#
+
 import requests
 from sqlalchemy.ext.asyncio import AsyncSession
 

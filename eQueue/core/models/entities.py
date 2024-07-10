@@ -1,5 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-#
+
 from datetime import datetime, timezone
 from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text, Text
 from sqlalchemy.dialects.postgresql import JSONB
