@@ -1,17 +1,17 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
 
 import requests
+from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.config import settings
 from core.models import User
 from core.schemas.moodle import (
     EcoursesSubjectDescription,
-    EcourseSubjectModule,
-    EcoursesSubjectStructure,
 )
-from core.schemas.subjects import WorkspaceSubjectCreate
-from crud.workspaces import get_workspace_subject_ids
+from core.schemas.subject_assignments import SubjectAssignmentCreate
+from core.schemas.subjects import WorkspaceSubjectCreate, WorkspaceSubjectRead
+from crud.workspaces import get_workspace_subject_ids_and_names
 from utils import validate
 
 
@@ -30,9 +30,11 @@ async def user_enrolled_courses(
     for course in response.json():
         if course["lastaccess"] is None:
             course["lastaccess"] = -1
-        if course["id"] not in await get_workspace_subject_ids(
-            session, user.assigned_workspace_id
-        ):
+        _, ids = await get_workspace_subject_ids_and_names(
+            session,
+            user.assigned_workspace_id,
+        )
+        if course["id"] not in ids:
             courses.append(EcoursesSubjectDescription.model_validate(course))
 
     sorted_courses = sorted(
@@ -61,11 +63,19 @@ async def user_enrolled_courses(
     return casted_courses
 
 
-async def get_course_data(
-    course_id: int,
+async def _from_course_structure(
     token: str,
-) -> EcoursesSubjectStructure | None:
-    response = requests.post(settings.moodle.course_structure % (token, course_id))
+    ecourses_id: int,
+    workspace_id: int,
+    subject_id: int,
+) -> list[SubjectAssignmentCreate] | None:
+    response = requests.post(
+        settings.moodle.course_structure
+        % (
+            token,
+            ecourses_id,
+        )
+    )
     if not isinstance(response, list):
         await validate(response.json())
 
@@ -73,9 +83,35 @@ async def get_course_data(
     for structure_node in response.json():
         for module in structure_node["modules"]:
             if module["modname"] == "assign":
-                result.append(EcourseSubjectModule.model_validate(module))
+                result.append(
+                    SubjectAssignmentCreate.model_validate(
+                        {
+                            "workspace_id": workspace_id,
+                            "subject_id": subject_id,
+                            "name": module["name"],
+                            "url": module["url"],
+                        }
+                    )
+                )
+    return result
 
-    return EcoursesSubjectStructure.model_validate({"assign_modules": result})
+
+async def get_subject_assignments(
+    token: str,
+    subject_in: WorkspaceSubjectRead,
+) -> list[SubjectAssignmentCreate] | None:
+    if subject_in.ecourses_id is not None:
+        return await _from_course_structure(
+            token,
+            subject_in.ecourses_id,
+            subject_in.workspace_id,
+            subject_in.id,
+        )
+    else:
+        raise HTTPException(
+            status_code=404,
+            detail="Курс не найден",
+        )
 
 
 async def check_course_availability(
@@ -83,4 +119,4 @@ async def check_course_availability(
     token: str,
 ) -> bool:
     response = requests.post(settings.moodle.course_structure % (token, course_id))
-    return isinstance(response, list)
+    return isinstance(response.json(), list)

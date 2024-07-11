@@ -1,7 +1,17 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
 
 from datetime import datetime, timezone
-from sqlalchemy import String, TIMESTAMP, func, ForeignKey, ARRAY, Integer, text, Text
+from sqlalchemy import (
+    String,
+    TIMESTAMP,
+    func,
+    ForeignKey,
+    ARRAY,
+    Integer,
+    text,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -185,14 +195,23 @@ class SubjectAssignment(Base):
         ForeignKey("workspace_subjects.id"),
         nullable=False,
     )
+    # TODO: unique constraint for workspace for many instances
     name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
-        unique=True,
     )
     url: Mapped[str] = mapped_column(
         Text,
         nullable=True,
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "workspace_id",
+            "subject_id",
+            "name",
+            name="uq_subj_assign_wid_sid_name",
+        ),
     )
 
 

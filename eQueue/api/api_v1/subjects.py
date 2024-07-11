@@ -2,30 +2,21 @@
 
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response, HTTPException, UploadFile, File
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.config import settings
 from core.models import db_helper, User
-from core.schemas.moodle import (
-    MoodleLogin,
-    EcoursesSubjectDescription,
-    EcoursesSubjectStructure,
-    SelectedCourses,
+from core.schemas.subject_assignments import (
+    SubjectAssignmentRead,
 )
 from core.schemas.subjects import WorkspaceSubjectCreate, WorkspaceSubjectRead
-from core.schemas.users import UserRead, UserCreate, UserAuth, UserUpdate
+from crud.assignments import generate_subject_assignment
 from crud.subjects import create_workspace_subject
-from crud.users import create_new_user, get_user_by_ecourses_id, update_user
 from moodle.auth import (
-    auth_by_moodle_credentials,
-    get_moodle_user_info,
-    token_persistence,
     get_current_user,
 )
 from moodle.courses import user_enrolled_courses
-from moodle.users import patch_profile_picture
 
 router = APIRouter(
     tags=["Subjects"],
@@ -48,14 +39,19 @@ async def get_courses_from_moodle(
 
 
 @router.post(
-    settings.api.v1.fill_workspace_ecourses,
+    "",
     response_model=list[WorkspaceSubjectRead],
 )
-async def fill_workspace_with_ecourses(
-    user_selection: list[WorkspaceSubjectCreate] | list[int],
+async def add_subjects(
+    user_selection: list[WorkspaceSubjectCreate],
     current_user: Annotated[User, Depends(get_current_user)],
     session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
 ):
+    if not current_user.workspace_chief:
+        raise HTTPException(
+            status_code=403,
+            detail="Вы не можете добавлять предметы, т.к. вы не являетесь руководителем рабочего пространства",
+        )
     resposne = []
     for course in user_selection:
         resposne.append(
@@ -66,3 +62,34 @@ async def fill_workspace_with_ecourses(
             )
         )
     return resposne
+
+
+@router.post(
+    settings.api.v1.gen_subject_assignments,
+    response_model=list[SubjectAssignmentRead],
+)
+async def generate_assignments_from_ecourses(
+    user_selection: list[WorkspaceSubjectRead],
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    if not current_user.workspace_chief:
+        raise HTTPException(
+            status_code=403,
+            detail="Вы не можете добавлять предметы, т.к. вы не являетесь руководителем рабочего пространства",
+        )
+    resposne = []
+    for course in user_selection:
+        resposne.extend(
+            await generate_subject_assignment(
+                session=session,
+                user=current_user,
+                subject_in=course,
+            )
+        )
+    return resposne
+
+
+# TODO: сделать добавлений ассайнов
+# TODO: сделать добавление субмиссий
+# TODO: при добавлении юзера в воркспейс создавать субмиссии

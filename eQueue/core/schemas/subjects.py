@@ -20,9 +20,9 @@ class WorkspaceSubjectRead(WorkspaceSubjectBase):
 
 
 class WorkspaceSubjectCreate(BaseModel):
-    workspace_id: int | None = None
+    workspace_id: int | None
     ecourses_id: int | None = None
-    name: str | None = None
+    name: str | None
     ecourses_link: str | None = None
     professor: str | None = None
     professor_contact: str | None = None

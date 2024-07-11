@@ -23,7 +23,8 @@ class APIv1Prefix(BaseModel):
     leave_workspace: str = "/leave/{user_id}"
     raise_user: str = "/raise/{user_id}"
     ecourses_enrolled: str = "/enrolled"
-    fill_workspace_ecourses: str = "/fill"
+    gen_subject_assignments: str = "/assignments/generate"
+    add_subject_assignments: str = "/assignments"
 
 
 class APIPrefix(BaseModel):

@@ -20,16 +20,3 @@ class EcoursesSubjectDescription(BaseModel):
     lastaccess: int | None
     isfavourite: bool | None
     hidden: bool | None
-
-
-class EcourseSubjectModule(BaseModel):
-    url: str
-    name: str
-
-
-class EcoursesSubjectStructure(BaseModel):
-    assign_modules: list[EcourseSubjectModule]
-
-
-class SelectedCourses(BaseModel):
-    courses: list[int]

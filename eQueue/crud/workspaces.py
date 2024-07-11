@@ -5,7 +5,8 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from core.models import User, Workspace, Group, WorkspaceSubject
+from core.models import User, Workspace, Group
+from core.schemas.subjects import WorkspaceSubjectRead
 from core.schemas.workspace import WorkspaceJoin, WorkspaceCreate, WorkspaceUpdate
 from crud.groups import get_group
 from crud.users import get_user_by_id
@@ -80,6 +81,41 @@ async def get_workspace_with_assignees(
     )
     result = await session.scalars(stmt)
     return result.first()
+
+
+# noinspection PyTypeChecker
+async def get_workspace_subject_ids_and_names(
+    session: AsyncSession,
+    workspace_id: int,
+) -> tuple[list[str], list[int | None]]:
+    stmt = (
+        select(Workspace)
+        .options(selectinload(Workspace.subjects))
+        .where(Workspace.id == workspace_id)
+    )
+    result = await session.scalars(stmt)
+    workspace = result.first()
+    return (
+        [subj.name for subj in workspace.subjects],
+        [subj.ecourses_id for subj in workspace.subjects],
+    )
+
+
+# noinspection PyTypeChecker
+async def get_workspace_subjects_casted(
+    session: AsyncSession,
+    workspace_id: int,
+) -> list[WorkspaceSubjectRead]:
+    stmt = (
+        select(Workspace)
+        .options(selectinload(Workspace.subjects))
+        .where(Workspace.id == workspace_id)
+    )
+    result = await session.scalars(stmt)
+    workspace = result.first()
+    return [
+        WorkspaceSubjectRead.model_validate(subj.dict()) for subj in workspace.subjects
+    ]
 
 
 async def create_workspace(
@@ -323,18 +359,3 @@ async def raise_user(
             status_code=403,
             detail="Вы уже являетесь руководителем рабочего пространства",
         )
-
-
-# noinspection PyTypeChecker
-async def get_workspace_subject_ids(
-    session: AsyncSession,
-    workspace_id: int,
-) -> list[int | None]:
-    stmt = (
-        select(Workspace)
-        .options(selectinload(Workspace.subjects))
-        .where(Workspace.id == workspace_id)
-    )
-    result = await session.scalars(stmt)
-    workspace = result.first()
-    return [subj.ecourses_id for subj in workspace.subjects]
