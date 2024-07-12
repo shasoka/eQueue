@@ -27,3 +27,13 @@ class WorkspaceSubjectCreate(BaseModel):
     professor: str | None = None
     professor_contact: str | None = None
     requirements: str | None = None
+
+
+class WorkspaceSubjectUpdate(BaseModel):
+    id: int
+    workspace_id: int
+    professor: str | None = None
+    professor_contact: str | None = None
+    requirements: str | None = None
+    ecourses_link: str | None = None
+    name: str | None = None

@@ -25,7 +25,9 @@ class APIv1Prefix(BaseModel):
     ecourses_enrolled: str = "/enrolled"
     gen_subject_assignments: str = "/assignments/generate"
     add_subject_assignments: str = "/assignments"
+    update_subject_assignments: str = "/assignments"
     mark_assignment: str = "/assignments/mark"
+    delete_subject_assignment: str = "/assignments/{assignment_id}"
 
 
 class APIPrefix(BaseModel):

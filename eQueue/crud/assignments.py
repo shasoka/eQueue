@@ -16,6 +16,7 @@ from core.schemas.user_submissions import UserSubmissionUpdate
 from crud.workspaces import (
     get_workspace_subjects_casted,
     get_workspace_subject_ids_and_names,
+    get_workspace_with_assignees,
 )
 from moodle.courses import get_subject_assignments
 
@@ -133,8 +134,7 @@ async def add_assignment(
                 await session.flush()
                 await update_submission_total_works(
                     session=session,
-                    user_id=user.id,
-                    workspace_id=user.assigned_workspace_id,
+                    group_id=user.assigned_group_id,
                     subject_id=assignment.subject_id,
                 )
                 if commit:
@@ -158,7 +158,7 @@ async def add_assignment(
         )
 
 
-async def update_assignment(
+async def partial_update_assignment(
     session: AsyncSession,
     assignment_in: SubjectAssignmentUpdate,
     user: User,
@@ -170,11 +170,17 @@ async def update_assignment(
         ):
             if assignment.workspace_id == user.assigned_workspace_id:
                 assignment_in = assignment_in.model_dump(exclude_unset=True)
-                for key, value in assignment_in:
+                for key, value in assignment_in.items():
                     setattr(assignment, key, value)
-                await session.commit()
-                await session.refresh(assignment)
-                return assignment
+                try:
+                    await session.commit()
+                    await session.refresh(assignment)
+                    return assignment
+                except IntegrityError:
+                    raise HTTPException(
+                        status_code=409,
+                        detail=f"Задание {assignment_in["name"]} уже есть в рабочем пространстве",
+                    )
             else:
                 raise HTTPException(
                     status_code=403,
@@ -184,6 +190,49 @@ async def update_assignment(
             raise HTTPException(
                 status_code=404,
                 detail=f"Задание с id={assignment_in.id} не найдено",
+            )
+    else:
+        raise HTTPException(
+            status_code=403,
+            detail="Вы не являетесь администратором рабочего пространства",
+        )
+
+
+async def delete_workspace_subject_assignment(
+    session: AsyncSession,
+    user: User,
+    assignment_id: int,
+) -> SubjectAssignment:
+    if user.workspace_chief:
+        if assignment := await get_assignment_by_id(
+            session=session,
+            assignment_id=assignment_id,
+        ):
+            if assignment.workspace_id == user.assigned_workspace_id:
+                await update_submission_total_works(
+                    session=session,
+                    group_id=user.assigned_group_id,
+                    subject_id=assignment.subject_id,
+                    increment=-1,
+                )
+                await clear_submitted_works_on_assign_delete(
+                    session=session,
+                    subject_id=assignment.subject_id,
+                    group_id=user.assigned_group_id,
+                    assignment_id=assignment_id,
+                )
+                await session.delete(assignment)
+                await session.commit()
+                return assignment
+            else:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Вы не можете удалять задание в другом рабочем пространстве",
+                )
+        else:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Задание с id={assignment_id} не найдено",
             )
     else:
         raise HTTPException(
@@ -211,47 +260,85 @@ async def get_submission(
 
 async def add_submission(
     session: AsyncSession,
-    user_id: int,
-    workspace_id: int,
     subject_id: int,
-) -> UserSubmission | None:
-    new_submission = UserSubmission(
-        user_id=user_id,
-        workspace_id=workspace_id,
-        subject_id=subject_id,
+    group_id: int,
+) -> None:
+    workspace = await get_workspace_with_assignees(
+        session=session,
+        group_id=group_id,
     )
-    try:
-        session.add(new_submission)
-        # No commit because session will be commited in function which calls this function
-        return new_submission
-    except IntegrityError:
-        raise HTTPException(
-            status_code=409,
-            detail="Нарушено ограничение уникальносьти. Такой submission уже добавлен",
+    for assignee in workspace.users:
+        new_submission = UserSubmission(
+            user_id=assignee.id,
+            workspace_id=assignee.assigned_workspace_id,
+            subject_id=subject_id,
         )
+        try:
+            session.add(new_submission)
+            # No commit because session will be commited in function which calls this function
+        except IntegrityError:
+            raise HTTPException(
+                status_code=409,
+                detail="Нарушено ограничение уникальносьти. Такой submission уже добавлен",
+            )
+
+
+async def clear_submitted_works_on_assign_delete(
+    session: AsyncSession,
+    subject_id: int,
+    group_id: int,
+    assignment_id: int,
+) -> None:
+    workspace = await get_workspace_with_assignees(
+        session=session,
+        group_id=group_id,
+    )
+    for assignee in workspace.users:
+        if submission := await get_submission(
+            session=session,
+            user_id=assignee.id,
+            workspace_id=assignee.assigned_workspace_id,
+            subject_id=subject_id,
+        ):
+            submission.submitted_works = func.array_remove(
+                submission.submitted_works,
+                assignment_id,
+            )
+            await session.flush()
+            # No commit because session will be commited in function which calls this function
+        else:
+            raise HTTPException(
+                status_code=404,
+                detail="Предмета нет в рабочем пространстве",
+            )
 
 
 # noinspection PyTypeChecker
 async def update_submission_total_works(
     session: AsyncSession,
-    user_id: int,
-    workspace_id: int,
     subject_id: int,
-) -> UserSubmission | None:
-    if submission := await get_submission(
+    group_id: int,
+    increment: int = 1,
+) -> None:
+    workspace = await get_workspace_with_assignees(
         session=session,
-        user_id=user_id,
-        workspace_id=workspace_id,
-        subject_id=subject_id,
-    ):
-        submission.total_required_works += 1
-        # No commit because session will be commited in function which calls this function
-        return submission
-    else:
-        raise HTTPException(
-            status_code=404,
-            detail="Предмета нет в рабочем пространстве",
-        )
+        group_id=group_id,
+    )
+    for assignee in workspace.users:
+        if submission := await get_submission(
+            session=session,
+            user_id=assignee.id,
+            workspace_id=assignee.assigned_workspace_id,
+            subject_id=subject_id,
+        ):
+            submission.total_required_works += increment
+            await session.flush()
+            # No commit because session will be commited in function which calls this function
+        else:
+            raise HTTPException(
+                status_code=404,
+                detail="Предмета нет в рабочем пространстве",
+            )
 
 
 # noinspection PyTypeChecker

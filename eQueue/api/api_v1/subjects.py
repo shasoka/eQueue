@@ -10,15 +10,26 @@ from core.models import db_helper, User
 from core.schemas.subject_assignments import (
     SubjectAssignmentRead,
     SubjectAssignmentCreate,
+    SubjectAssignmentUpdate,
 )
-from core.schemas.subjects import WorkspaceSubjectCreate, WorkspaceSubjectRead
+from core.schemas.subjects import (
+    WorkspaceSubjectCreate,
+    WorkspaceSubjectRead,
+    WorkspaceSubjectUpdate,
+)
 from core.schemas.user_submissions import UserSubmissionRead, UserSubmissionUpdate
 from crud.assignments import (
     generate_subject_assignment,
     add_assignment,
     update_submission_submitted_works,
+    partial_update_assignment,
+    delete_workspace_subject_assignment,
 )
-from crud.subjects import create_workspace_subject
+from crud.subjects import (
+    create_workspace_subject,
+    partial_update_workspace_subject,
+    delete_workspace_subject,
+)
 from moodle.auth import get_current_user
 from moodle.courses import user_enrolled_courses
 
@@ -68,6 +79,22 @@ async def add_subjects(
     return resposne
 
 
+@router.patch(
+    "",
+    response_model=WorkspaceSubjectRead,
+)
+async def update_subject(
+    subject_in: WorkspaceSubjectUpdate,
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    return await partial_update_workspace_subject(
+        session=session,
+        user=current_user,
+        subject_in=subject_in,
+    )
+
+
 @router.post(
     settings.api.v1.gen_subject_assignments,
     response_model=list[SubjectAssignmentRead],
@@ -115,7 +142,23 @@ async def add_assignment_manually(
     )
 
 
-@router.post(
+@router.patch(
+    settings.api.v1.update_subject_assignments,
+    response_model=SubjectAssignmentRead,
+)
+async def update_assignment(
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+    current_user: Annotated[User, Depends(get_current_user)],
+    assignment_in: SubjectAssignmentUpdate,
+):
+    return await partial_update_assignment(
+        session=session,
+        assignment_in=assignment_in,
+        user=current_user,
+    )
+
+
+@router.patch(
     settings.api.v1.mark_assignment,
     response_model=UserSubmissionRead,
 )
@@ -131,6 +174,33 @@ async def update_user_submitted_works(
     )
 
 
-# TODO: сделать добавлений ассайнов
-# TODO: сделать добавление субмиссий
-# TODO: при добавлении юзера в воркспейс создавать субмиссии
+@router.delete(
+    settings.api.v1.delete_subject_assignment,
+    response_model=SubjectAssignmentRead,
+)
+async def delete_assignment(
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+    current_user: Annotated[User, Depends(get_current_user)],
+    assignment_id: int,
+):
+    return await delete_workspace_subject_assignment(
+        session=session,
+        user=current_user,
+        assignment_id=assignment_id,
+    )
+
+
+@router.delete(
+    "/{subject_id}",
+    response_model=WorkspaceSubjectRead,
+)
+async def delete_subject(
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+    current_user: Annotated[User, Depends(get_current_user)],
+    subject_id: int,
+):
+    return await delete_workspace_subject(
+        session=session,
+        user=current_user,
+        subject_id=subject_id,
+    )

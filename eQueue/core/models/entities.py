@@ -88,7 +88,6 @@ class Workspace(Base):
     group_id: Mapped[int] = mapped_column(
         ForeignKey("groups.id"),
         nullable=False,
-        unique=True,
     )
     semester: Mapped[int] = mapped_column(
         default=1,
@@ -100,7 +99,6 @@ class Workspace(Base):
     name: Mapped[str] = mapped_column(
         String(35),
         nullable=True,
-        unique=True,
     )
 
     pending_users: Mapped[list[int]] = mapped_column(
@@ -129,6 +127,14 @@ class Workspace(Base):
     assignments: Mapped[list["SubjectAssignment"]] = relationship(
         "SubjectAssignment",
         cascade="all, delete-orphan",
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "group_id",
+            "name",
+            name="uq_workspace_gid_name",
+        ),
     )
 
 
@@ -179,6 +185,7 @@ class WorkspaceSubject(Base):
     submissions: Mapped[list["UserSubmission"]] = relationship(
         "UserSubmission",
         back_populates="subject",
+        cascade="all, delete-orphan",
     )
     assignments: Mapped[list["SubjectAssignment"]] = relationship(
         "SubjectAssignment",
@@ -195,7 +202,6 @@ class SubjectAssignment(Base):
         ForeignKey("workspace_subjects.id"),
         nullable=False,
     )
-    # TODO: unique constraint for workspace for many instances
     name: Mapped[str] = mapped_column(
         String(255),
         nullable=False,

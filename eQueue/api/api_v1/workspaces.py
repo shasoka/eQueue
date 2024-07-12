@@ -34,7 +34,7 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=WorkspaceRead)
+@router.get("", response_model=list[WorkspaceRead])
 async def get_exisiting_workspace(
     session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
     current_user: Annotated[User, Depends(get_current_user)],
