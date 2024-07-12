@@ -216,22 +216,43 @@ class SubjectAssignment(Base):
 
 
 class UserSubmission(Base):
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id"),
+        nullable=False,
+    )
     workspace_id: Mapped[int] = mapped_column(
         ForeignKey("workspaces.id"), nullable=False
     )
     subject_id: Mapped[int] = mapped_column(
-        ForeignKey("workspace_subjects.id"), nullable=False
+        ForeignKey("workspace_subjects.id"),
+        nullable=False,
     )
-    submitted_works: Mapped[int] = mapped_column(default=0, server_default=text("0"))
+    submitted_works: Mapped[list[int]] = mapped_column(
+        ARRAY(Integer),
+        default=[],
+        server_default=text("ARRAY[]::integer[]"),
+    )
     total_required_works: Mapped[int] = mapped_column(
         default=0, server_default=text("0")
     )
 
-    user: Mapped["User"] = relationship("User", back_populates="submissions")
+    user: Mapped["User"] = relationship(
+        "User",
+        back_populates="submissions",
+    )
     workspace: Mapped["Workspace"] = relationship(
         "Workspace", back_populates="submissions"
     )
     subject: Mapped["WorkspaceSubject"] = relationship(
-        "WorkspaceSubject", back_populates="submissions"
+        "WorkspaceSubject",
+        back_populates="submissions",
+    )
+
+    __table_args__ = (
+        UniqueConstraint(
+            "user_id",
+            "workspace_id",
+            "subject_id",
+            name="uq_user_submissons_uid_wid_sid",
+        ),
     )

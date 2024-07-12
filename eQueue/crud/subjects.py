@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import WorkspaceSubject, User
 from core.schemas.subjects import WorkspaceSubjectCreate
+from crud.assignments import add_submission
 from crud.workspaces import get_workspace_subject_ids_and_names
 from moodle.courses import check_course_availability
 
@@ -32,6 +33,13 @@ async def create_workspace_subject(
         if (subject_in.ecourses_id not in ids) and (subject_in.name not in names):
             subject = WorkspaceSubject(**subject_in.model_dump())
             session.add(subject)
+            await session.flush()
+            await add_submission(
+                session=session,
+                user_id=user.id,
+                workspace_id=user.assigned_workspace_id,
+                subject_id=subject.id,
+            )
             await session.commit()
             await session.refresh(subject)
             return subject

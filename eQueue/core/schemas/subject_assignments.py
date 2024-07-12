@@ -16,3 +16,9 @@ class SubjectAssignmentRead(SubjectAssignmentBase):
 
 class SubjectAssignmentCreate(SubjectAssignmentBase):
     url: str | None = None
+
+
+class SubjectAssignmentUpdate(BaseModel):
+    id: int
+    name: str | None = None
+    url: str | None = None

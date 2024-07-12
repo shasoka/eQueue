@@ -87,6 +87,7 @@ async def get_workspace_with_assignees(
 async def get_workspace_subject_ids_and_names(
     session: AsyncSession,
     workspace_id: int,
+    ecourse_id: bool = True,
 ) -> tuple[list[str], list[int | None]]:
     stmt = (
         select(Workspace)
@@ -95,10 +96,19 @@ async def get_workspace_subject_ids_and_names(
     )
     result = await session.scalars(stmt)
     workspace = result.first()
-    return (
-        [subj.name for subj in workspace.subjects],
-        [subj.ecourses_id for subj in workspace.subjects],
-    )
+    if workspace:
+        if ecourse_id:
+            return (
+                [subj.name for subj in workspace.subjects],
+                [subj.ecourses_id for subj in workspace.subjects],
+            )
+        else:
+            return (
+                [subj.name for subj in workspace.subjects],
+                [subj.id for subj in workspace.subjects],
+            )
+    else:
+        return [], []
 
 
 # noinspection PyTypeChecker

@@ -9,13 +9,17 @@ from core.config import settings
 from core.models import db_helper, User
 from core.schemas.subject_assignments import (
     SubjectAssignmentRead,
+    SubjectAssignmentCreate,
 )
 from core.schemas.subjects import WorkspaceSubjectCreate, WorkspaceSubjectRead
-from crud.assignments import generate_subject_assignment
-from crud.subjects import create_workspace_subject
-from moodle.auth import (
-    get_current_user,
+from core.schemas.user_submissions import UserSubmissionRead, UserSubmissionUpdate
+from crud.assignments import (
+    generate_subject_assignment,
+    add_assignment,
+    update_submission_submitted_works,
 )
+from crud.subjects import create_workspace_subject
+from moodle.auth import get_current_user
 from moodle.courses import user_enrolled_courses
 
 router = APIRouter(
@@ -88,6 +92,43 @@ async def generate_assignments_from_ecourses(
             )
         )
     return resposne
+
+
+@router.post(
+    settings.api.v1.add_subject_assignments,
+    response_model=SubjectAssignmentRead,
+)
+async def add_assignment_manually(
+    assignnment_in: SubjectAssignmentCreate,
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    if not current_user.workspace_chief:
+        raise HTTPException(
+            status_code=403,
+            detail="Вы не можете добавлять предметы, т.к. вы не являетесь руководителем рабочего пространства",
+        )
+    return await add_assignment(
+        session=session,
+        user=current_user,
+        assignment_in=assignnment_in,
+    )
+
+
+@router.post(
+    settings.api.v1.mark_assignment,
+    response_model=UserSubmissionRead,
+)
+async def update_user_submitted_works(
+    submission_in: UserSubmissionUpdate,
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    return await update_submission_submitted_works(
+        session=session,
+        user=current_user,
+        submission_in=submission_in,
+    )
 
 
 # TODO: сделать добавлений ассайнов

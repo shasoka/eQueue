@@ -63,6 +63,16 @@ async def user_enrolled_courses(
     return casted_courses
 
 
+async def _name_in_assignments(
+    assignments: list[SubjectAssignmentCreate],
+    name: str,
+) -> bool:
+    for assignment in assignments:
+        if assignment.name == name:
+            return True
+    return False
+
+
 async def _from_course_structure(
     token: str,
     ecourses_id: int,
@@ -83,6 +93,11 @@ async def _from_course_structure(
     for structure_node in response.json():
         for module in structure_node["modules"]:
             if module["modname"] == "assign":
+                if await _name_in_assignments(
+                    result,
+                    module["name"],
+                ):
+                    module["name"] += f" ({structure_node["name"]})"
                 result.append(
                     SubjectAssignmentCreate.model_validate(
                         {
