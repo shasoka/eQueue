@@ -2,10 +2,11 @@
 
 from pydantic import BaseModel
 
-from core.schemas.groups import GroupRead
+from core.schemas.users import UserRead
 
 
 class WorkspaceBase(BaseModel):
+    group_id: int
     name: str | None
     semester: int | None
     about: str | None
@@ -14,7 +15,7 @@ class WorkspaceBase(BaseModel):
 
 class WorkspaceRead(WorkspaceBase):
     id: int
-    group: GroupRead
+    users: list[UserRead]
 
 
 class WorkspaceReadNoSelectInLoad(WorkspaceBase):

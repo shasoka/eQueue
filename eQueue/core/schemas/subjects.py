@@ -2,6 +2,8 @@
 
 from pydantic import BaseModel
 
+from core.schemas.subject_assignments import SubjectAssignmentRead
+
 
 class WorkspaceSubjectBase(BaseModel):
     workspace_id: int
@@ -17,6 +19,10 @@ class WorkspaceSubjectBase(BaseModel):
 
 class WorkspaceSubjectRead(WorkspaceSubjectBase):
     id: int
+
+
+class WorkspaceSubjectWithAssignmentsRead(WorkspaceSubjectRead):
+    assignments: list[SubjectAssignmentRead]
 
 
 class WorkspaceSubjectCreate(BaseModel):

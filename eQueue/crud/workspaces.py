@@ -36,11 +36,11 @@ async def get_available_workspace(
         if not user.workspace_chief:
             stmt = (
                 select(Workspace)
-                .options(selectinload(Workspace.group).selectinload(Group.users))
+                .options(selectinload(Workspace.users))
                 .where(Workspace.group_id == user.assigned_group_id)
             )
             result = await session.scalars(stmt)
-            return list(result.all())
+            return result.all()
     return None
 
 

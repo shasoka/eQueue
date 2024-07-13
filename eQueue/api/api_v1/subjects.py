@@ -16,6 +16,7 @@ from core.schemas.subjects import (
     WorkspaceSubjectCreate,
     WorkspaceSubjectRead,
     WorkspaceSubjectUpdate,
+    WorkspaceSubjectWithAssignmentsRead,
 )
 from core.schemas.user_submissions import UserSubmissionRead, UserSubmissionUpdate
 from crud.assignments import (
@@ -24,11 +25,13 @@ from crud.assignments import (
     update_submission_submitted_works,
     partial_update_assignment,
     delete_workspace_subject_assignment,
+    get_all_user_submissions,
 )
 from crud.subjects import (
     create_workspace_subject,
     partial_update_workspace_subject,
     delete_workspace_subject,
+    get_all_workspace_subjects,
 )
 from moodle.auth import get_current_user
 from moodle.courses import user_enrolled_courses
@@ -50,6 +53,34 @@ async def get_courses_from_moodle(
         token=current_user.access_token,
         user=current_user,
         session=session,
+    )
+
+
+@router.get(
+    "",
+    response_model=list[WorkspaceSubjectWithAssignmentsRead],
+)
+async def get_subjects_in_workspace(
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    return await get_all_workspace_subjects(
+        session=session,
+        user=current_user,
+    )
+
+
+@router.get(
+    settings.api.v1.get_user_submissions,
+    response_model=list[UserSubmissionRead],
+)
+async def get_user_submissions(
+    current_user: Annotated[User, Depends(get_current_user)],
+    session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+):
+    return await get_all_user_submissions(
+        session=session,
+        user=current_user,
     )
 
 

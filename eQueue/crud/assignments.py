@@ -242,6 +242,20 @@ async def delete_workspace_subject_assignment(
 
 
 # noinspection PyTypeChecker
+async def get_all_user_submissions(
+    session: AsyncSession,
+    user: User,
+) -> list[UserSubmission]:
+    stmt = (
+        select(UserSubmission)
+        .where(UserSubmission.user_id == user.id)
+        .where(UserSubmission.workspace_id == user.assigned_workspace_id)
+    )
+    result = await session.scalars(stmt)
+    return result.all()
+
+
+# noinspection PyTypeChecker
 async def get_submission(
     session: AsyncSession,
     user_id: int,

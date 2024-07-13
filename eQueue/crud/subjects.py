@@ -16,6 +16,26 @@ from moodle.courses import check_course_availability
 
 
 # noinspection PyTypeChecker
+async def get_all_workspace_subjects(
+    session: AsyncSession,
+    user: User,
+) -> list[WorkspaceSubject] | None:
+    if user.assigned_workspace_id:
+        stmt = (
+            select(WorkspaceSubject)
+            .where(WorkspaceSubject.workspace_id == user.assigned_workspace_id)
+            .options(selectinload(WorkspaceSubject.assignments))
+        )
+        result = await session.scalars(stmt)
+        return result.all()
+    else:
+        raise HTTPException(
+            status_code=428,
+            detail="Сперва прикрепитесь к рабочему пространству",
+        )
+
+
+# noinspection PyTypeChecker
 async def get_workspace_subject_by_id(
     session: AsyncSession,
     subject_id: int,
@@ -37,18 +57,6 @@ async def get_workspace_subject_with_assignments_by_id(
     )
     result = await session.scalars(stmt)
     return result.first()
-
-
-# noinspection PyTypeChecker
-async def get_workspace_subject_names_by_id(
-    session: AsyncSession,
-) -> WorkspaceSubject | None:
-    stmt = select(WorkspaceSubject)
-    result = await session.scalars(stmt)
-    subjects = result.all()
-    if subjects:
-        return [subject.name for subject in subjects]
-    return None
 
 
 async def create_workspace_subject(

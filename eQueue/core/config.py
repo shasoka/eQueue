@@ -25,6 +25,7 @@ class APIv1Prefix(BaseModel):
     leave_workspace: str = "/leave/{user_id}"
     raise_user: str = "/raise/{user_id}"
     ecourses_enrolled: str = "/enrolled"
+    get_user_submissions: str = "/submissions"
     gen_subject_assignments: str = "/assignments/generate"
     add_subject_assignments: str = "/assignments"
     update_subject_assignments: str = "/assignments"
