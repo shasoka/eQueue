@@ -18,31 +18,37 @@ async def get_subject_queue(
     user: User,
     subject_id: int,
 ) -> list[dict] | None:
-    if subject := await get_workspace_subject_by_id(
-        session,
-        subject_id,
-    ):
-        if subject.workspace_id == user.assigned_workspace_id:
-            result = []
-            for user_id in subject.queue:
-                cur_user = await get_user_by_id(session, user_id)
-                if cur_user:
-                    result.append(cur_user.dict(cast=True))
-                else:
-                    raise HTTPException(
-                        status_code=404,
-                        detail=f"Пользователя id={user_id} нет в очереди",
-                    )
-            return result
+    if user.assigned_workspace_id:
+        if subject := await get_workspace_subject_by_id(
+            session,
+            subject_id,
+        ):
+            if subject.workspace_id == user.assigned_workspace_id:
+                result = []
+                for user_id in subject.queue:
+                    cur_user = await get_user_by_id(session, user_id)
+                    if cur_user:
+                        result.append(cur_user.dict(cast=True))
+                    else:
+                        raise HTTPException(
+                            status_code=404,
+                            detail=f"Пользователя id={user_id} нет в очереди",
+                        )
+                return result
+            else:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Вы не можете просматривать очередь в другом рабочем пространстве",
+                )
         else:
             raise HTTPException(
-                status_code=403,
-                detail="Вы не можете просматривать очередь в другом рабочем пространстве",
+                status_code=404,
+                detail=f"Предмет id={subject_id} не добавлен в рабочее пространство",
             )
     else:
         raise HTTPException(
-            status_code=404,
-            detail=f"Предмет id={subject_id} не добавлен в рабочее пространство",
+            status_code=428,
+            detail="Сперва прикрепитесь к рабочему пространству",
         )
 
 
@@ -108,10 +114,12 @@ async def leave_subject_queue(
                         subject_id=subject_id,
                     ):
                         done = submission.submitted_works
-                        next_mark = list(set(works) ^ set(done))[0]
-                        submission.submitted_works = func.array_append(
-                            submission.submitted_works, next_mark
-                        )
+                        available_marks = list(set(works) ^ set(done))
+                        if available_marks:
+                            next_mark = available_marks[0]
+                            submission.submitted_works = func.array_append(
+                                submission.submitted_works, next_mark
+                            )
                     else:
                         raise HTTPException(
                             status_code=404,

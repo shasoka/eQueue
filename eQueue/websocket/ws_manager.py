@@ -20,7 +20,7 @@ class ConnectionManager:
             del self.active_connections[subject_id]
 
     @staticmethod
-    async def send_personal_message(message: str, websocket: WebSocket):
+    async def send_personal_message(message: str | dict, websocket: WebSocket):
         await websocket.send_text(
             json.dumps(
                 message,
