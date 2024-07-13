@@ -10,3 +10,6 @@ router = APIRouter(
 )
 
 router.include_router(v1_router)
+
+
+__all__ = "router"

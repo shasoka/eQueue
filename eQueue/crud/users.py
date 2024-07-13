@@ -1,9 +1,9 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-
+from fastapi import HTTPException
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models import User
+from core.models import User, Group
 from core.schemas.users import UserCreate, UserUpdate
 
 
@@ -34,8 +34,19 @@ async def create_new_user(session: AsyncSession, user_in: UserCreate) -> User:
     return user
 
 
-async def update_user(session: AsyncSession, user: User, user_upd: UserUpdate) -> User:
-    for key, value in user_upd.model_dump(exclude_unset=True).items():
+async def update_user(
+    session: AsyncSession,
+    user: User,
+    user_upd: UserUpdate,
+) -> User:
+    user_upd = user_upd.model_dump(exclude_unset=True)
+    if "assigned_group_id" in user_upd:
+        if await session.get(Group, user_upd["assigned_group_id"]) is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Группа id={user_upd['assigned_group_id']} не существует",
+            )
+    for key, value in user_upd.items():
         setattr(user, key, value)
     await session.commit()
     return user

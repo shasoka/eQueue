@@ -3,14 +3,17 @@
 from contextlib import asynccontextmanager
 
 import uvicorn
-
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
+from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import HTMLResponse
 
 from api import router as api_router
 from core.config import settings
 from core.models import db_helper
+
+templates = Jinja2Templates(directory="templates")
 
 
 @asynccontextmanager
@@ -28,10 +31,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.include_router(
-    api_router,
-)
-
 # For debugger
 # noinspection PyTypeChecker
 app.add_middleware(
@@ -41,6 +40,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(
+    api_router,
+)
+
+
+@app.get("/", tags=["Test template for queue"])
+async def get(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="queue_test.html",
+    )
+
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host=settings.run.host, port=settings.run.port, reload=True)

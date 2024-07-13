@@ -1,13 +1,15 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from core.models import WorkspaceSubject, User
 from core.schemas.subjects import WorkspaceSubjectCreate, WorkspaceSubjectUpdate
 from crud.assignments import add_submission
+from crud.users import get_user_by_id
 from crud.workspaces import (
     get_workspace_subject_ids_and_names,
 )
@@ -20,6 +22,20 @@ async def get_workspace_subject_by_id(
     subject_id: int,
 ) -> WorkspaceSubject | None:
     stmt = select(WorkspaceSubject).where(WorkspaceSubject.id == subject_id)
+    result = await session.scalars(stmt)
+    return result.first()
+
+
+# noinspection PyTypeChecker
+async def get_workspace_subject_with_assignments_by_id(
+    session: AsyncSession,
+    subject_id: int,
+) -> WorkspaceSubject | None:
+    stmt = (
+        select(WorkspaceSubject)
+        .where(WorkspaceSubject.id == subject_id)
+        .options(selectinload(WorkspaceSubject.assignments))
+    )
     result = await session.scalars(stmt)
     return result.first()
 

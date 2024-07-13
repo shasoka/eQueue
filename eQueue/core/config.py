@@ -15,6 +15,7 @@ class APIv1Prefix(BaseModel):
     users_prefix: str = "/users"
     workspaces_prefix: str = "/workspaces"
     subjects_prefix: str = "/subjects"
+    queue_prefix: str = "/queue"
 
     moodle_auth: str = "/moodle_auth"
     token_persistence: str = "/token_persistence"
@@ -28,6 +29,10 @@ class APIv1Prefix(BaseModel):
     update_subject_assignments: str = "/assignments"
     mark_assignment: str = "/assignments/mark"
     delete_subject_assignment: str = "/assignments/{assignment_id}"
+    get_current_queue_state: str = "/{subject_id}"
+    patch_queue_enter: str = "/enter/{subject_id}"
+    patch_queue_leave: str = "/leave/{subject_id}"
+    patch_queue_leave_and_mark: str = "/leave/mark/{subject_id}"
 
 
 class APIPrefix(BaseModel):

@@ -32,14 +32,8 @@ class UserCreate(UserBase, MoodleTokenMixin):
     pass
 
 
-class UserUpdate(UserBase, MoodleTokenMixin):
+class UserUpdate(BaseModel):
     access_token: str | None = None
-    ecourses_user_id: int | None = None
     assigned_group_id: int | None = None
-    assigned_workspace_id: int | None = None
-    workspace_chief: bool = False
-    first_name: str | None = None
-    second_name: str | None = None
     status: str | None = None
-    talon: str | None = None
     user_picture_url: str | None = None

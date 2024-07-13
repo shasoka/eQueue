@@ -23,7 +23,13 @@ class Base(AsyncAttrs, DeclarativeBase):
     # Annotations
     type_annotation_map = {list[int]: ARRAY(Integer)}
 
-    def dict(self):
-        return {
-            c.name: getattr(self, c.name) for c in self.__table__.columns.__iter__()
-        }
+    def dict(self, cast=False):
+        if not cast:
+            return {
+                c.name: getattr(self, c.name) for c in self.__table__.columns.__iter__()
+            }
+        else:
+            return {
+                c.name: str(getattr(self, c.name))
+                for c in self.__table__.columns.__iter__()
+            }
