@@ -13,9 +13,10 @@ class RunConfig(BaseModel):
 class APIv1Prefix(BaseModel):
     prefix: str = "/v1"
     users_prefix: str = "/users"
+    groups_prefix: str = "/groups"
     workspaces_prefix: str = "/workspaces"
     subjects_prefix: str = "/subjects"
-    queue_prefix: str = "/queue"
+    websocket_prefix: str = "/queue_ws"
 
     moodle_auth: str = "/moodle_auth"
     token_persistence: str = "/token_persistence"
@@ -50,6 +51,9 @@ class MoodleAPI(BaseModel):
     )
     timetable_url: str = "https://edu.sfu-kras.ru/api/timetable/get_insts"
     ecourses_base_url: str = "https://e.sfu-kras.ru/webservice/rest/server.php"
+    get_user_info_url: str = (
+        f"{ecourses_base_url}?wstoken=%s&wsfunction=core_webservice_get_site_info&moodlewsrestformat=json"
+    )
     upload_new_image_url: str = (
         "https://e.sfu-kras.ru/webservice/upload.php" "?token=%s" "&filearea=draft"
     )

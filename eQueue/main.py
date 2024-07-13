@@ -7,7 +7,6 @@ from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
 from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import HTMLResponse
 
 from api import router as api_router
 from core.config import settings

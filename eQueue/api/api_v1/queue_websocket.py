@@ -11,7 +11,7 @@ from crud.queues import get_subject_queue, enter_subject_queue, leave_subject_qu
 from moodle.auth.oauth2 import MoodleOAuth2
 from websocket import manager
 
-router = APIRouter(tags=["Websocket"], prefix="/queue_ws")
+router = APIRouter(tags=["Websocket"])
 
 
 @router.websocket("/{subject_id}", name="Endpoint for queue websocket")

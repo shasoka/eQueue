@@ -1,7 +1,7 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
 
 from fastapi import HTTPException
-from sqlalchemy import select, func
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -9,7 +9,6 @@ from sqlalchemy.orm import selectinload
 from core.models import WorkspaceSubject, User
 from core.schemas.subjects import WorkspaceSubjectCreate, WorkspaceSubjectUpdate
 from crud.assignments import add_submission
-from crud.users import get_user_by_id
 from crud.workspaces import (
     get_workspace_subject_ids_and_names,
 )

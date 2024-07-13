@@ -1,8 +1,7 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
-from typing import Any, Sequence
 
 from fastapi import HTTPException
-from sqlalchemy import select, func, delete, Row, RowMapping
+from sqlalchemy import select, func, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
