@@ -59,7 +59,7 @@ async def login_user(
     return user
 
 
-@router.head(settings.api.v1.token_persistence)
+@router.head(settings.api.v1.token_persistence_head)
 async def check_token_persistence(
     current_user: Annotated[User, Depends(get_current_user)]
 ):

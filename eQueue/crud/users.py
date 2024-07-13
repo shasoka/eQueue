@@ -51,8 +51,3 @@ async def update_user(
         setattr(user, key, value)
     await session.commit()
     return user
-
-
-async def delete_user(session: AsyncSession, user: User) -> None:
-    await session.delete(user)
-    await session.commit()

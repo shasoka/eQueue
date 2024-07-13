@@ -100,7 +100,7 @@ async def join_workspace(
     )
 
 
-@router.patch(settings.api.v1.raise_user, response_model=UserRead)
+@router.patch(settings.api.v1.raise_up_user, response_model=UserRead)
 async def make_user_workspace_chief(
     session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
     user_id: int,

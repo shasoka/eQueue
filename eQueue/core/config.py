@@ -19,11 +19,11 @@ class APIv1Prefix(BaseModel):
     websocket_prefix: str = "/queue_ws"
 
     moodle_auth: str = "/moodle_auth"
-    token_persistence: str = "/token_persistence"
+    token_persistence_head: str = "/token_persistence"
     join_workspace: str = "/join"
     accept_pending: str = "/accept/{user_id}"
     leave_workspace: str = "/leave/{user_id}"
-    raise_user: str = "/raise/{user_id}"
+    raise_up_user: str = "/raise/{user_id}"
     ecourses_enrolled: str = "/enrolled"
     get_user_submissions: str = "/submissions"
     gen_subject_assignments: str = "/assignments/generate"

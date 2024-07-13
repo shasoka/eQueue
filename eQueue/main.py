@@ -30,7 +30,6 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# For debugger
 # noinspection PyTypeChecker
 app.add_middleware(
     CORSMiddleware,

@@ -8,7 +8,7 @@ from starlette.websockets import WebSocket, WebSocketDisconnect
 
 from core.models import db_helper
 from crud.queues import get_subject_queue, enter_subject_queue, leave_subject_queue
-from moodle.auth.oauth2 import MoodleOAuth2
+from moodle.auth import MoodleOAuth2
 from websocket import manager
 
 router = APIRouter(tags=["Websocket"])
