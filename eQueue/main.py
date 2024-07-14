@@ -45,7 +45,7 @@ app.include_router(
 
 
 @app.get("/", tags=["Test template for queue"])
-async def get(request: Request):
+def get(request: Request):
     return templates.TemplateResponse(
         request=request,
         name="queue_test.html",
