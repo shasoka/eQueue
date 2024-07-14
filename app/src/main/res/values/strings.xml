@@ -1,3 +1,7 @@
+<!--
+  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+  -->
+
 <resources>
     <string name="app_name">eQueue</string>
 </resources>

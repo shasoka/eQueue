@@ -1,6 +1,19 @@
+/*
+ Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ */
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+}
+
+ktlint {
+    version.set("0.48.0")
+    android.set(true) // если вы разрабатываете под Android
+    outputToConsole.set(true)
+    coloredOutput.set(true)
+    enableExperimentalRules.set(true)
 }
 
 android {
@@ -25,7 +38,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }

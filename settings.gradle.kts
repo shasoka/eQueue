@@ -1,3 +1,7 @@
+/*
+ Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ */
+
 @file:Suppress("UnstableApiUsage")
 
 pluginManagement {
