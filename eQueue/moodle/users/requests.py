@@ -2,6 +2,7 @@
 
 import requests
 
+from moodle.proxies import proxies
 from core.config import settings
 from utils import validate
 
@@ -10,7 +11,11 @@ async def patch_profile_picture(
     token: str,
     files: dict,
 ) -> str:
-    response = requests.post(settings.moodle.upload_new_image_url % token, files=files)
+    response = requests.post(
+        settings.moodle.upload_new_image_url % token,
+        files=files,
+        proxies=proxies,
+    )
     response = response.json()
     if not isinstance(response, list):
         await validate(response)
@@ -25,7 +30,11 @@ async def patch_profile_picture(
         "moodlewsrestformat": "json",
     }
 
-    response = requests.post(settings.moodle.ecourses_base_url, data=upd_data)
+    response = requests.post(
+        settings.moodle.ecourses_base_url,
+        data=upd_data,
+        proxies=proxies,
+    )
     response = response.json()
     await validate(response, error_key="error", message_key="error")
 

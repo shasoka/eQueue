@@ -4,6 +4,7 @@ import requests
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from moodle.proxies import proxies
 from core.config import settings
 from core.models import User
 from core.schemas.moodle import (
@@ -21,7 +22,8 @@ async def user_enrolled_courses(
     session: AsyncSession,
 ) -> list[WorkspaceSubjectCreate]:
     response = requests.post(
-        settings.moodle.enrolled_courses_url % (token, user.ecourses_user_id)
+        settings.moodle.enrolled_courses_url % (token, user.ecourses_user_id),
+        proxies=proxies,
     )
     if not isinstance(response, list):
         await validate(response.json())
@@ -84,7 +86,8 @@ async def _from_course_structure(
         % (
             token,
             ecourses_id,
-        )
+        ),
+        proxies=proxies,
     )
     if not isinstance(response, list):
         await validate(response.json())
@@ -133,5 +136,8 @@ async def check_course_availability(
     course_id: int,
     token: str,
 ) -> bool:
-    response = requests.post(settings.moodle.course_structure % (token, course_id))
+    response = requests.post(
+        settings.moodle.course_structure % (token, course_id),
+        proxies=proxies,
+    )
     return isinstance(response.json(), list)

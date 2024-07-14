@@ -92,6 +92,11 @@ class DatabaseConfig(BaseModel):
     }
 
 
+class Proxy(BaseModel):
+    http: str
+    https: str
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=(".env-template", ".env"),
@@ -104,6 +109,7 @@ class Settings(BaseSettings):
     api: APIPrefix = APIPrefix()
     moodle: MoodleAPI = MoodleAPI()
     db: DatabaseConfig
+    proxy: Proxy
 
 
 settings = Settings()

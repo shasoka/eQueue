@@ -2,6 +2,7 @@
 
 import requests
 
+from moodle import proxies
 from core.config import settings
 from core.schemas.moodle import MoodleLogin
 from utils import validate
@@ -9,10 +10,10 @@ from utils import validate
 
 async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
     response = requests.get(
-        settings.moodle.auth_url % (credentials.login, credentials.password)
+        settings.moodle.auth_url % (credentials.login, credentials.password),
+        proxies=proxies,
     )
 
-    print("Response Text: ", response.text)
     response = response.json()
     await validate(response=response, error_key="error", message_key="error")
 
@@ -22,7 +23,10 @@ async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
 async def get_moodle_user_info(
     token: str,
 ) -> dict:
-    response = requests.get(settings.moodle.get_user_info_url % token)
+    response = requests.get(
+        settings.moodle.get_user_info_url % token,
+        proxies=proxies,
+    )
 
     response = response.json()
     await validate(response)
@@ -38,6 +42,9 @@ async def get_moodle_user_info(
 
 
 async def token_persistence(token: str) -> None:
-    response = requests.get(settings.moodle.get_user_info_url % token)
+    response = requests.get(
+        settings.moodle.get_user_info_url % token,
+        proxies=proxies,
+    )
     response = response.json()
     await validate(response)
