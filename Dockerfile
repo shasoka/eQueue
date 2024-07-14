@@ -9,7 +9,7 @@ COPY pyproject.toml poetry.lock ./
 
 RUN python -m venv venv
 
-RUN chmod a+x venv/bin/*.sh
+RUN chmod a+x venv/bin/activate
 
 RUN venv/bin/activate
 
