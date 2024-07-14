@@ -13,6 +13,8 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 
 COPY . .
 
+RUN mv .env ./eQueue/.env
+
 WORKDIR ./eQueue
 
 # CMD goes on image run
