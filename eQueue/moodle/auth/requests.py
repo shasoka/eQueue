@@ -12,6 +12,7 @@ async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
         settings.moodle.auth_url % (credentials.login, credentials.password)
     )
 
+    print("Response Text: ", response.text)
     response = response.json()
     await validate(response=response, error_key="error", message_key="error")
 
