@@ -26,4 +26,4 @@ WORKDIR ./eQueue
 RUN alembic upgrade head
 
 # CMD goes on image run
-CMD gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000 --access-logfile -
+CMD gunicorn main:app --workers 3 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000 --access-logfile -
