@@ -10,7 +10,7 @@ plugins {
 
 ktlint {
     version.set("0.48.0")
-    android.set(true) // если вы разрабатываете под Android
+    android.set(true)
     outputToConsole.set(true)
     coloredOutput.set(true)
     enableExperimentalRules.set(true)
@@ -23,7 +23,8 @@ android {
     defaultConfig {
         applicationId = "ru.shasoka.equeue"
         minSdk = 24
-        targetSdk = 34
+        //noinspection OldTargetApi
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
