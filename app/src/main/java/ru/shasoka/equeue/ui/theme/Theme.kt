@@ -42,7 +42,7 @@ private val LightColorScheme =
 @Composable
 fun EQueueTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     val colorScheme =

@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.shasoka.equeue.presentation.Dimensions.MediumPadding2
@@ -31,11 +30,10 @@ import ru.shasoka.equeue.presentation.common.BackTextButton
 import ru.shasoka.equeue.presentation.common.StartButton
 import ru.shasoka.equeue.presentation.onboarding.components.OnBoardingPage
 import ru.shasoka.equeue.presentation.onboarding.components.PageIndicator
-import ru.shasoka.equeue.ui.theme.EQueueTheme
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
     Column(
         modifier = Modifier.fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -65,10 +63,10 @@ fun OnBoardingScreen() {
 		
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(all = MediumPadding2)
-                    .navigationBarsPadding(),
+            Modifier
+                .fillMaxWidth()
+                .padding(all = MediumPadding2)
+                .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -97,8 +95,8 @@ fun OnBoardingScreen() {
                     text = buttonState.value[1],
                     onClick = {
                         scope.launch {
-                            if (pagerState.currentPage == 3) {
-                                // nav to login screen
+                            if (pagerState.currentPage == 1) {
+                                event(OnBoardingEvent.SaveAppEntry)
                             } else {
                                 pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
                             }
@@ -107,15 +105,5 @@ fun OnBoardingScreen() {
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true, widthDp = 480, heightDp = 800)
-@Preview(showBackground = true, widthDp = 720, heightDp = 1280)
-@Preview(showBackground = true, widthDp = 720, heightDp = 1600)
-@Composable
-private fun OnBoardingScreenPreview() {
-    EQueueTheme {
-        OnBoardingScreen()
     }
 }
