@@ -5,14 +5,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
 }
 
 ktlint {
-    version.set("0.48.0")
+    debug.set(true)
     android.set(true)
     outputToConsole.set(true)
-    coloredOutput.set(true)
+    ignoreFailures.set(false)
     enableExperimentalRules.set(true)
 }
 

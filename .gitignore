@@ -46,3 +46,4 @@ obj/
 .editorconfig
 desktop.ini
 adb.connect.bat
+/.run/**
