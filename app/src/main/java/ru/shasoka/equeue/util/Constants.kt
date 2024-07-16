@@ -11,4 +11,6 @@ object Constants {
     // Data store keys
     // USER_SETTINGS:
     const val APP_ENTRY = "appEntry"
+
+    const val RESET_PASS = "https://users.sfu-kras.ru/?page=no_passw"
 }

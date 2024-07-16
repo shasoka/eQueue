@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import ru.shasoka.equeue.presentation.Dimensions.IndicatorSize
-import ru.shasoka.equeue.ui.theme.Gray
 
 @Composable
 fun PageIndicator(
@@ -24,7 +23,7 @@ fun PageIndicator(
     selectedPage: Int,
     modifier: Modifier = Modifier,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedColor: Color = Gray,
+    unselectedColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
 ) {
     Row(
         modifier = modifier,
@@ -33,11 +32,19 @@ fun PageIndicator(
         repeat(pageSize) { page ->
             Box(
                 modifier =
-                    Modifier
-                        .size(
-                            IndicatorSize,
-                        ).clip(CircleShape)
-                        .background(color = if (page == selectedPage) selectedColor else unselectedColor),
+                Modifier
+                    .size(
+                        IndicatorSize,
+                    )
+                    .clip(CircleShape)
+                        .background(
+                            color =
+                                if (page == selectedPage) {
+                                    selectedColor
+                                } else {
+                                    unselectedColor
+                                },
+                    ),
             )
         }
     }

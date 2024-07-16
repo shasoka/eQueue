@@ -24,7 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import ru.shasoka.equeue.presentation.Dimensions.MediumPadding2
+import ru.shasoka.equeue.presentation.Dimensions.LargestPadding
 import ru.shasoka.equeue.presentation.Dimensions.PageIndicatorWidth
 import ru.shasoka.equeue.presentation.common.BackTextButton
 import ru.shasoka.equeue.presentation.common.StartButton
@@ -65,8 +65,8 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
             modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(all = MediumPadding2)
-                .navigationBarsPadding(),
+                    .padding(all = LargestPadding)
+                    .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {

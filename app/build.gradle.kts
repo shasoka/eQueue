@@ -81,7 +81,7 @@ dependencies {
 
     // Splash Api
     implementation(libs.androidx.core.splashscreen)
-    
+
     // Datastore
     implementation(libs.androidx.datastore.preferences)
 
@@ -89,6 +89,16 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.51.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("com.google.dagger:hilt-compiler:2.51.1")
+	
+    // Compose Foundation
+    implementation("androidx.compose.foundation:foundation:1.4.3")
+	
+    // Compose Navigation
+    implementation("androidx.navigation:navigation-compose:2.6.0")
+	
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 }
 
 kapt {

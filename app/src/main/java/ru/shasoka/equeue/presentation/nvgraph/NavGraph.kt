@@ -4,13 +4,13 @@
 
 package ru.shasoka.equeue.presentation.nvgraph
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import ru.shasoka.equeue.presentation.login.components.LoginScreen
 import ru.shasoka.equeue.presentation.onboarding.OnBoardingScreen
 import ru.shasoka.equeue.presentation.onboarding.OnBoardingViewModel
 
@@ -36,7 +36,7 @@ fun NavGraph(startDestination: String) {
             startDestination = Route.LogInScreen.route,
         ) {
             composable(route = Route.LogInScreen.route) {
-                Text("123")
+                LoginScreen()
             }
         }
     }

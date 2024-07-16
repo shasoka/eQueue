@@ -2,7 +2,7 @@
  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
-package ru.shasoka.equeue.domain.usecases
+package ru.shasoka.equeue.domain.usecases.appentry
 
 import kotlinx.coroutines.flow.Flow
 import ru.shasoka.equeue.domain.manager.LocalUserManager

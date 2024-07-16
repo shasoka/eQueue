@@ -23,15 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ru.shasoka.equeue.R
-import ru.shasoka.equeue.presentation.Dimensions.MediumPadding1
-import ru.shasoka.equeue.presentation.Dimensions.MediumPadding2
+import ru.shasoka.equeue.presentation.Dimensions.LargePadding
+import ru.shasoka.equeue.presentation.Dimensions.LargestPadding
 import ru.shasoka.equeue.presentation.onboarding.Page
 import ru.shasoka.equeue.presentation.onboarding.pages
 import ru.shasoka.equeue.ui.theme.EQueueTheme
@@ -46,25 +44,26 @@ fun OnBoardingPage(
 	
     Column(
         verticalArrangement = Arrangement.Top,
-//        modifier = Modifier.height(screenHeight * 3 / 4)
     ) {
         Image(
             painter = painterResource(id = page.image),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier.height(screenHeight / 2 - 5.dp).fillMaxWidth(),
+            modifier = Modifier
+                .height(screenHeight / 2 - 5.dp)
+                .fillMaxWidth(),
         )
         Spacer(
             modifier =
                 Modifier.height(
-                    MediumPadding1,
+                    LargePadding,
                 ),
         )
         Text(
             text = page.title,
-            modifier = Modifier.padding(horizontal = MediumPadding2),
+            modifier = Modifier.padding(horizontal = LargestPadding),
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
-            color = colorResource(id = R.color.display_small),
+            color = MaterialTheme.colorScheme.inverseSurface,
         )
 		
         val scrollState = rememberScrollState()
@@ -76,16 +75,16 @@ fun OnBoardingPage(
 		
         Box(
             modifier =
-                Modifier
-                    .padding(horizontal = MediumPadding2, vertical = MediumPadding1)
+            Modifier
+                    .padding(horizontal = LargestPadding, vertical = LargePadding)
                     .height(lineHeightDp * 5) // Set the maximum height for the text box
-                    .verticalScroll(scrollState),
+                .verticalScroll(scrollState),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = page.description,
                 style = MaterialTheme.typography.bodyMedium,
-                color = colorResource(id = R.color.text_medium),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 minLines = 5,
             )
         }

@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ru.shasoka.equeue.domain.usecases.AppEntryUseCases
+import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import javax.inject.Inject
 
 @HiltViewModel
