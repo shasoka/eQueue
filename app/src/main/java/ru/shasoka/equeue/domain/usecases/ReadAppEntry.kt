@@ -12,5 +12,5 @@ class ReadAppEntry(
     private val localUserManager: LocalUserManager,
 ) {
     // Operator allows to call this function by class name
-    suspend operator fun invoke(): Flow<Boolean> = localUserManager.readAppEntry()
+    operator fun invoke(): Flow<Boolean> = localUserManager.readAppEntry()
 }
