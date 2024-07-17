@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.presentation.nvgraph.Route
 import javax.inject.Inject
@@ -30,17 +30,19 @@ class MainViewModel
             private set
 
         init {
-            appEntryUseCases
-                .readAppEntry()
-                .onEach { shouldStartFromLoginScreen ->
-                    startDestination =
-                        if (shouldStartFromLoginScreen) {
-                            Route.LogInNavigation.route
-                        } else {
-                            Route.AppStartNavigation.route
-                        }
-                    delay(300)
-                    splashCondition = false
-                }.launchIn(viewModelScope)
+            viewModelScope.launch {
+                appEntryUseCases
+                    .readAppEntry()
+                    .collectLatest { shouldStartFromLoginScreen ->
+                        startDestination =
+                            if (shouldStartFromLoginScreen) {
+                                Route.LogInNavigation.route
+                            } else {
+                                Route.AppStartNavigation.route
+                            }
+                        delay(300)
+                        splashCondition = false
+                    }
+            }
         }
     }

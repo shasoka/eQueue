@@ -4,9 +4,11 @@
 
 package ru.shasoka.equeue.domain.repository
 
+import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
+
 interface APIRepository {
     suspend fun login(
         username: String,
         password: String,
-    )
+    ): ECoursesLoginResponse
 }

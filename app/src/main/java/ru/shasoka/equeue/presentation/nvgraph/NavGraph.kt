@@ -40,6 +40,8 @@ fun NavGraph(startDestination: String) {
                 val viewModel: LoginViewModel = hiltViewModel()
                 LoginScreen(
                     event = viewModel::onEvent,
+                    showAlert = viewModel.showAlert,
+                    isLoading = viewModel.isLoading,
                 )
             }
         }

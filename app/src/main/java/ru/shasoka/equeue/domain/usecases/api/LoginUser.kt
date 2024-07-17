@@ -4,6 +4,7 @@
 
 package ru.shasoka.equeue.domain.usecases.api
 
+import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
 import ru.shasoka.equeue.domain.repository.APIRepository
 
 class LoginUser(
@@ -12,7 +13,11 @@ class LoginUser(
     suspend operator fun invoke(
         username: String,
         password: String,
-    ) {
-        apiRepository.login(username, password)
+    ): ECoursesLoginResponse {
+        try {
+            return apiRepository.login(username, password)
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }

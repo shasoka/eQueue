@@ -9,4 +9,6 @@ sealed class LoginEvent {
         val username: String,
         val password: String,
     ) : LoginEvent()
+
+    data object DisposeAlert : LoginEvent()
 }
