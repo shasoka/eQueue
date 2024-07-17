@@ -4,6 +4,6 @@
 
 package ru.shasoka.equeue.domain.usecases.api
 
-class APIUseCase(
+class APIUseCases(
     val loginUser: LoginUser,
 )

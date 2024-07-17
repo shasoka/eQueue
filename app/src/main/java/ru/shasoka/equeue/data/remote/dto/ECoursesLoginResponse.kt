@@ -4,18 +4,19 @@
 
 package ru.shasoka.equeue.data.remote.dto
 
+@Suppress("PropertyName")
 data class ECoursesLoginResponse(
-    val accessToken: String,
-    val assignedGroupId: Int,
-    val assignedWorkspaceId: Int,
-    val createdAt: String,
-    val ecoursesUserId: Int,
-    val firstName: String,
+    val access_token: String,
+    val assigned_group_id: Int,
+    val assigned_workspace_id: Int,
+    val created_at: String,
+    val ecourses_user_id: Int,
+    val first_name: String,
     val id: Int,
-    val secondName: String,
+    val second_name: String,
     val status: String,
     val talon: String,
-    val tokenType: String,
-    val userPictureUrl: String,
-    val workspaceChief: Boolean,
+    val token_type: String,
+    val user_picture_url: String,
+    val workspace_chief: Boolean,
 )

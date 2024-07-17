@@ -10,7 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import ru.shasoka.equeue.presentation.login.components.LoginScreen
+import ru.shasoka.equeue.presentation.login.LoginScreen
+import ru.shasoka.equeue.presentation.login.LoginViewModel
 import ru.shasoka.equeue.presentation.onboarding.OnBoardingScreen
 import ru.shasoka.equeue.presentation.onboarding.OnBoardingViewModel
 
@@ -36,7 +37,10 @@ fun NavGraph(startDestination: String) {
             startDestination = Route.LogInScreen.route,
         ) {
             composable(route = Route.LogInScreen.route) {
-                LoginScreen()
+                val viewModel: LoginViewModel = hiltViewModel()
+                LoginScreen(
+                    event = viewModel::onEvent,
+                )
             }
         }
     }

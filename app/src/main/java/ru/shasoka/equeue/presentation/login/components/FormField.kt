@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -46,8 +48,11 @@ import ru.shasoka.equeue.ui.theme.EQueueTheme
 fun FormField(
     placeholder: String,
     icon: ImageVector,
+    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     isSecret: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     var text by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
@@ -61,16 +66,18 @@ fun FormField(
 	
     Box(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    shape = RoundedCornerShape(6.dp),
-                ).border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    shape = RoundedCornerShape(6.dp),
-                ).padding(all = MediumPadding),
+        modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.inverseOnSurface,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.secondary,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .padding(all = MediumPadding),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -84,7 +91,12 @@ fun FormField(
             )
             BasicTextField(
                 value = text,
-                onValueChange = { text = it },
+                onValueChange = {
+                    onTextChange(it)
+                    text = it
+                },
+                keyboardOptions = keyboardOptions,
+                keyboardActions = keyboardActions,
                 visualTransformation = visualTransformation,
                 maxLines = 1,
                 textStyle =
@@ -103,10 +115,10 @@ fun FormField(
                     innerTextField()
                 },
                 modifier =
-                    Modifier
-                        .padding(start = 8.dp)
-                        .weight(1f)
-                        .horizontalScroll(rememberScrollState()),
+                Modifier
+                    .padding(start = 8.dp)
+                    .weight(1f)
+                    .horizontalScroll(rememberScrollState()),
             )
             if (isSecret) {
                 IconButton(
@@ -121,7 +133,9 @@ fun FormField(
                                 painterResource(R.drawable.visibility_off)
                             },
                         contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                        modifier = Modifier.size(24.dp).padding(all = 0.dp),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .padding(all = 0.dp),
                         tint = MaterialTheme.colorScheme.secondary,
                     )
                 }
@@ -133,16 +147,21 @@ fun FormField(
 @Preview(showBackground = true)
 @Composable
 private fun FormFieldPreview() {
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     EQueueTheme(dynamicColor = false) {
         Column {
             FormField(
                 placeholder = "Введите логин ... ",
                 icon = Icons.Default.Person,
+                onTextChange = { username = it },
             )
             FormField(
                 placeholder = "Введите пароль ...",
                 icon = Icons.Default.Lock,
                 isSecret = true,
+                onTextChange = { password = it },
             )
         }
     }

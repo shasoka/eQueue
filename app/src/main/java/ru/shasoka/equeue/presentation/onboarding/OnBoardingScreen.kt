@@ -48,7 +48,7 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
                 derivedStateOf {
                     when (pagerState.currentPage) {
                         0 -> listOf("", "Далее")
-                        1 -> listOf("Назад", "Войти")
+                        1 -> listOf("Назад", "К делу! \uD83D\uDC49\uD83C\uDFFB")
                         else -> listOf("", "")
                     }
                 }
@@ -63,8 +63,8 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
 		
         Row(
             modifier =
-            Modifier
-                .fillMaxWidth()
+			Modifier
+				.fillMaxWidth()
                     .padding(all = LargestPadding)
                     .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceBetween,
