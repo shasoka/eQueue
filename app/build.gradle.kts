@@ -99,6 +99,12 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    // Room
+    implementation("androidx.room:room-runtime:$2.6.1")
+    //noinspection KaptUsageInsteadOfKsp
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 }
 
 kapt {

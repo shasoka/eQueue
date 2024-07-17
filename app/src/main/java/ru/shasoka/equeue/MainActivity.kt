@@ -40,8 +40,8 @@ class MainActivity : ComponentActivity() {
                 SystemBarStyle.auto(
                     android.graphics.Color.TRANSPARENT,
                     android.graphics.Color.TRANSPARENT,
-			),
-		)
+                ),
+        )
 
         setContent {
             EQueueTheme(

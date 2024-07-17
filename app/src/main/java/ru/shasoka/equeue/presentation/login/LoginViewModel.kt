@@ -13,18 +13,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
-import ru.shasoka.equeue.domain.usecases.api.APIUseCases
+import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
+import ru.shasoka.equeue.presentation.nvgraph.Route
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel
     @Inject
     constructor(
-        private val apiUseCases: APIUseCases,
+        private val loginUseCases: LoginUseCases,
     ) : ViewModel() {
-        var userProfileData: ECoursesLoginResponse? = null
-            private set
-
         var showAlert: Boolean by mutableStateOf(false)
             private set
 
@@ -38,8 +36,9 @@ class LoginViewModel
                         try {
                             isLoading = true
                             delay(500)
-                            userProfileData = loginUser(event.username, event.password)
+                            loginUser(event.username, event.password)
                             isLoading = false
+                            event.navController.navigate(Route.GroupSelectionNavigation.route)
                         } catch (e: Exception) {
                             showAlert = true
                             isLoading = false
@@ -58,7 +57,7 @@ class LoginViewModel
             password: String,
         ): ECoursesLoginResponse {
             try {
-                return apiUseCases.loginUser(username, password)
+                return loginUseCases.loginUser(username, password)
             } catch (e: Exception) {
                 throw e
             }

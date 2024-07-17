@@ -2,8 +2,8 @@
  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
-package ru.shasoka.equeue.domain.usecases.api
+package ru.shasoka.equeue.domain.usecases.api.login
 
-class APIUseCases(
+class LoginUseCases(
     val loginUser: LoginUser,
 )

@@ -5,22 +5,28 @@
 package ru.shasoka.equeue.di
 
 import android.app.Application
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.shasoka.equeue.data.local.EQueueDatabase
+import ru.shasoka.equeue.data.local.UserDao
 import ru.shasoka.equeue.data.manager.LocalUserManagerImpl
-import ru.shasoka.equeue.data.remote.API
-import ru.shasoka.equeue.data.repository.APIRepositoryImpl
+import ru.shasoka.equeue.data.remote.Api
+import ru.shasoka.equeue.data.repository.ApiRepositoryImpl
 import ru.shasoka.equeue.domain.manager.LocalUserManager
-import ru.shasoka.equeue.domain.repository.APIRepository
-import ru.shasoka.equeue.domain.usecases.api.APIUseCases
-import ru.shasoka.equeue.domain.usecases.api.LoginUser
+import ru.shasoka.equeue.domain.repository.ApiRepository
+import ru.shasoka.equeue.domain.usecases.api.groupselection.GetGroups
+import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
+import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
+import ru.shasoka.equeue.domain.usecases.api.login.LoginUser
 import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.ReadAppEntry
 import ru.shasoka.equeue.domain.usecases.appentry.SaveAppEntry
+import ru.shasoka.equeue.util.Constants.DB_NAME
 import javax.inject.Singleton
 
 @Module
@@ -52,16 +58,44 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApi(retrofit: Retrofit): API = retrofit.create(API::class.java)
+    fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
 
     @Provides
     @Singleton
-    fun provideAPIRepository(api: API): APIRepository = APIRepositoryImpl(api)
+    fun provideApiRepository(api: Api): ApiRepository = ApiRepositoryImpl(api)
 
     @Provides
     @Singleton
-    fun provideAPIUseCases(repository: APIRepository): APIUseCases =
-        APIUseCases(
-            loginUser = LoginUser(repository),
-		)
+    fun provideLoginUseCases(
+        repository: ApiRepository,
+        userDao: UserDao,
+    ): LoginUseCases =
+        LoginUseCases(
+            loginUser = LoginUser(repository, userDao),
+        )
+
+    @Provides
+    @Singleton
+    fun provideGroupSelectionUseCases(
+        repository: ApiRepository,
+        userDao: UserDao,
+    ): GroupSelectionUseCases =
+        GroupSelectionUseCases(
+            getGroups = GetGroups(repository, userDao),
+        )
+
+    @Provides
+    @Singleton
+    fun provideEQueueDatabase(application: Application): EQueueDatabase =
+        Room
+            .databaseBuilder(
+                context = application,
+                klass = EQueueDatabase::class.java,
+                name = DB_NAME,
+            ).fallbackToDestructiveMigration()
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideUserDao(eQueueDatabase: EQueueDatabase): UserDao = eQueueDatabase.userDao
 }

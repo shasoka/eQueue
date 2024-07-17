@@ -12,9 +12,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -42,6 +45,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
@@ -55,10 +59,13 @@ fun LoginScreen(
     event: (LoginEvent) -> Unit,
     showAlert: Boolean,
     isLoading: Boolean,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var prevUsername by remember { mutableStateOf("") }
+    var prevPassword by remember { mutableStateOf("") }
 
     val focusManager = LocalFocusManager.current
     val usernameFocusRequester = remember { FocusRequester() }
@@ -97,7 +104,10 @@ fun LoginScreen(
     }
 
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(WindowInsets.ime.asPaddingValues()),
         contentAlignment = Alignment.Center,
     ) {
         AnimatedVisibility(
@@ -112,28 +122,36 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
             modifier =
-                Modifier
-                    .fillMaxWidth(0.7f)
-                    .fillMaxHeight()
-                    .alpha(contentAlpha),
+            Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight()
+                .alpha(contentAlpha),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 modifier =
-                    Modifier
-                        .fillMaxHeight(0.5f)
-                        .padding(SmallPadding),
+                Modifier
+                    .fillMaxHeight(0.5f)
+                    .padding(SmallPadding),
             )
             FormField(
                 placeholder = "Введите логин ... ",
                 icon = Icons.Default.Person,
                 modifier =
-                Modifier
-                    .padding(vertical = SmallPadding)
-                    .focusRequester(usernameFocusRequester),
-                onTextChange = { username = it },
+                    Modifier
+                        .padding(vertical = SmallPadding)
+                        .focusRequester(usernameFocusRequester),
+                onTextChange = { newText ->
+                    if (newText != prevUsername) {
+                        if (newText.length - prevUsername.length > 1) {
+                            passwordFocusRequester.requestFocus()
+                        }
+                        prevUsername = newText
+                    }
+                    username = newText
+                },
                 keyboardOptions =
                     KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Next,
@@ -152,10 +170,18 @@ fun LoginScreen(
                 icon = Icons.Default.Lock,
                 isSecret = true,
                 modifier =
-                Modifier
-                    .padding(vertical = SmallPadding)
-                    .focusRequester(passwordFocusRequester),
-                onTextChange = { password = it },
+                    Modifier
+                        .padding(vertical = SmallPadding)
+                        .focusRequester(passwordFocusRequester),
+                onTextChange = { newText ->
+                    if (newText != prevPassword) {
+                        if (newText.length - prevPassword.length > 1) {
+                            focusManager.clearFocus()
+                        }
+                        prevPassword = newText
+                    }
+                    password = newText
+                },
                 keyboardOptions =
                     KeyboardOptions.Default.copy(
                         imeAction = ImeAction.Done,
@@ -177,7 +203,7 @@ fun LoginScreen(
                 text = "Войти",
                 onClick = {
                     coroutineScope.launch {
-                        event(LoginEvent.LoginUser(username, password))
+                        event(LoginEvent.LoginUser(username, password, navController))
                     }
                 },
                 modifier = Modifier.padding(vertical = SmallPadding),
