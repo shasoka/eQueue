@@ -31,7 +31,10 @@ async def login_user(
 ):
     # 1. Try to auth user through e.sfu-kras.ru/login
     token = await auth_by_moodle_credentials(
-        MoodleLogin(login=credentials.username, password=credentials.password)
+        MoodleLogin(
+            login=credentials.username,
+            password=credentials.password,
+        )
     )
     # 2. On success auth get user info
     user_info = await get_moodle_user_info(
@@ -44,7 +47,10 @@ async def login_user(
         )
     ):
         # User is not registered
-        user = await create_new_user(session=session, user_in=UserCreate(**user_info))
+        user = await create_new_user(
+            session=session,
+            user_in=UserCreate(**user_info),
+        )
     else:
         # User is registered
         user = await update_user(

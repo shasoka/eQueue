@@ -57,7 +57,7 @@ class MoodleAPI(BaseModel):
         f"{ecourses_base_url}?wstoken=%s&wsfunction=core_webservice_get_site_info&moodlewsrestformat=json"
     )
     upload_new_image_url: str = (
-        "https://e.sfu-kras.ru/webservice/upload.php" "?token=%s" "&filearea=draft"
+        "https://e.sfu-kras.ru/webservice/upload.php?token=%s&filearea=draft"
     )
     enrolled_courses_url: str = (
         "https://e.sfu-kras.ru/webservice/rest/server.php"
