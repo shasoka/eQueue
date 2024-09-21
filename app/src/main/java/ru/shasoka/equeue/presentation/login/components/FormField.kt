@@ -42,127 +42,128 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
+import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.ui.theme.EQueueTheme
 
 @Composable
 fun FormField(
-    placeholder: String,
-    icon: ImageVector,
-    onTextChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    isSecret: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
+	placeholder: String,
+	icon: ImageVector,
+	onTextChange: (String) -> Unit,
+	modifier: Modifier = Modifier,
+	isSecret: Boolean = false,
+	keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+	keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-    var text by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
+	var text by remember { mutableStateOf("") }
+	var passwordVisible by remember { mutableStateOf(false) }
 	
-    val visualTransformation =
-        if (isSecret && !passwordVisible) {
-            PasswordVisualTransformation()
-        } else {
-            VisualTransformation.None
-        }
+	val visualTransformation =
+		if (isSecret && !passwordVisible) {
+			PasswordVisualTransformation()
+		} else {
+			VisualTransformation.None
+		}
 	
-    Box(
-        modifier =
-        modifier
-            .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colorScheme.inverseOnSurface,
-                shape = RoundedCornerShape(6.dp),
-            )
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.secondary,
-                shape = RoundedCornerShape(6.dp),
-            )
-            .padding(all = MediumPadding),
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.secondary,
-            )
-            BasicTextField(
-                value = text,
-                onValueChange = {
-                    onTextChange(it)
-                    text = it
-                },
-                keyboardOptions = keyboardOptions,
-                keyboardActions = keyboardActions,
-                visualTransformation = visualTransformation,
-                maxLines = 1,
-                textStyle =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                decorationBox = { innerTextField ->
-                    if (text.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            color = MaterialTheme.colorScheme.secondary,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                    innerTextField()
-                },
-                modifier =
-                Modifier
-                    .padding(start = 8.dp)
-                    .weight(1f)
-                    .horizontalScroll(rememberScrollState()),
-            )
-            if (isSecret) {
-                IconButton(
-                    modifier = Modifier.then(Modifier.size(24.dp)),
-                    onClick = { passwordVisible = !passwordVisible },
-                ) {
-                    Icon(
-                        painter =
-                            if (passwordVisible) {
-                                painterResource(R.drawable.visibility_on)
-                            } else {
-                                painterResource(R.drawable.visibility_off)
-                            },
-                        contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                        modifier = Modifier
-                            .size(24.dp)
-                            .padding(all = 0.dp),
-                        tint = MaterialTheme.colorScheme.secondary,
-                    )
-                }
-            }
-        }
-    }
+	Box(
+		modifier =
+		modifier
+			.fillMaxWidth()
+			.background(
+				color = MaterialTheme.colorScheme.inverseOnSurface,
+				shape = RoundedCornerShape(6.dp),
+			).border(
+				width = 1.dp,
+				color = MaterialTheme.colorScheme.secondary,
+				shape = RoundedCornerShape(6.dp),
+			).padding(all = MediumPadding),
+		contentAlignment = Alignment.Center,
+	) {
+		Row(
+			verticalAlignment = Alignment.CenterVertically,
+			horizontalArrangement = Arrangement.Start,
+			modifier = Modifier.fillMaxWidth(),
+		) {
+			Icon(
+				imageVector = icon,
+				contentDescription = null,
+				tint = MaterialTheme.colorScheme.secondary,
+			)
+			BasicTextField(
+				value = text,
+				onValueChange = {
+					onTextChange(it)
+					text = it
+				},
+				keyboardOptions = keyboardOptions,
+				keyboardActions = keyboardActions,
+				visualTransformation = visualTransformation,
+				maxLines = 1,
+				textStyle =
+				MaterialTheme.typography.bodyMedium.copy(
+					color = MaterialTheme.colorScheme.secondary,
+					fontWeight = FontWeight.Bold,
+				),
+				decorationBox = { innerTextField ->
+					if (text.isEmpty()) {
+						Text(
+							text = placeholder,
+							color = MaterialTheme.colorScheme.secondary,
+							style = MaterialTheme.typography.bodyMedium,
+						)
+					}
+					innerTextField()
+				},
+				modifier =
+				Modifier
+					.padding(horizontal = SmallPadding)
+					.weight(1f)
+					.horizontalScroll(rememberScrollState()),
+			)
+			if (isSecret) {
+				IconButton(
+					modifier = Modifier.then(Modifier.size(24.dp)),
+					onClick = { passwordVisible = !passwordVisible },
+				) {
+					Icon(
+						painter =
+						if (passwordVisible) {
+							painterResource(R.drawable.visibility_on)
+						} else {
+							painterResource(R.drawable.visibility_off)
+						},
+						contentDescription = if (passwordVisible) "Hide password" else "Show password",
+						modifier =
+						Modifier
+							.size(24.dp)
+							.padding(all = 0.dp),
+						tint = MaterialTheme.colorScheme.secondary,
+					)
+				}
+			}
+		}
+	}
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun FormFieldPreview() {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    EQueueTheme(dynamicColor = false) {
-        Column {
-            FormField(
-                placeholder = "Введите логин ... ",
-                icon = Icons.Default.Person,
-                onTextChange = { username = it },
-            )
-            FormField(
-                placeholder = "Введите пароль ...",
-                icon = Icons.Default.Lock,
-                isSecret = true,
-                onTextChange = { password = it },
-            )
-        }
-    }
+	var username by remember { mutableStateOf("") }
+	var password by remember { mutableStateOf("") }
+	
+	EQueueTheme(dynamicColor = false) {
+		Column {
+			FormField(
+				placeholder = "Введите логин ... ",
+				icon = Icons.Default.Person,
+				onTextChange = { username = it },
+			)
+			FormField(
+				placeholder = "Введите пароль ...",
+				icon = Icons.Default.Lock,
+				isSecret = true,
+				onTextChange = { password = it },
+			)
+		}
+	}
 }

@@ -5,11 +5,13 @@
 package ru.shasoka.equeue.util
 
 object Constants {
-    const val USER_SETTINGS = "userSettings"
-
-    const val APP_ENTRY = "appEntry"
-
-    const val RESET_PASS = "https://users.sfu-kras.ru/?page=no_passw"
+	const val USER_SETTINGS = "userSettings"
 	
-    const val DB_NAME = "equeue_db"
+	const val APP_ENTRY = "appEntry"
+	
+	const val RESET_PASS = "https://users.sfu-kras.ru/?page=no_passw"
+	
+	const val DB_NAME = "equeue_db"
+	
+	const val SEARCH_RESULT_HEIGHT = 47.5
 }

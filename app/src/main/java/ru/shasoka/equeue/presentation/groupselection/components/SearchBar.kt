@@ -33,84 +33,85 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
+import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.ui.theme.EQueueTheme
 
 @Composable
 fun SearchBar(
-    placeholder: String,
-    onTextChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
+	placeholder: String,
+	onTextChange: (String) -> Unit,
+	modifier: Modifier = Modifier,
+	keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+	keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-    var text by remember { mutableStateOf("") }
+	var text by remember { mutableStateOf("") }
 	
-    Box(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    shape = RoundedCornerShape(6.dp),
-                ).border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    shape = RoundedCornerShape(6.dp),
-                ).padding(all = MediumPadding),
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.secondary,
-            )
-            BasicTextField(
-                value = text,
-                onValueChange = {
-                    onTextChange(it)
-                    text = it
-                },
-                keyboardOptions = keyboardOptions,
-                keyboardActions = keyboardActions,
-                visualTransformation = VisualTransformation.None,
-                maxLines = 1,
-                textStyle =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.secondary,
-                    ),
-                decorationBox = { innerTextField ->
-                    if (text.isEmpty()) {
-                        Text(
-                            text = placeholder,
-                            color = MaterialTheme.colorScheme.secondary,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                    innerTextField()
-                },
-                modifier =
-                    Modifier
-                        .padding(start = 8.dp)
-                        .weight(1f)
-                        .horizontalScroll(rememberScrollState()),
-            )
-        }
-    }
+	Box(
+		modifier =
+		modifier
+			.fillMaxWidth()
+			.background(
+				color = MaterialTheme.colorScheme.inverseOnSurface,
+				shape = RoundedCornerShape(6.dp),
+			).border(
+				width = 1.dp,
+				color = MaterialTheme.colorScheme.secondary,
+				shape = RoundedCornerShape(6.dp),
+			).padding(all = MediumPadding),
+	) {
+		Row(
+			verticalAlignment = Alignment.CenterVertically,
+			horizontalArrangement = Arrangement.Start,
+			modifier = Modifier.fillMaxWidth(),
+		) {
+			Icon(
+				imageVector = Icons.Default.Search,
+				contentDescription = null,
+				tint = MaterialTheme.colorScheme.secondary,
+			)
+			BasicTextField(
+				value = text,
+				onValueChange = {
+					onTextChange(it)
+					text = it
+				},
+				keyboardOptions = keyboardOptions,
+				keyboardActions = keyboardActions,
+				visualTransformation = VisualTransformation.None,
+				maxLines = 1,
+				textStyle =
+				MaterialTheme.typography.bodyMedium.copy(
+					color = MaterialTheme.colorScheme.secondary,
+				),
+				decorationBox = { innerTextField ->
+					if (text.isEmpty()) {
+						Text(
+							text = placeholder,
+							color = MaterialTheme.colorScheme.secondary,
+							style = MaterialTheme.typography.bodyMedium,
+						)
+					}
+					innerTextField()
+				},
+				modifier =
+				Modifier
+					.padding(horizontal = SmallPadding)
+					.weight(1f)
+					.horizontalScroll(rememberScrollState()),
+			)
+		}
+	}
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun SearchBarPreview() {
-    var searchQuery by remember { mutableStateOf("") }
+	var searchQuery by remember { mutableStateOf("") }
 	
-    EQueueTheme(dynamicColor = false) {
-        SearchBar(
-            placeholder = "Поиск...",
-            onTextChange = { searchQuery = it },
-        )
-    }
+	EQueueTheme(dynamicColor = false) {
+		SearchBar(
+			placeholder = "Поиск...",
+			onTextChange = { searchQuery = it },
+		)
+	}
 }
