@@ -22,4 +22,4 @@ jobs:
           clear_cache: true
           wait_deploy: true
           github_deployment: true
-          deployment_environment: 'production'
+          deployment_environment: 'staging'
