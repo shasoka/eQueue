@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
@@ -13,4 +13,3 @@ jobs:
         with:
           service-id: ${{ secrets.RENDER_COM__SERVICE_ID }}
           api-key: ${{ secrets.RENDER_COM__API_KEY }}
-          wait-for-success: true
