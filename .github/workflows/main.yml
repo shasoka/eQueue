@@ -5,16 +5,31 @@ on:
     branches: [main]
 
 jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - name: 🗑️ Delete production deployment
+        uses: strumwolf/delete-deployment-environment@v2
+        with:
+          token: ${{ secrets.GH__TOKEN }}
+          environment: production
+          onlyRemoveDeployments: true
+
   deploy:
+    needs: cleanup
     runs-on: ubuntu-latest
     permissions:
       deployments: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - name: ✅ Checkout repository
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH__TOKEN }}
-      - uses: JorgeLNJunior/render-deploy@v1.4.4
+      - name: 🛫 New deployment on render.com
+        uses: JorgeLNJunior/render-deploy@v1.4.4
         with:
           api_key: ${{ secrets.RENDER_COM__API_KEY }}
           service_id: ${{ secrets.RENDER_COM__SERVICE_ID }}
@@ -22,4 +37,4 @@ jobs:
           clear_cache: true
           wait_deploy: true
           github_deployment: true
-          deployment_environment: 'staging'
+          deployment_environment: staging
