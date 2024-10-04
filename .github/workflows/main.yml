@@ -4,12 +4,18 @@ on:
   push:
     branches: [main]
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        uses: johnbeynon/render-deploy-action@v0.0.8
-        with:
-          service-id: ${{ secrets.RENDER_COM__SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_COM__API_KEY }}
+deploy:
+  runs-on: ubuntu-latest
+  permissions:
+    deployments: write
+  steps:
+    - uses: actions/checkout@v3
+    - uses: JorgeLNJunior/render-deploy@v1.4.4
+      with:
+        service-id: ${{ secrets.RENDER_COM__SERVICE_ID }}
+        api-key: ${{ secrets.RENDER_COM__API_KEY }}
+        clear_cache: true
+        wait_deploy: true
+        github_token: ${{ secrets.GH__TOKEN }}
+        github_deployment: true
+        deployment_environment: 'production'
