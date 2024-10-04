@@ -1,0 +1,16 @@
+name: Render.com auto-deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.RENDER_COM__SERVICE_ID }}
+          api-key: ${{ secrets.RENDER_COM__API_KEY }}
+          wait-for-success: true
