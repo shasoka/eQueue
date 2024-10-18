@@ -4,17 +4,29 @@
 
 package ru.shasoka.equeue.presentation.common
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun HyperlinkText(
+fun HyperlinkURL(
     fullText: String,
     linkText: List<String>,
     hyperlinks: List<String>,
@@ -48,9 +60,8 @@ fun HyperlinkText(
 	
     ClickableText(
         text = annotatedString,
-        style =
-            MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.secondary,
+        style = MaterialTheme.typography.bodyMedium.copy(
+            color = MaterialTheme.colorScheme.secondary,
             ),
         modifier = modifier,
         onClick = { offset ->
@@ -62,4 +73,32 @@ fun HyperlinkText(
                 }
         },
     )
+}
+
+
+@Composable
+fun HyperlinkNAV(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .padding(WindowInsets.ime.asPaddingValues())
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) { onClick() },
+        contentAlignment = Alignment.Center,
+
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline,
+            ),
+            modifier = modifier,
+        )
+    }
 }

@@ -23,6 +23,8 @@ import ru.shasoka.equeue.domain.usecases.api.groupselection.GetGroups
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUser
+import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
+import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUser
 import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.ReadAppEntry
 import ru.shasoka.equeue.domain.usecases.appentry.SaveAppEntry
@@ -83,6 +85,13 @@ object AppModule {
         GroupSelectionUseCases(
             getGroups = GetGroups(repository, userDao),
         )
+
+    @Provides
+    @Singleton
+    fun provideLogoutUserUseCases(
+        userDao: UserDao,
+    ): LogoutUseCases =
+        LogoutUseCases(logoutUser = LogoutUser(userDao = userDao))
 
     @Provides
     @Singleton

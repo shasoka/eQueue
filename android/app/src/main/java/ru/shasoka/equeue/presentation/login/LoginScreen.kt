@@ -49,7 +49,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
-import ru.shasoka.equeue.presentation.common.HyperlinkText
+import ru.shasoka.equeue.presentation.common.HyperlinkURL
 import ru.shasoka.equeue.presentation.common.StartButton
 import ru.shasoka.equeue.presentation.login.components.FormField
 import ru.shasoka.equeue.util.Constants.RESET_PASS
@@ -193,7 +193,7 @@ fun LoginScreen(
 					},
 				),
 			)
-			HyperlinkText(
+			HyperlinkURL(
 				fullText = "Забыли пароль? Вам сюда \uD83E\uDEA4",
 				linkText = listOf("Вам сюда \uD83E\uDEA4"),
 				hyperlinks = listOf(RESET_PASS),

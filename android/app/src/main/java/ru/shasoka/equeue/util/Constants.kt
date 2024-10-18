@@ -10,6 +10,8 @@ object Constants {
 	const val APP_ENTRY = "appEntry"
 	
 	const val RESET_PASS = "https://users.sfu-kras.ru/?page=no_passw"
+
+	const val CHANGE_ACC = ""
 	
 	const val DB_NAME = "equeue_db"
 	

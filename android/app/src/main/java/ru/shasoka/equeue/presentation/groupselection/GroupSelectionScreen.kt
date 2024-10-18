@@ -37,20 +37,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
+import ru.shasoka.equeue.presentation.common.HyperlinkNAV
+import ru.shasoka.equeue.presentation.common.HyperlinkURL
 import ru.shasoka.equeue.presentation.common.SearchBar
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
 import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
+import ru.shasoka.equeue.util.Constants.RESET_PASS
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
 import ru.shasoka.equeue.util.keyboardAsState
 
@@ -59,6 +66,7 @@ fun GroupSelectionScreen(
 	groups: List<GetGroupsResponseItem>,
 	isLoading: Boolean,
 	showAlert: Boolean,
+	showExitError: Boolean,
 	selectedGroup: GetGroupsResponseItem?,
 	event: (GroupSelectionEvent) -> Unit,
 	navController: NavController,
@@ -69,6 +77,7 @@ fun GroupSelectionScreen(
 
 	val keyboardController = LocalSoftwareKeyboardController.current
 	val keyboardOpen by keyboardAsState()
+	val focusManager = LocalFocusManager.current
 
 	val contentAlpha by animateFloatAsState(
 		targetValue = if (searchQuery.isNotEmpty() && keyboardOpen) 0f else 0.5f,
@@ -78,7 +87,6 @@ fun GroupSelectionScreen(
 		targetValue = if (isLoading) 0.1f else 1f,
 		label = "",
 	)
-
 
 	val context = LocalContext.current
 	val activity = context as? Activity
@@ -108,6 +116,31 @@ fun GroupSelectionScreen(
 			shape = MaterialTheme.shapes.medium,
 		)
 	}
+
+	if (showExitError) {
+		AlertDialog(
+			onDismissRequest = { event(GroupSelectionEvent.DisposeError) },
+			confirmButton = {
+				Button(
+					onClick = { event(GroupSelectionEvent.DisposeError) },
+				) {
+					Text("Печально... \uD83E\uDEE1")
+				}
+			},
+			text = {
+				Box {
+					Text(
+						"\uD83D\uDE14 Произошла так называемая \"ошибка\"",
+						style = MaterialTheme.typography.bodyMedium.copy(
+							color = MaterialTheme.colorScheme.secondary,
+							fontWeight = FontWeight.Bold,
+						),
+					)
+				}
+			},
+			shape = MaterialTheme.shapes.medium,
+		)
+	}
 	
 	Box(
 		modifier =
@@ -127,6 +160,7 @@ fun GroupSelectionScreen(
 		BackHandler {
 			activity?.finish()
 		}
+
 		Column(
 			horizontalAlignment = Alignment.CenterHorizontally,
 			verticalArrangement = Arrangement.Center,
@@ -135,15 +169,17 @@ fun GroupSelectionScreen(
 				.fillMaxHeight()
 				.alpha(globalAlpha),
 		) {
+
 			Box(
 				contentAlignment = Alignment.BottomCenter,
 				modifier = Modifier.fillMaxWidth(),
 			) {
-				// TODO кнопка выхода из акка
+
 				SelectionBackground(
 					contentAlpha = contentAlpha,
 					text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»\n\uD83E\uDD28",
 				)
+
 				this@Column.AnimatedVisibility(
 					visible = searchQuery.isNotEmpty() && keyboardOpen
 				) {
@@ -185,6 +221,7 @@ fun GroupSelectionScreen(
 									text = group.name,
 									onClick = {
 										keyboardController?.hide()
+										focusManager.clearFocus()
 										searchQuery = group.name
 									}
 								)
@@ -193,9 +230,14 @@ fun GroupSelectionScreen(
 					}
 				}
 			}
+
+			var proceedAssign by remember { mutableStateOf(false) }
 			SearchBar(
 				placeholder = "КИ21-16 ...",
 				onTextChange = { searchQuery = it },
+				onClick = {
+					proceedAssign = true
+				},
 				textState = selectedGroup?.name ?: searchQuery,
 				keyboardOptions = KeyboardOptions.Default.copy(
 					imeAction = ImeAction.Done,
@@ -205,6 +247,42 @@ fun GroupSelectionScreen(
 						keyboardController?.hide()
 					},
 				),
+			)
+			if (proceedAssign) {
+				AlertDialog(
+					onDismissRequest = { proceedAssign = false },
+					confirmButton = {
+						Button(
+							onClick = {
+								proceedAssign = false
+								// TODO аппрув группы
+//								event(GroupSelectionEvent.ChangeAccount(navController))
+							}
+						) {
+							Text("ОК")
+						}
+					},
+					dismissButton = {
+						Button(
+							onClick = { proceedAssign = false }
+						) {
+							Text("Отмена")
+						}
+					},
+					title = { Text("Писька") },
+					text = { Text("Попка?") }
+				)
+			}
+
+			val coroutineScope = rememberCoroutineScope()
+			HyperlinkNAV(
+				text = "Сменить аккаунт \uD83D\uDEAA",
+				modifier = Modifier.padding(vertical = SmallPadding),
+				onClick = {
+					coroutineScope.launch {
+						event(GroupSelectionEvent.ChangeAccount(navController))
+					}
+				}
 			)
 		}
 	}

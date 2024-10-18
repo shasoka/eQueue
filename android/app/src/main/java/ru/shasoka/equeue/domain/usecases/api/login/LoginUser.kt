@@ -4,6 +4,7 @@
 
 package ru.shasoka.equeue.domain.usecases.api.login
 
+import android.util.Log
 import ru.shasoka.equeue.data.local.UserDao
 import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
 import ru.shasoka.equeue.data.remote.dto.toUser

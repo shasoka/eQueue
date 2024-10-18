@@ -44,6 +44,7 @@ import ru.shasoka.equeue.ui.theme.EQueueTheme
 fun SearchBar(
 	placeholder: String,
 	onTextChange: (String) -> Unit,
+	onClick: () -> Unit,
 	modifier: Modifier = Modifier,
 	textState: String = "",
 	keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -104,7 +105,7 @@ fun SearchBar(
 			)
 			IconButton(
 				modifier = Modifier.then(Modifier.size(24.dp)),
-				onClick = { },
+				onClick = { onClick() },
 			) {
 				Icon(
 					painter = painterResource(R.drawable.nav_next),
@@ -116,18 +117,5 @@ fun SearchBar(
 				)
 			}
 		}
-	}
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun SearchBarPreview() {
-	var searchQuery by remember { mutableStateOf("") }
-	
-	EQueueTheme(dynamicColor = false) {
-		SearchBar(
-			placeholder = "Поиск...",
-			onTextChange = { searchQuery = it },
-		)
 	}
 }

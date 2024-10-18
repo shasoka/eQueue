@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
+import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
+import ru.shasoka.equeue.presentation.nvgraph.Route
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +24,15 @@ class GroupSelectionViewModel
 @Inject
 constructor(
 	private val groupSelectionUseCases: GroupSelectionUseCases,
+	private val logoutUseCases: LogoutUseCases,
 ) : ViewModel() {
 	var isLoading: Boolean by mutableStateOf(false)
 		private set
 	
 	var showAlert: Boolean by mutableStateOf(false)
+		private set
+
+	var showExitError: Boolean by mutableStateOf(false)
 		private set
 	
 	var groups by mutableStateOf<List<GetGroupsResponseItem>>(emptyList())
@@ -55,12 +61,40 @@ constructor(
 				showAlert = false
 			}
 
+			is GroupSelectionEvent.DisposeError -> {
+				showExitError = false
+			}
+
 			is GroupSelectionEvent.GroupSelected -> {
 				selectedGroup = event.group
 			}
+
+			is GroupSelectionEvent.ChangeAccount -> {
+				viewModelScope.launch {
+					try {
+						isLoading = true
+						delay(300)
+						logoutUser()
+						isLoading = false
+						event.navController.navigate(Route.LogInNavigation.route)
+					} catch (e: Exception) {
+						showExitError = true
+						isLoading = false
+					}
+				}
+			}
+
 		}
 	}
 	
 	private suspend fun getGroups(): GetGroupsResponse = groupSelectionUseCases.getGroups()
+
+	private suspend fun logoutUser(): Unit {
+		try {
+			return logoutUseCases.logoutUser()
+		} catch (e: Exception) {
+			throw e
+		}
+	}
 
 }
