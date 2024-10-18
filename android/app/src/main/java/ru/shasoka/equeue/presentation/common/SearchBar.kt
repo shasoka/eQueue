@@ -2,7 +2,7 @@
  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
-package ru.shasoka.equeue.presentation.groupselection.components
+package ru.shasoka.equeue.presentation.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -20,6 +21,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,9 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.ui.theme.EQueueTheme
@@ -41,6 +45,7 @@ fun SearchBar(
 	placeholder: String,
 	onTextChange: (String) -> Unit,
 	modifier: Modifier = Modifier,
+	textState: String = "",
 	keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 	keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
@@ -70,7 +75,7 @@ fun SearchBar(
 				tint = MaterialTheme.colorScheme.secondary,
 			)
 			BasicTextField(
-				value = text,
+				value = textState,
 				onValueChange = {
 					onTextChange(it)
 					text = it
@@ -79,8 +84,7 @@ fun SearchBar(
 				keyboardActions = keyboardActions,
 				visualTransformation = VisualTransformation.None,
 				maxLines = 1,
-				textStyle =
-				MaterialTheme.typography.bodyMedium.copy(
+				textStyle = MaterialTheme.typography.bodyMedium.copy(
 					color = MaterialTheme.colorScheme.secondary,
 				),
 				decorationBox = { innerTextField ->
@@ -93,12 +97,24 @@ fun SearchBar(
 					}
 					innerTextField()
 				},
-				modifier =
-				Modifier
+				modifier = Modifier
 					.padding(horizontal = SmallPadding)
 					.weight(1f)
 					.horizontalScroll(rememberScrollState()),
 			)
+			IconButton(
+				modifier = Modifier.then(Modifier.size(24.dp)),
+				onClick = { },
+			) {
+				Icon(
+					painter = painterResource(R.drawable.nav_next),
+					contentDescription = "Select this group and proceed",
+					modifier = Modifier
+						.size(24.dp)
+						.padding(all = 0.dp),
+					tint = MaterialTheme.colorScheme.secondary,
+				)
+			}
 		}
 	}
 }

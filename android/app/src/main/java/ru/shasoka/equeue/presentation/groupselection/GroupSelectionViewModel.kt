@@ -31,6 +31,9 @@ constructor(
 	
 	var groups by mutableStateOf<List<GetGroupsResponseItem>>(emptyList())
 		private set
+
+	var selectedGroup by mutableStateOf<GetGroupsResponseItem?>(null)
+		private set
 	
 	init {
 		viewModelScope.launch {
@@ -51,8 +54,13 @@ constructor(
 			is GroupSelectionEvent.DisposeAlert -> {
 				showAlert = false
 			}
+
+			is GroupSelectionEvent.GroupSelected -> {
+				selectedGroup = event.group
+			}
 		}
 	}
 	
 	private suspend fun getGroups(): GetGroupsResponse = groupSelectionUseCases.getGroups()
+
 }

@@ -4,6 +4,12 @@
 
 package ru.shasoka.equeue.presentation.groupselection
 
+import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+
 sealed class GroupSelectionEvent {
 	data object DisposeAlert : GroupSelectionEvent()
+
+	data class GroupSelected(
+		val group: GetGroupsResponseItem
+	) : GroupSelectionEvent()
 }

@@ -4,6 +4,7 @@
 
 package ru.shasoka.equeue.presentation.groupselection.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,21 +23,21 @@ import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
 @Composable
 fun SearchResult(
 	text: String,
+	onClick: () -> Unit,
 	modifier: Modifier = Modifier,
 ) {
 	// Height is about 33.dp
 	Box(
-		modifier =
-		modifier
+		modifier = modifier
 			.fillMaxWidth()
 			.padding(all = MediumPadding)
+			.clickable { onClick() }
 			.horizontalScroll(rememberScrollState()),
 		contentAlignment = Alignment.CenterStart,
 	) {
 		Text(
 			text = text,
-			style =
-			MaterialTheme.typography.bodyMedium.copy(
+			style = MaterialTheme.typography.bodyMedium.copy(
 				color = MaterialTheme.colorScheme.secondary,
 				fontWeight = FontWeight.SemiBold,
 			),

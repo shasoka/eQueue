@@ -48,35 +48,41 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
-import ru.shasoka.equeue.presentation.groupselection.components.SearchBar
+import ru.shasoka.equeue.presentation.common.SearchBar
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
 import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
+import ru.shasoka.equeue.util.keyboardAsState
 
 @Composable
 fun GroupSelectionScreen(
 	groups: List<GetGroupsResponseItem>,
 	isLoading: Boolean,
 	showAlert: Boolean,
+	selectedGroup: GetGroupsResponseItem?,
 	event: (GroupSelectionEvent) -> Unit,
 	navController: NavController,
 	modifier: Modifier = Modifier,
 ) {
 	var searchQuery by remember { mutableStateOf("") }
+	var filteredGroups by remember { mutableStateOf<List<GetGroupsResponseItem>>(emptyList()) }
+
+	val keyboardController = LocalSoftwareKeyboardController.current
+	val keyboardOpen by keyboardAsState()
+
 	val contentAlpha by animateFloatAsState(
-		targetValue = if (searchQuery.isEmpty()) 0.5f else 0f,
+		targetValue = if (searchQuery.isNotEmpty() && keyboardOpen) 0f else 0.5f,
 		label = "",
 	)
 	val globalAlpha by animateFloatAsState(
 		targetValue = if (isLoading) 0.1f else 1f,
 		label = "",
 	)
-	
-	val keyboardController = LocalSoftwareKeyboardController.current
-	
+
+
 	val context = LocalContext.current
 	val activity = context as? Activity
-	
+
 	if (showAlert) {
 		AlertDialog(
 			onDismissRequest = { event(GroupSelectionEvent.DisposeAlert) },
@@ -138,19 +144,22 @@ fun GroupSelectionScreen(
 					contentAlpha = contentAlpha,
 					text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»\n\uD83E\uDD28",
 				)
-				if (searchQuery.isNotEmpty()) {
-					val filteredGroups =
-						groups.filter {
-							it.name.contains(searchQuery, ignoreCase = true)
-						}
+				this@Column.AnimatedVisibility(
+					visible = searchQuery.isNotEmpty() && keyboardOpen
+				) {
+					filteredGroups = groups.filter {
+						it.name.contains(
+							searchQuery,
+							ignoreCase = true
+						)
+					}
 					val visibleItems = filteredGroups.take(5)
 					val lazyColumnHeight = (visibleItems.size * SEARCH_RESULT_HEIGHT).dp
-					
+
 					LazyColumn(
 						horizontalAlignment = Alignment.Start,
 						verticalArrangement = Arrangement.Bottom,
-						modifier =
-						Modifier
+						modifier = Modifier
 							.fillMaxWidth()
 							.height(lazyColumnHeight)
 							.background(
@@ -165,11 +174,20 @@ fun GroupSelectionScreen(
 					) {
 						if (filteredGroups.isEmpty()) {
 							item {
-								SearchResult(text = "Ничего не найдено")
+								SearchResult(
+									text = "Ничего не найдено",
+									onClick = {}
+								)
 							}
 						} else {
 							items(filteredGroups) { group ->
-								SearchResult(text = group.name)
+								SearchResult(
+									text = group.name,
+									onClick = {
+										keyboardController?.hide()
+										searchQuery = group.name
+									}
+								)
 							}
 						}
 					}
@@ -178,12 +196,11 @@ fun GroupSelectionScreen(
 			SearchBar(
 				placeholder = "КИ21-16 ...",
 				onTextChange = { searchQuery = it },
-				keyboardOptions =
-				KeyboardOptions.Default.copy(
+				textState = selectedGroup?.name ?: searchQuery,
+				keyboardOptions = KeyboardOptions.Default.copy(
 					imeAction = ImeAction.Done,
 				),
-				keyboardActions =
-				KeyboardActions(
+				keyboardActions = KeyboardActions(
 					onDone = {
 						keyboardController?.hide()
 					},
