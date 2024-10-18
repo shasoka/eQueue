@@ -52,7 +52,7 @@ object AppModule {
     fun provideRetrofit(): Retrofit =
         Retrofit
             .Builder()
-            .baseUrl("https://equeue-backend.onrender.com/api/v1/")
+            .baseUrl("https://equeue.onrender.com/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

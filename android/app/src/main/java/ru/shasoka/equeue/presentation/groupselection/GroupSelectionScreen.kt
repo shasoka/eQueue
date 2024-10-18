@@ -133,6 +133,7 @@ fun GroupSelectionScreen(
 				contentAlignment = Alignment.BottomCenter,
 				modifier = Modifier.fillMaxWidth(),
 			) {
+				// TODO кнопка выхода из акка
 				SelectionBackground(
 					contentAlpha = contentAlpha,
 					text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»\n\uD83E\uDD28",

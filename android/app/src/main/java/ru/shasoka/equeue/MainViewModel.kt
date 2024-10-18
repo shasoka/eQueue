@@ -4,6 +4,7 @@
 
 package ru.shasoka.equeue
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -41,9 +42,10 @@ class MainViewModel
                 if (user != null) {
                     // Проверяем наличие группы у пользователя
                     startDestination =
-                        if (user.assigned_group_id != null) {
-                            TODO()
-                        } else {
+                        if (user.assigned_group_id != null) ({
+                            // TODO
+                            Log.d("MainViewModel", "Group assigned to user: ${user.assigned_group_id}")
+                        }).toString() else {
                             Route.GroupSelectionNavigation.route
                         }
                     delay(300)
