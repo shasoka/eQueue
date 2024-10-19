@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,7 +74,7 @@ fun LoginScreen(
 		targetValue = if (isLoading) 0.1f else 1f,
 		label = "",
 	)
-	
+
 	if (showAlert) {
 		AlertDialog(
 			onDismissRequest = { event(LoginEvent.DisposeAlert) },
@@ -194,7 +195,7 @@ fun LoginScreen(
 			)
 			StartButton(
 				text = "Войти",
-				onClick = { event(LoginEvent.LoginUser(username, password, navController)) },
+				onClick = {	event(LoginEvent.LoginUser(username, password, navController)) },
 				modifier = Modifier.padding(vertical = SmallPadding),
 			)
 		}

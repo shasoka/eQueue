@@ -78,13 +78,13 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val scope = rememberCoroutineScope()
+                val coroutineScope = rememberCoroutineScope()
 				
                 if (buttonState.value[0].isNotEmpty()) {
                     BackTextButton(
                         text = buttonState.value[0],
                         onClick = {
-                            scope.launch {
+                            coroutineScope.launch {
                                 pagerState.animateScrollToPage(page = pagerState.currentPage - 1)
                             }
                         },
@@ -94,7 +94,7 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
                 StartButton(
                     text = buttonState.value[1],
                     onClick = {
-                        scope.launch {
+                        coroutineScope.launch {
                             if (pagerState.currentPage == 1) {
                                 event(OnBoardingEvent.SaveAppEntry)
                             } else {

@@ -37,8 +37,8 @@ class LoginViewModel
                             isLoading = true
                             delay(500)
                             loginUser(event.username, event.password)
-                            event.navController.navigate(Route.GroupSelectionNavigation.route)
                             isLoading = false
+                            event.navController.navigate(Route.GroupSelectionNavigation.route)
                         } catch (e: Exception) {
                             showAlert = true
                             isLoading = false

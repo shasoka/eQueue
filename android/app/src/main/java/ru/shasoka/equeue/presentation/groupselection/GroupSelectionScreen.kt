@@ -12,7 +12,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,11 +25,9 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -40,7 +37,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,13 +48,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.presentation.common.HyperlinkNAV
 import ru.shasoka.equeue.presentation.common.SearchBar
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
 import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
+import ru.shasoka.equeue.util.Alerts
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
 import ru.shasoka.equeue.util.keyboardAsState
 
@@ -66,14 +62,17 @@ import ru.shasoka.equeue.util.keyboardAsState
 fun GroupSelectionScreen(
 	groups: List<GetGroupsResponseItem>,
 	isLoading: Boolean,
-	showAlert: Boolean,
-	showExitError: Boolean,
+	showGroupsLoadingAlert: Boolean,
+	showConnectionAlert: Boolean,
 	event: (GroupSelectionEvent) -> Unit,
 	navController: NavController,
 	modifier: Modifier = Modifier,
 ) {
+	// TODO move to viewModel
 	var searchQuery by remember { mutableStateOf("") }
 	var filteredGroups by remember { mutableStateOf<List<GetGroupsResponseItem>>(emptyList()) }
+	var proceedDialog by remember { mutableStateOf(false) }
+	var correctGroupSelected by remember { mutableStateOf(false) }
 
 	val keyboardController = LocalSoftwareKeyboardController.current
 	val keyboardOpen by keyboardAsState()
@@ -91,12 +90,12 @@ fun GroupSelectionScreen(
 	val context = LocalContext.current
 	val activity = context as? Activity
 
-	if (showAlert) {
+	if (showGroupsLoadingAlert) {
 		AlertDialog(
-			onDismissRequest = { event(GroupSelectionEvent.DisposeAlert) },
+			onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
 			confirmButton = {
 				Button(
-					onClick = { event(GroupSelectionEvent.DisposeAlert) },
+					onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
 				) {
 					Text("Сэр, да, сэр! \uD83E\uDEE1")
 				}
@@ -117,12 +116,12 @@ fun GroupSelectionScreen(
 		)
 	}
 
-	if (showExitError) {
+	if (showConnectionAlert) {
 		AlertDialog(
-			onDismissRequest = { event(GroupSelectionEvent.DisposeError) },
+			onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
 			confirmButton = {
 				Button(
-					onClick = { event(GroupSelectionEvent.DisposeError) },
+					onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
 				) {
 					Text("Печально... \uD83E\uDEE1")
 				}
@@ -141,7 +140,56 @@ fun GroupSelectionScreen(
 			shape = MaterialTheme.shapes.medium,
 		)
 	}
-	
+
+	if (proceedDialog) {
+		AlertDialog(
+			onDismissRequest = { proceedDialog = false },
+			confirmButton = {
+				if (correctGroupSelected) {
+					Button(
+						onClick = {
+							proceedDialog = false
+							event(GroupSelectionEvent.JoinGroup(groups.first { it.name == searchQuery }))
+						}
+					) {
+						Text("Так точно \uD83E\uDEE1")
+					}
+				} else {
+					Button(
+						onClick = {
+							proceedDialog = false
+						}
+					) {
+						Text("Сэр, да, сэр! \uD83E\uDEE1")
+					}
+				}
+			},
+			dismissButton = {
+				if (correctGroupSelected) {
+					Button(
+						onClick = { proceedDialog = false }
+					) {
+						Text("Отмена")
+					}
+				}
+			},
+			title = {
+				if (correctGroupSelected) {
+					Text("Подтверждение")
+				} else {
+					Text("Группа не найдена")
+				}
+			},
+			text = {
+				if (correctGroupSelected) {
+					Text("Вы уверены, что хотите присоединиться к группе ${searchQuery}?")
+				} else {
+					Text("Вы ввели некорректную группу. Попробуйте ещё раз.")
+				}
+			}
+		)
+	}
+
 	Box(
 		modifier =
 		modifier
@@ -231,8 +279,6 @@ fun GroupSelectionScreen(
 				}
 			}
 
-			var proceedDialog by remember { mutableStateOf(false) }
-			var correctGroupSelected by remember { mutableStateOf(false) }
 			SearchBar(
 				placeholder = "КИ21-16 ...",
 				onTextChange = {
@@ -257,65 +303,11 @@ fun GroupSelectionScreen(
 					},
 				),
 			)
-			if (proceedDialog) {
-				AlertDialog(
-					onDismissRequest = { proceedDialog = false },
-					confirmButton = {
-						if (correctGroupSelected) {
-							Button(
-								onClick = {
-									proceedDialog = false
-									// TODO аппрув группы
-									event(GroupSelectionEvent.ChangeAccount(navController))
-								}
-							) {
-								Text("Так точно \uD83E\uDEE1")
-							}
-						} else {
-							Button(
-								onClick = {
-									proceedDialog = false
-								}
-							) {
-								Text("Сэр, да, сэр! \uD83E\uDEE1")
-							}
-						}
-					},
-					dismissButton = {
-						if (correctGroupSelected) {
-							Button(
-								onClick = { proceedDialog = false }
-							) {
-								Text("Отмена")
-							}
-						}
-					},
-					title = {
-						if (correctGroupSelected) {
-							Text("Подтверждение")
-						} else {
-							Text("Группа не найдена")
-						}
-					},
-					text = {
-						if (correctGroupSelected) {
-							Text("Вы уверены, что хотите присоединиться к группе ${searchQuery}?",)
-						} else {
-							Text("Вы ввели некорректную группу. Попробуйте ещё раз.")
-						}
-					}
-				)
-			}
 
-			val coroutineScope = rememberCoroutineScope()
 			HyperlinkNAV(
 				text = "Сменить аккаунт \uD83D\uDEAA",
 				modifier = Modifier.padding(vertical = SmallPadding),
-				onClick = {
-					coroutineScope.launch {
-						event(GroupSelectionEvent.ChangeAccount(navController))
-					}
-				}
+				onClick = { event(GroupSelectionEvent.ChangeAccount(navController)) }
 			)
 		}
 	}

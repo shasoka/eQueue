@@ -4,7 +4,7 @@
 
 package ru.shasoka.equeue.data.remote.dto
 
-data class UserRead(
+data class UserReadResponse(
     val assigned_group_id: Any,
     val assigned_workspace_id: Any,
     val created_at: String,

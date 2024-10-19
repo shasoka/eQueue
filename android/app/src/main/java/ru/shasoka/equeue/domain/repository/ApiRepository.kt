@@ -6,6 +6,7 @@ package ru.shasoka.equeue.domain.repository
 
 import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
+import ru.shasoka.equeue.data.remote.dto.UserReadResponse
 
 interface ApiRepository {
     suspend fun login(
@@ -13,5 +14,13 @@ interface ApiRepository {
         password: String,
     ): ECoursesLoginResponse
 
-    suspend fun getGroups(token: String): GetGroupsResponse
+    suspend fun getGroups(token: String) : GetGroupsResponse
+
+    suspend fun patchUser(
+        header: String,
+        access_token: String?,
+        assigned_group_id: Int?,
+        status: String?,
+        user_picture_url: String?,
+    ): UserReadResponse
 }

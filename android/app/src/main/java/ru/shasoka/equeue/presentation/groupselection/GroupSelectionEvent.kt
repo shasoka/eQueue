@@ -6,13 +6,14 @@ package ru.shasoka.equeue.presentation.groupselection
 
 import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+import ru.shasoka.equeue.util.Alerts
 
 sealed class GroupSelectionEvent {
-	data object DisposeAlert : GroupSelectionEvent()
+	data class DisposeAlert(
+		val alertType: Alerts
+	) : GroupSelectionEvent()
 
-	data object DisposeError : GroupSelectionEvent()
-
-	data class GroupSelected(
+	data class JoinGroup(
 		val group: GetGroupsResponseItem
 	) : GroupSelectionEvent()
 

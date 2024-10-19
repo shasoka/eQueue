@@ -6,4 +6,5 @@ package ru.shasoka.equeue.domain.usecases.api.groupselection
 
 class GroupSelectionUseCases(
     val getGroups: GetGroups,
+    val joinGroup: JoinGroup,
 )

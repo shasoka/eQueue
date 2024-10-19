@@ -21,6 +21,7 @@ import ru.shasoka.equeue.domain.manager.LocalUserManager
 import ru.shasoka.equeue.domain.repository.ApiRepository
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GetGroups
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
+import ru.shasoka.equeue.domain.usecases.api.groupselection.JoinGroup
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUser
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
@@ -84,6 +85,7 @@ object AppModule {
     ): GroupSelectionUseCases =
         GroupSelectionUseCases(
             getGroups = GetGroups(repository, userDao),
+            joinGroup = JoinGroup(repository, userDao),
         )
 
     @Provides

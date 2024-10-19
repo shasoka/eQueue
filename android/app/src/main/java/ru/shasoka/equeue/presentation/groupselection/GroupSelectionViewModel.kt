@@ -14,9 +14,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+import ru.shasoka.equeue.data.remote.dto.UserReadResponse
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
 import ru.shasoka.equeue.presentation.nvgraph.Route
+import ru.shasoka.equeue.util.Alerts
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,21 +28,19 @@ constructor(
 	private val groupSelectionUseCases: GroupSelectionUseCases,
 	private val logoutUseCases: LogoutUseCases,
 ) : ViewModel() {
+
 	var isLoading: Boolean by mutableStateOf(false)
 		private set
 	
-	var showAlert: Boolean by mutableStateOf(false)
+	var showConnectionAlert: Boolean by mutableStateOf(false)
 		private set
 
-	var showExitError: Boolean by mutableStateOf(false)
+	var showGroupsLoadingAlert: Boolean by mutableStateOf(false)
 		private set
 	
 	var groups by mutableStateOf<List<GetGroupsResponseItem>>(emptyList())
 		private set
 
-	var selectedGroup by mutableStateOf<GetGroupsResponseItem?>(null)
-		private set
-	
 	init {
 		viewModelScope.launch {
 			try {
@@ -49,7 +49,7 @@ constructor(
 				groups = getGroups()
 				isLoading = false
 			} catch (e: Exception) {
-				showAlert = true
+				showConnectionAlert = true
 				isLoading = false
 			}
 		}
@@ -58,15 +58,24 @@ constructor(
 	fun onEvent(event: GroupSelectionEvent) {
 		when (event) {
 			is GroupSelectionEvent.DisposeAlert -> {
-				showAlert = false
+				when (event.alertType) {
+					Alerts.GROUPS_LOADING -> showGroupsLoadingAlert = false
+					Alerts.BASE_CONNECTION -> showConnectionAlert = false
+				}
 			}
 
-			is GroupSelectionEvent.DisposeError -> {
-				showExitError = false
-			}
-
-			is GroupSelectionEvent.GroupSelected -> {
-				selectedGroup = event.group
+			is GroupSelectionEvent.JoinGroup -> {
+				viewModelScope.launch {
+					try {
+						isLoading = true
+						delay(300)
+						joinGroup(event.group.id)
+						isLoading = false
+						// todo navigate next
+					} catch (e: Exception) {
+						isLoading = false
+					}
+				}
 			}
 
 			is GroupSelectionEvent.ChangeAccount -> {
@@ -78,20 +87,27 @@ constructor(
 						isLoading = false
 						event.navController.navigate(Route.LogInNavigation.route)
 					} catch (e: Exception) {
-						showExitError = true
+						showGroupsLoadingAlert = true
 						isLoading = false
 					}
 				}
 			}
-
 		}
 	}
 	
 	private suspend fun getGroups(): GetGroupsResponse = groupSelectionUseCases.getGroups()
 
-	private suspend fun logoutUser(): Unit {
+	private suspend fun logoutUser() {
 		try {
 			return logoutUseCases.logoutUser()
+		} catch (e: Exception) {
+			throw e
+		}
+	}
+
+	private suspend fun joinGroup(groupId: Int): UserReadResponse {
+		try {
+			return groupSelectionUseCases.joinGroup(groupId)
 		} catch (e: Exception) {
 			throw e
 		}

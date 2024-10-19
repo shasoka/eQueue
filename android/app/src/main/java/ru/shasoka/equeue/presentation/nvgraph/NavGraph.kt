@@ -58,8 +58,8 @@ fun NavGraph(startDestination: String) {
 				GroupSelectionScreen(
 					groups = viewModel.groups,
 					isLoading = viewModel.isLoading,
-					showAlert = viewModel.showAlert,
-					showExitError = viewModel.showExitError,
+					showGroupsLoadingAlert = viewModel.showConnectionAlert,
+					showConnectionAlert = viewModel.showGroupsLoadingAlert,
 					event = viewModel::onEvent,
 					navController = navController,
 				)
