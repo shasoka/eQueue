@@ -60,7 +60,6 @@ fun NavGraph(startDestination: String) {
 					isLoading = viewModel.isLoading,
 					showAlert = viewModel.showAlert,
 					showExitError = viewModel.showExitError,
-					selectedGroup = viewModel.selectedGroup,
 					event = viewModel::onEvent,
 					navController = navController,
 				)

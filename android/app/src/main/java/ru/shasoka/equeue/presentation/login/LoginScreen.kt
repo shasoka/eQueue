@@ -33,7 +33,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +45,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
-import kotlinx.coroutines.launch
 import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.presentation.common.HyperlinkURL
@@ -70,8 +68,7 @@ fun LoginScreen(
 	val focusManager = LocalFocusManager.current
 	val usernameFocusRequester = remember { FocusRequester() }
 	val passwordFocusRequester = remember { FocusRequester() }
-	val coroutineScope = rememberCoroutineScope()
-	
+
 	val contentAlpha by animateFloatAsState(
 		targetValue = if (isLoading) 0.1f else 1f,
 		label = "",
@@ -158,11 +155,7 @@ fun LoginScreen(
 				),
 				keyboardActions =
 				KeyboardActions(
-					onNext = {
-						coroutineScope.launch {
-							passwordFocusRequester.requestFocus()
-						}
-					},
+					onNext = { passwordFocusRequester.requestFocus() },
 				),
 			)
 			FormField(
@@ -201,11 +194,7 @@ fun LoginScreen(
 			)
 			StartButton(
 				text = "Войти",
-				onClick = {
-					coroutineScope.launch {
-						event(LoginEvent.LoginUser(username, password, navController))
-					}
-				},
+				onClick = { event(LoginEvent.LoginUser(username, password, navController)) },
 				modifier = Modifier.padding(vertical = SmallPadding),
 			)
 		}

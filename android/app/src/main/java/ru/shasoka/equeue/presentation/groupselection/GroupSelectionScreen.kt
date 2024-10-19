@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,9 +26,11 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -53,11 +56,9 @@ import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.presentation.common.HyperlinkNAV
-import ru.shasoka.equeue.presentation.common.HyperlinkURL
 import ru.shasoka.equeue.presentation.common.SearchBar
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
 import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
-import ru.shasoka.equeue.util.Constants.RESET_PASS
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
 import ru.shasoka.equeue.util.keyboardAsState
 
@@ -67,7 +68,6 @@ fun GroupSelectionScreen(
 	isLoading: Boolean,
 	showAlert: Boolean,
 	showExitError: Boolean,
-	selectedGroup: GetGroupsResponseItem?,
 	event: (GroupSelectionEvent) -> Unit,
 	navController: NavController,
 	modifier: Modifier = Modifier,
@@ -231,46 +231,79 @@ fun GroupSelectionScreen(
 				}
 			}
 
-			var proceedAssign by remember { mutableStateOf(false) }
+			var proceedDialog by remember { mutableStateOf(false) }
+			var correctGroupSelected by remember { mutableStateOf(false) }
 			SearchBar(
 				placeholder = "КИ21-16 ...",
-				onTextChange = { searchQuery = it },
-				onClick = {
-					proceedAssign = true
+				onTextChange = {
+					searchQuery = it
 				},
-				textState = selectedGroup?.name ?: searchQuery,
+				onClick = {
+					if (searchQuery in groups.map { it.name }) {
+						correctGroupSelected = true
+						proceedDialog = true
+					} else {
+						correctGroupSelected = false
+						proceedDialog = true
+					}
+				},
+				textState = searchQuery,
 				keyboardOptions = KeyboardOptions.Default.copy(
 					imeAction = ImeAction.Done,
-				),
+					),
 				keyboardActions = KeyboardActions(
 					onDone = {
 						keyboardController?.hide()
 					},
 				),
 			)
-			if (proceedAssign) {
+			if (proceedDialog) {
 				AlertDialog(
-					onDismissRequest = { proceedAssign = false },
+					onDismissRequest = { proceedDialog = false },
 					confirmButton = {
-						Button(
-							onClick = {
-								proceedAssign = false
-								// TODO аппрув группы
-//								event(GroupSelectionEvent.ChangeAccount(navController))
+						if (correctGroupSelected) {
+							Button(
+								onClick = {
+									proceedDialog = false
+									// TODO аппрув группы
+									event(GroupSelectionEvent.ChangeAccount(navController))
+								}
+							) {
+								Text("Так точно \uD83E\uDEE1")
 							}
-						) {
-							Text("ОК")
+						} else {
+							Button(
+								onClick = {
+									proceedDialog = false
+								}
+							) {
+								Text("Сэр, да, сэр! \uD83E\uDEE1")
+							}
 						}
 					},
 					dismissButton = {
-						Button(
-							onClick = { proceedAssign = false }
-						) {
-							Text("Отмена")
+						if (correctGroupSelected) {
+							Button(
+								onClick = { proceedDialog = false }
+							) {
+								Text("Отмена")
+							}
 						}
 					},
-					title = { Text("Писька") },
-					text = { Text("Попка?") }
+					title = {
+						if (correctGroupSelected) {
+							Text("Подтверждение")
+						} else {
+							Text("Группа не найдена")
+						}
+					},
+					text = {
+						if (correctGroupSelected) {
+							Text("Вы уверены, что хотите присоединиться к группе ${searchQuery}?",)
+						} else {
+							Text("Вы ввели некорректную группу. Попробуйте ещё раз.")
+						}
+					}
 				)
 			}
 

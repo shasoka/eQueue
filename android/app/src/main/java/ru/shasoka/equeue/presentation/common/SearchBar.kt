@@ -25,20 +25,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
-import ru.shasoka.equeue.ui.theme.EQueueTheme
 
 @Composable
 fun SearchBar(
@@ -50,8 +44,7 @@ fun SearchBar(
 	keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 	keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
-	var text by remember { mutableStateOf("") }
-	
+
 	Box(
 		modifier =
 		modifier
@@ -79,7 +72,6 @@ fun SearchBar(
 				value = textState,
 				onValueChange = {
 					onTextChange(it)
-					text = it
 				},
 				keyboardOptions = keyboardOptions,
 				keyboardActions = keyboardActions,
@@ -89,7 +81,7 @@ fun SearchBar(
 					color = MaterialTheme.colorScheme.secondary,
 				),
 				decorationBox = { innerTextField ->
-					if (text.isEmpty()) {
+					if (textState.isEmpty()) {
 						Text(
 							text = placeholder,
 							color = MaterialTheme.colorScheme.secondary,
@@ -106,7 +98,7 @@ fun SearchBar(
 			IconButton(
 				modifier = Modifier.then(Modifier.size(24.dp)),
 				onClick = { onClick() },
-			) {
+				) {
 				Icon(
 					painter = painterResource(R.drawable.nav_next),
 					contentDescription = "Select this group and proceed",
