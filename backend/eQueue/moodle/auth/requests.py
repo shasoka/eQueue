@@ -2,6 +2,8 @@
 
 import requests
 
+from urllib.parse import quote_plus as url_encode
+
 from moodle import proxies
 from core.config import settings
 from core.schemas.moodle import MoodleLogin
@@ -10,7 +12,10 @@ from utils import validate
 
 async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
     response = requests.get(
-        settings.moodle.auth_url % (credentials.login, credentials.password),
+        settings.moodle.auth_url % (
+            url_encode(credentials.login),
+            url_encode(credentials.password),
+        ),
         proxies=proxies,
     )
 
@@ -24,7 +29,7 @@ async def get_moodle_user_info(
     token: str,
 ) -> dict:
     response = requests.get(
-        settings.moodle.get_user_info_url % token,
+        settings.moodle.get_user_info_url % url_encode(token),
         proxies=proxies,
     )
 
@@ -43,7 +48,7 @@ async def get_moodle_user_info(
 
 async def token_persistence(token: str) -> None:
     response = requests.get(
-        settings.moodle.get_user_info_url % token,
+        settings.moodle.get_user_info_url % url_encode(token),
         proxies=proxies,
     )
     response = response.json()

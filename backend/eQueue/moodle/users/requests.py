@@ -2,6 +2,8 @@
 
 import requests
 
+from urllib.parse import quote_plus as url_encode
+
 from moodle.proxies import proxies
 from core.config import settings
 from utils import validate
@@ -12,7 +14,7 @@ async def patch_profile_picture(
     files: dict,
 ) -> str:
     response = requests.post(
-        settings.moodle.upload_new_image_url % token,
+        settings.moodle.upload_new_image_url % url_encode(token),
         files=files,
         proxies=proxies,
     )
