@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue
@@ -42,10 +42,14 @@ class MainViewModel
                 if (user != null) {
                     // Проверяем наличие группы у пользователя
                     startDestination =
-                        if (user.assigned_group_id != null) ({
-                            // TODO
-                            Log.d("MainViewModel", "Group assigned to user: ${user.assigned_group_id}")
-                        }).toString() else {
+                        if (user.assigned_group_id != null) {
+                            (
+                                {
+                                    // TODO
+                                    Log.d("MainViewModel", "Group assigned to user: ${user.assigned_group_id}")
+                                }
+                            ).toString()
+                        } else {
                             Route.GroupSelectionNavigation.route
                         }
                     delay(300)

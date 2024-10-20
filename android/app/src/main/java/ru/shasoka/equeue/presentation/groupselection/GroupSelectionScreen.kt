@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.groupselection
@@ -60,255 +60,258 @@ import ru.shasoka.equeue.util.keyboardAsState
 
 @Composable
 fun GroupSelectionScreen(
-	groups: List<GroupRead>,
-	isLoading: Boolean,
-	showGroupsLoadingAlert: Boolean,
-	showConnectionAlert: Boolean,
-	event: (GroupSelectionEvent) -> Unit,
-	navController: NavController,
-	modifier: Modifier = Modifier,
+    groups: List<GroupRead>,
+    isLoading: Boolean,
+    showGroupsLoadingAlert: Boolean,
+    showConnectionAlert: Boolean,
+    event: (GroupSelectionEvent) -> Unit,
+    navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
-	// TODO move to viewModel
-	var searchQuery by remember { mutableStateOf("") }
-	var filteredGroups by remember { mutableStateOf<List<GroupRead>>(emptyList()) }
-	var proceedDialog by remember { mutableStateOf(false) }
-	var correctGroupSelected by remember { mutableStateOf(false) }
+    // TODO move to viewModel
+    var searchQuery by remember { mutableStateOf("") }
+    var filteredGroups by remember { mutableStateOf<List<GroupRead>>(emptyList()) }
+    var proceedDialog by remember { mutableStateOf(false) }
+    var correctGroupSelected by remember { mutableStateOf(false) }
 
-	val keyboardController = LocalSoftwareKeyboardController.current
-	val keyboardOpen by keyboardAsState()
-	val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val keyboardOpen by keyboardAsState()
+    val focusManager = LocalFocusManager.current
 
-	val contentAlpha by animateFloatAsState(
-		targetValue = if (searchQuery.isNotEmpty() && keyboardOpen) 0f else 0.5f,
-		label = "",
-	)
-	val globalAlpha by animateFloatAsState(
-		targetValue = if (isLoading) 0.1f else 1f,
-		label = "",
-	)
+    val contentAlpha by animateFloatAsState(
+        targetValue = if (searchQuery.isNotEmpty() && keyboardOpen) 0f else 0.5f,
+        label = "",
+    )
+    val globalAlpha by animateFloatAsState(
+        targetValue = if (isLoading) 0.1f else 1f,
+        label = "",
+    )
 
-	val context = LocalContext.current
-	val activity = context as? Activity
+    val context = LocalContext.current
+    val activity = context as? Activity
 
-	if (showGroupsLoadingAlert) {
-		AlertDialog(
-			onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
-			confirmButton = {
-				Button(
-					onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
-				) {
-					Text("Сэр, да, сэр! \uD83E\uDEE1")
-				}
-			},
-			text = {
-				Box {
-					Text(
-						"\uD83D\uDE16 Не смогли загрузить список групп",
-						style =
-						MaterialTheme.typography.bodyMedium.copy(
-							color = MaterialTheme.colorScheme.secondary,
-							fontWeight = FontWeight.Bold,
-						),
-					)
-				}
-			},
-			shape = MaterialTheme.shapes.medium,
-		)
-	}
+    if (showGroupsLoadingAlert) {
+        AlertDialog(
+            onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
+            confirmButton = {
+                Button(
+                    onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
+                ) {
+                    Text("Сэр, да, сэр! \uD83E\uDEE1")
+                }
+            },
+            text = {
+                Box {
+                    Text(
+                        "\uD83D\uDE16 Не смогли загрузить список групп",
+                        style =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.secondary,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                    )
+                }
+            },
+            shape = MaterialTheme.shapes.medium,
+        )
+    }
 
-	if (showConnectionAlert) {
-		AlertDialog(
-			onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
-			confirmButton = {
-				Button(
-					onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
-				) {
-					Text("Печально... \uD83E\uDEE1")
-				}
-			},
-			text = {
-				Box {
-					Text(
-						"\uD83D\uDE14 Произошла так называемая \"ошибка\"",
-						style = MaterialTheme.typography.bodyMedium.copy(
-							color = MaterialTheme.colorScheme.secondary,
-							fontWeight = FontWeight.Bold,
-						),
-					)
-				}
-			},
-			shape = MaterialTheme.shapes.medium,
-		)
-	}
+    if (showConnectionAlert) {
+        AlertDialog(
+            onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
+            confirmButton = {
+                Button(
+                    onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
+                ) {
+                    Text("Печально... \uD83E\uDEE1")
+                }
+            },
+            text = {
+                Box {
+                    Text(
+                        "\uD83D\uDE14 Произошла так называемая \"ошибка\"",
+                        style =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.secondary,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                    )
+                }
+            },
+            shape = MaterialTheme.shapes.medium,
+        )
+    }
 
-	if (proceedDialog) {
-		AlertDialog(
-			onDismissRequest = { proceedDialog = false },
-			confirmButton = {
-				if (correctGroupSelected) {
-					Button(
-						onClick = {
-							proceedDialog = false
-							event(GroupSelectionEvent.JoinGroup(groups.first { it.name == searchQuery }))
-						}
-					) {
-						Text("Так точно \uD83E\uDEE1")
-					}
-				} else {
-					Button(
-						onClick = {
-							proceedDialog = false
-						}
-					) {
-						Text("Сэр, да, сэр! \uD83E\uDEE1")
-					}
-				}
-			},
-			dismissButton = {
-				if (correctGroupSelected) {
-					Button(
-						onClick = { proceedDialog = false }
-					) {
-						Text("Отмена")
-					}
-				}
-			},
-			title = {
-				if (correctGroupSelected) {
-					Text("Подтверждение")
-				} else {
-					Text("Группа не найдена")
-				}
-			},
-			text = {
-				if (correctGroupSelected) {
-					Text("Вы уверены, что хотите присоединиться к группе ${searchQuery}?")
-				} else {
-					Text("Вы ввели некорректную группу. Попробуйте ещё раз.")
-				}
-			}
-		)
-	}
+    if (proceedDialog) {
+        AlertDialog(
+            onDismissRequest = { proceedDialog = false },
+            confirmButton = {
+                if (correctGroupSelected) {
+                    Button(
+                        onClick = {
+                            proceedDialog = false
+                            event(GroupSelectionEvent.JoinGroup(groups.first { it.name == searchQuery }))
+                        },
+                    ) {
+                        Text("Так точно \uD83E\uDEE1")
+                    }
+                } else {
+                    Button(
+                        onClick = {
+                            proceedDialog = false
+                        },
+                    ) {
+                        Text("Сэр, да, сэр! \uD83E\uDEE1")
+                    }
+                }
+            },
+            dismissButton = {
+                if (correctGroupSelected) {
+                    Button(
+                        onClick = { proceedDialog = false },
+                    ) {
+                        Text("Отмена")
+                    }
+                }
+            },
+            title = {
+                if (correctGroupSelected) {
+                    Text("Подтверждение")
+                } else {
+                    Text("Группа не найдена")
+                }
+            },
+            text = {
+                if (correctGroupSelected) {
+                    Text("Вы уверены, что хотите присоединиться к группе $searchQuery?")
+                } else {
+                    Text("Вы ввели некорректную группу. Попробуйте ещё раз.")
+                }
+            },
+        )
+    }
 
-	Box(
-		modifier =
-		modifier
-			.fillMaxSize()
-			.padding(WindowInsets.ime.asPaddingValues()),
-		contentAlignment = Alignment.Center,
-	) {
-		AnimatedVisibility(
-			visible = isLoading,
-			enter = fadeIn(),
-			exit = fadeOut(),
-		) {
-			CircularProgressIndicator()
-		}
+    Box(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(WindowInsets.ime.asPaddingValues()),
+        contentAlignment = Alignment.Center,
+    ) {
+        AnimatedVisibility(
+            visible = isLoading,
+            enter = fadeIn(),
+            exit = fadeOut(),
+        ) {
+            CircularProgressIndicator()
+        }
 		
-		BackHandler {
-			activity?.finish()
-		}
+        BackHandler {
+            activity?.finish()
+        }
 
-		Column(
-			horizontalAlignment = Alignment.CenterHorizontally,
-			verticalArrangement = Arrangement.Center,
-			modifier = Modifier
-				.fillMaxWidth(0.7f)
-				.fillMaxHeight()
-				.alpha(globalAlpha),
-		) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier =
+                Modifier
+                    .fillMaxWidth(0.7f)
+                    .fillMaxHeight()
+                    .alpha(globalAlpha),
+        ) {
+            Box(
+                contentAlignment = Alignment.BottomCenter,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                SelectionBackground(
+                    contentAlpha = contentAlpha,
+                    text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»\n\uD83E\uDD28",
+                )
 
-			Box(
-				contentAlignment = Alignment.BottomCenter,
-				modifier = Modifier.fillMaxWidth(),
-			) {
+                this@Column.AnimatedVisibility(
+                    visible = searchQuery.isNotEmpty() && keyboardOpen,
+                ) {
+                    filteredGroups =
+                        groups.filter {
+                            it.name.contains(
+                                searchQuery,
+                                ignoreCase = true,
+                            )
+                        }
+                    val visibleItems = filteredGroups.take(5)
+                    val lazyColumnHeight = (visibleItems.size * SEARCH_RESULT_HEIGHT).dp
 
-				SelectionBackground(
-					contentAlpha = contentAlpha,
-					text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»\n\uD83E\uDD28",
-				)
+                    LazyColumn(
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.Bottom,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(lazyColumnHeight)
+                                .background(
+                                    color = MaterialTheme.colorScheme.inverseOnSurface,
+                                    shape = RoundedCornerShape(6.dp),
+                                ).border(
+                                    width = 1.dp,
+                                    color = MaterialTheme.colorScheme.inverseOnSurface,
+                                    shape = RoundedCornerShape(6.dp),
+                                ),
+                    ) {
+                        if (filteredGroups.isEmpty()) {
+                            item {
+                                SearchResult(
+                                    text = "Ничего не найдено",
+                                    onClick = {},
+                                )
+                            }
+                        } else {
+                            items(filteredGroups) { group ->
+                                SearchResult(
+                                    text = group.name,
+                                    onClick = {
+                                        keyboardController?.hide()
+                                        focusManager.clearFocus()
+                                        searchQuery = group.name
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+            }
 
-				this@Column.AnimatedVisibility(
-					visible = searchQuery.isNotEmpty() && keyboardOpen
-				) {
-					filteredGroups = groups.filter {
-						it.name.contains(
-							searchQuery,
-							ignoreCase = true
-						)
-					}
-					val visibleItems = filteredGroups.take(5)
-					val lazyColumnHeight = (visibleItems.size * SEARCH_RESULT_HEIGHT).dp
+            SearchBar(
+                placeholder = "КИ21-16 ...",
+                onTextChange = {
+                    searchQuery = it
+                },
+                onClick = {
+                    if (searchQuery in groups.map { it.name }) {
+                        correctGroupSelected = true
+                        proceedDialog = true
+                    } else {
+                        correctGroupSelected = false
+                        proceedDialog = true
+                    }
+                },
+                textState = searchQuery,
+                keyboardOptions =
+                    KeyboardOptions.Default.copy(
+                        imeAction = ImeAction.Done,
+                    ),
+                keyboardActions =
+                    KeyboardActions(
+                        onDone = {
+                            keyboardController?.hide()
+                        },
+                    ),
+            )
 
-					LazyColumn(
-						horizontalAlignment = Alignment.Start,
-						verticalArrangement = Arrangement.Bottom,
-						modifier = Modifier
-							.fillMaxWidth()
-							.height(lazyColumnHeight)
-							.background(
-								color = MaterialTheme.colorScheme.inverseOnSurface,
-								shape = RoundedCornerShape(6.dp),
-							)
-							.border(
-								width = 1.dp,
-								color = MaterialTheme.colorScheme.inverseOnSurface,
-								shape = RoundedCornerShape(6.dp),
-							),
-					) {
-						if (filteredGroups.isEmpty()) {
-							item {
-								SearchResult(
-									text = "Ничего не найдено",
-									onClick = {}
-								)
-							}
-						} else {
-							items(filteredGroups) { group ->
-								SearchResult(
-									text = group.name,
-									onClick = {
-										keyboardController?.hide()
-										focusManager.clearFocus()
-										searchQuery = group.name
-									}
-								)
-							}
-						}
-					}
-				}
-			}
-
-			SearchBar(
-				placeholder = "КИ21-16 ...",
-				onTextChange = {
-					searchQuery = it
-				},
-				onClick = {
-					if (searchQuery in groups.map { it.name }) {
-						correctGroupSelected = true
-						proceedDialog = true
-					} else {
-						correctGroupSelected = false
-						proceedDialog = true
-					}
-				},
-				textState = searchQuery,
-				keyboardOptions = KeyboardOptions.Default.copy(
-					imeAction = ImeAction.Done,
-					),
-				keyboardActions = KeyboardActions(
-					onDone = {
-						keyboardController?.hide()
-					},
-				),
-			)
-
-			HyperlinkNAV(
-				text = "Сменить аккаунт \uD83D\uDEAA",
-				modifier = Modifier.padding(vertical = SmallPadding),
-				onClick = { event(GroupSelectionEvent.ChangeAccount(navController)) }
-			)
-		}
-	}
+            HyperlinkNAV(
+                text = "Сменить аккаунт \uD83D\uDEAA",
+                modifier = Modifier.padding(vertical = SmallPadding),
+                onClick = { event(GroupSelectionEvent.ChangeAccount(navController)) },
+            )
+        }
+    }
 }

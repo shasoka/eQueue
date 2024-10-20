@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.common
@@ -9,7 +9,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
@@ -23,7 +22,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HyperlinkURL(
@@ -57,11 +55,13 @@ fun HyperlinkURL(
         }
 	
     val uriHandler = LocalUriHandler.current
-	
+
+    @Suppress("DEPRECATION")
     ClickableText(
         text = annotatedString,
-        style = MaterialTheme.typography.bodyMedium.copy(
-            color = MaterialTheme.colorScheme.secondary,
+        style =
+            MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.secondary,
             ),
         modifier = modifier,
         onClick = { offset ->
@@ -75,7 +75,6 @@ fun HyperlinkURL(
     )
 }
 
-
 @Composable
 fun HyperlinkNAV(
     text: String,
@@ -83,22 +82,22 @@ fun HyperlinkNAV(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .padding(WindowInsets.ime.asPaddingValues())
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
-            ) { onClick() },
+        modifier =
+            modifier
+                .padding(WindowInsets.ime.asPaddingValues())
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { onClick() },
         contentAlignment = Alignment.Center,
-
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline,
-            ),
-            modifier = modifier,
+            style =
+                MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline,
+                ),
         )
     }
 }

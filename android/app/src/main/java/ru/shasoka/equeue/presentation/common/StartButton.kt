@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.common
@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
@@ -18,7 +17,6 @@ import androidx.compose.ui.unit.dp
 fun StartButton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Button(
         onClick = onClick,

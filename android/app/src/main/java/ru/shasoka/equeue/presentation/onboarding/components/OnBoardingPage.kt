@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.onboarding.components
@@ -35,10 +35,7 @@ import ru.shasoka.equeue.presentation.onboarding.pages
 import ru.shasoka.equeue.ui.theme.EQueueTheme
 
 @Composable
-fun OnBoardingPage(
-    page: Page,
-    modifier: Modifier = Modifier,
-) {
+fun OnBoardingPage(page: Page) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
 	
@@ -49,9 +46,10 @@ fun OnBoardingPage(
             painter = painterResource(id = page.image),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .height(screenHeight / 2 - 5.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .height(screenHeight / 2 - 5.dp)
+                    .fillMaxWidth(),
         )
         Spacer(
             modifier =
@@ -75,10 +73,10 @@ fun OnBoardingPage(
 		
         Box(
             modifier =
-            Modifier
+                Modifier
                     .padding(horizontal = LargestPadding, vertical = LargePadding)
                     .height(lineHeightDp * 5) // Set the maximum height for the text box
-                .verticalScroll(scrollState),
+                    .verticalScroll(scrollState),
             contentAlignment = Alignment.Center,
         ) {
             Text(

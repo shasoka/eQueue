@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.ui.theme
@@ -56,7 +56,7 @@ val Typography =
             TextStyle(
                 fontSize = 13.sp,
                 fontFamily = DINPro,
-            fontWeight = FontWeight.Normal,
-            lineHeight = 19.sp,
-        ),
+                fontWeight = FontWeight.Normal,
+                lineHeight = 19.sp,
+            ),
     )

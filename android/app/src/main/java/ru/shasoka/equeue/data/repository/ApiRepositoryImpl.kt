@@ -5,12 +5,11 @@
 package ru.shasoka.equeue.data.repository
 
 import ru.shasoka.equeue.data.remote.Api
-import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
+import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
 import ru.shasoka.equeue.domain.repository.ApiRepository
-import java.net.URLEncoder
 
 class ApiRepositoryImpl(
     private val api: Api,
@@ -22,8 +21,8 @@ class ApiRepositoryImpl(
     ): UserAuth {
         try {
             return api.login(
-                URLEncoder.encode(username, "utf-8"),
-                URLEncoder.encode(password, "utf-8")
+                username,
+                password,
             )
         } catch (e: Exception) {
             throw e

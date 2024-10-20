@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.domain.usecases.api.groupselection
@@ -15,7 +15,8 @@ class GetGroups(
 ) {
     suspend operator fun invoke(): ListOfGroupRead {
         try {
-            val user = userDao
+            val user =
+                userDao
                     .getUsers() // Get Flow<List<User>>
                     .first() // Get List<User>
                     .firstOrNull() // Get User

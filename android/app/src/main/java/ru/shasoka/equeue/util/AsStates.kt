@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ */
+
 package ru.shasoka.equeue.util
 
 import android.view.ViewTreeObserver
@@ -14,18 +18,19 @@ import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-
 @Composable
 fun keyboardAsState(): State<Boolean> {
     val view = LocalView.current
     var isImeVisible by remember { mutableStateOf(false) }
 
     DisposableEffect(LocalWindowInfo.current) {
-        val listener = ViewTreeObserver.OnPreDrawListener {
-            isImeVisible = ViewCompat.getRootWindowInsets(view)
-                ?.isVisible(WindowInsetsCompat.Type.ime()) == true
-            true
-        }
+        val listener =
+            ViewTreeObserver.OnPreDrawListener {
+                isImeVisible = ViewCompat
+                    .getRootWindowInsets(view)
+                    ?.isVisible(WindowInsetsCompat.Type.ime()) == true
+                true
+            }
         view.viewTreeObserver.addOnPreDrawListener(listener)
         onDispose {
             view.viewTreeObserver.removeOnPreDrawListener(listener)
