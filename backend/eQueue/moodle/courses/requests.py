@@ -1,8 +1,11 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
 
 import requests
+
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
+from urllib.parse import quote_plus as url_encode
+
 
 from moodle.proxies import proxies
 from core.config import settings
@@ -22,7 +25,10 @@ async def user_enrolled_courses(
     session: AsyncSession,
 ) -> list[WorkspaceSubjectCreate]:
     response = requests.post(
-        settings.moodle.enrolled_courses_url % (token, user.ecourses_user_id),
+        settings.moodle.enrolled_courses_url % (
+            url_encode(token),
+            url_encode(str(user.ecourses_user_id)),
+        ),
         proxies=proxies,
     )
     if not isinstance(response, list):
@@ -84,8 +90,8 @@ async def _from_course_structure(
     response = requests.post(
         settings.moodle.course_structure
         % (
-            token,
-            ecourses_id,
+            url_encode(token),
+            url_encode(str(ecourses_id)),
         ),
         proxies=proxies,
     )
@@ -137,7 +143,10 @@ async def check_course_availability(
     token: str,
 ) -> bool:
     response = requests.post(
-        settings.moodle.course_structure % (token, course_id),
+        settings.moodle.course_structure % (
+            url_encode(token),
+            url_encode(str(course_id))
+        ),
         proxies=proxies,
     )
     return isinstance(response.json(), list)
