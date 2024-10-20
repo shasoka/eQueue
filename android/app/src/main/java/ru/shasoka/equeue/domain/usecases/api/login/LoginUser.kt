@@ -4,9 +4,8 @@
 
 package ru.shasoka.equeue.domain.usecases.api.login
 
-import android.util.Log
 import ru.shasoka.equeue.data.local.UserDao
-import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
+import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.toUser
 import ru.shasoka.equeue.domain.repository.ApiRepository
 
@@ -17,7 +16,7 @@ class LoginUser(
     suspend operator fun invoke(
         username: String,
         password: String,
-    ): ECoursesLoginResponse =
+    ): UserAuth =
         try {
             val response = apiRepository.login(username, password)
             userDao.upsert(response.toUser())

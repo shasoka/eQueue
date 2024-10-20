@@ -4,23 +4,21 @@
 
 package ru.shasoka.equeue.domain.repository
 
-import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
+import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
-import ru.shasoka.equeue.data.remote.dto.UserReadResponse
+import ru.shasoka.equeue.data.remote.dto.UserRead
+import ru.shasoka.equeue.data.remote.dto.UserUpdate
 
 interface ApiRepository {
     suspend fun login(
         username: String,
         password: String,
-    ): ECoursesLoginResponse
+    ): UserAuth
 
-    suspend fun getGroups(token: String) : GetGroupsResponse
+    suspend fun getGroups(header: String) : GetGroupsResponse
 
     suspend fun patchUser(
         header: String,
-        access_token: String?,
-        assigned_group_id: Int?,
-        status: String?,
-        user_picture_url: String?,
-    ): UserReadResponse
+        body: UserUpdate,
+    ): UserRead
 }

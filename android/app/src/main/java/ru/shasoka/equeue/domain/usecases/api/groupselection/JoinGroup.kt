@@ -2,7 +2,8 @@ package ru.shasoka.equeue.domain.usecases.api.groupselection
 
 import kotlinx.coroutines.flow.first
 import ru.shasoka.equeue.data.local.UserDao
-import ru.shasoka.equeue.data.remote.dto.UserReadResponse
+import ru.shasoka.equeue.data.remote.dto.UserRead
+import ru.shasoka.equeue.data.remote.dto.UserUpdate
 import ru.shasoka.equeue.domain.repository.ApiRepository
 
 class JoinGroup(
@@ -11,7 +12,7 @@ class JoinGroup(
 ) {
     suspend operator fun invoke(
         groupId: Int,
-    ): UserReadResponse {
+    ): UserRead =
         try {
             val user = userDao
                 .getUsers()
@@ -20,15 +21,16 @@ class JoinGroup(
             if (user == null) {
                 throw Exception("User not found")
             }
-            return apiRepository.patchUser(
+            val response = apiRepository.patchUser(
                 user.token_type + " " + user.access_token,
-                null,
-                groupId,
-                null,
-                null
+                UserUpdate(
+                    assigned_group_id = groupId
+                )
             )
+            // Getting assigned group id from response after successful request
+            userDao.upsert(user.copy(assigned_group_id=response.assigned_group_id))
+            response
         } catch (e: Exception) {
             throw e
         }
-    }
 }

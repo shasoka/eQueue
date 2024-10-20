@@ -12,7 +12,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.shasoka.equeue.data.remote.dto.ECoursesLoginResponse
+import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
 import ru.shasoka.equeue.presentation.nvgraph.Route
 import javax.inject.Inject
@@ -55,7 +55,7 @@ class LoginViewModel
         private suspend fun loginUser(
             username: String,
             password: String,
-        ): ECoursesLoginResponse {
+        ): UserAuth {
             try {
                 return loginUseCases.loginUser(username, password)
             } catch (e: Exception) {

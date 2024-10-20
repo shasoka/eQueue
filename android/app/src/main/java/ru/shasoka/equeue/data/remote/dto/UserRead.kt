@@ -6,9 +6,7 @@ package ru.shasoka.equeue.data.remote.dto
 
 import ru.shasoka.equeue.domain.model.User
 
-@Suppress("PropertyName")
-data class ECoursesLoginResponse(
-    val access_token: String,
+data class UserRead(
     val assigned_group_id: Int?,
     val assigned_workspace_id: Int?,
     val created_at: String,
@@ -17,17 +15,16 @@ data class ECoursesLoginResponse(
     val id: Int,
     val second_name: String,
     val status: String,
-    val talon: String?,
-    val token_type: String,
+    val talon: String,
     val user_picture_url: String,
     val workspace_chief: Boolean,
 )
 
-fun ECoursesLoginResponse.toUser(): User =
+fun UserRead.toUser(): User =
     User(
         id = this.id,
-        access_token = this.access_token,
-        token_type = this.token_type,
+        access_token = "",
+        token_type = "",
         talon = this.talon,
         assigned_group_id = this.assigned_group_id,
         assigned_workspace_id = this.assigned_workspace_id,

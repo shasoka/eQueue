@@ -14,7 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
 import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
-import ru.shasoka.equeue.data.remote.dto.UserReadResponse
+import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
 import ru.shasoka.equeue.presentation.nvgraph.Route
@@ -49,7 +49,7 @@ constructor(
 				groups = getGroups()
 				isLoading = false
 			} catch (e: Exception) {
-				showConnectionAlert = true
+				showGroupsLoadingAlert = true
 				isLoading = false
 			}
 		}
@@ -73,6 +73,7 @@ constructor(
 						isLoading = false
 						// todo navigate next
 					} catch (e: Exception) {
+						showConnectionAlert = true
 						isLoading = false
 					}
 				}
@@ -105,7 +106,7 @@ constructor(
 		}
 	}
 
-	private suspend fun joinGroup(groupId: Int): UserReadResponse {
+	private suspend fun joinGroup(groupId: Int): UserRead {
 		try {
 			return groupSelectionUseCases.joinGroup(groupId)
 		} catch (e: Exception) {
