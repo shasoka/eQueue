@@ -4,4 +4,4 @@
 
 package ru.shasoka.equeue.data.remote.dto
 
-class GetGroupsResponse : ArrayList<GetGroupsResponseItem>()
+class ListOfGroupRead : ArrayList<GroupRead>()

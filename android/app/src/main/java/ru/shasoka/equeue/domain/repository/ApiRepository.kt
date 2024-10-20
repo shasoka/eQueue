@@ -5,7 +5,7 @@
 package ru.shasoka.equeue.domain.repository
 
 import ru.shasoka.equeue.data.remote.dto.UserAuth
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
+import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
 
@@ -15,7 +15,7 @@ interface ApiRepository {
         password: String,
     ): UserAuth
 
-    suspend fun getGroups(header: String) : GetGroupsResponse
+    suspend fun getGroups(header: String) : ListOfGroupRead
 
     suspend fun patchUser(
         header: String,

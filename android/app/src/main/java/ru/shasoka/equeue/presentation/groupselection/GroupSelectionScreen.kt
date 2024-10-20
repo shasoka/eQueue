@@ -48,7 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.presentation.common.HyperlinkNAV
 import ru.shasoka.equeue.presentation.common.SearchBar
@@ -60,7 +60,7 @@ import ru.shasoka.equeue.util.keyboardAsState
 
 @Composable
 fun GroupSelectionScreen(
-	groups: List<GetGroupsResponseItem>,
+	groups: List<GroupRead>,
 	isLoading: Boolean,
 	showGroupsLoadingAlert: Boolean,
 	showConnectionAlert: Boolean,
@@ -70,7 +70,7 @@ fun GroupSelectionScreen(
 ) {
 	// TODO move to viewModel
 	var searchQuery by remember { mutableStateOf("") }
-	var filteredGroups by remember { mutableStateOf<List<GetGroupsResponseItem>>(emptyList()) }
+	var filteredGroups by remember { mutableStateOf<List<GroupRead>>(emptyList()) }
 	var proceedDialog by remember { mutableStateOf(false) }
 	var correctGroupSelected by remember { mutableStateOf(false) }
 

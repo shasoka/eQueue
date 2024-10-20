@@ -4,7 +4,7 @@
 
 package ru.shasoka.equeue.data.remote.dto
 
-data class GetGroupsResponseItem(
+data class GroupRead(
     val id: Int,
     val name: String,
     val users: List<UserRead>,

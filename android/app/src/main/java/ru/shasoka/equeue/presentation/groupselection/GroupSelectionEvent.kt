@@ -5,7 +5,7 @@
 package ru.shasoka.equeue.presentation.groupselection
 
 import androidx.navigation.NavController
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.util.Alerts
 
 sealed class GroupSelectionEvent {
@@ -14,7 +14,7 @@ sealed class GroupSelectionEvent {
 	) : GroupSelectionEvent()
 
 	data class JoinGroup(
-		val group: GetGroupsResponseItem
+		val group: GroupRead
 	) : GroupSelectionEvent()
 
 	data class ChangeAccount(

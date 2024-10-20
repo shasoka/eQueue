@@ -12,7 +12,7 @@ import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import ru.shasoka.equeue.data.remote.dto.UserAuth
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
+import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
 
@@ -27,7 +27,7 @@ interface Api {
     @GET("groups")
     suspend fun getGroups(
         @Header("Authorization") header: String,
-    ): GetGroupsResponse
+    ): ListOfGroupRead
 
     @PATCH("users")
     suspend fun patchUser(

@@ -6,7 +6,7 @@ package ru.shasoka.equeue.data.repository
 
 import ru.shasoka.equeue.data.remote.Api
 import ru.shasoka.equeue.data.remote.dto.UserAuth
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
+import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
 import ru.shasoka.equeue.domain.repository.ApiRepository
@@ -30,7 +30,7 @@ class ApiRepositoryImpl(
         }
     }
 
-    override suspend fun getGroups(header: String): GetGroupsResponse {
+    override suspend fun getGroups(header: String): ListOfGroupRead {
         try {
             return api.getGroups(header)
         } catch (e: Exception) {

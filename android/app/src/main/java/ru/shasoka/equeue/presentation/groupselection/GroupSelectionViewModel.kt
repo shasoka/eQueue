@@ -12,8 +12,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponse
-import ru.shasoka.equeue.data.remote.dto.GetGroupsResponseItem
+import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
+import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
@@ -38,7 +38,7 @@ constructor(
 	var showGroupsLoadingAlert: Boolean by mutableStateOf(false)
 		private set
 	
-	var groups by mutableStateOf<List<GetGroupsResponseItem>>(emptyList())
+	var groups by mutableStateOf<List<GroupRead>>(emptyList())
 		private set
 
 	init {
@@ -96,7 +96,7 @@ constructor(
 		}
 	}
 	
-	private suspend fun getGroups(): GetGroupsResponse = groupSelectionUseCases.getGroups()
+	private suspend fun getGroups(): ListOfGroupRead = groupSelectionUseCases.getGroups()
 
 	private suspend fun logoutUser() {
 		try {
