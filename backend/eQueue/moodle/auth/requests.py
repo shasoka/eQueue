@@ -12,7 +12,8 @@ from utils import validate
 
 async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
     response = requests.get(
-        settings.moodle.auth_url % (
+        settings.moodle.auth_url
+        % (
             url_encode(credentials.login),
             url_encode(credentials.password),
         ),
@@ -28,6 +29,14 @@ async def auth_by_moodle_credentials(credentials: MoodleLogin) -> str:
 async def get_moodle_user_info(
     token: str,
 ) -> dict:
+    """
+
+    :param token:
+    :type token:
+    :return:
+    :rtype:
+    """
+
     response = requests.get(
         settings.moodle.get_user_info_url % url_encode(token),
         proxies=proxies,

@@ -5,7 +5,9 @@ from .requests import (
     get_moodle_user_info,
     token_persistence,
 )
+
 from .oauth2 import get_current_user, MoodleOAuth2
+
 
 __all__ = (
     "auth_by_moodle_credentials",

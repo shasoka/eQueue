@@ -164,6 +164,9 @@ cython_debug/
 .idea/
 .run/
 
+# Sphinx builds
+_build/
+
 # Kotlin .gitignore
 
 *.iml
@@ -183,6 +186,9 @@ app/build/
 .externalNativeBuild
 .cxx
 local.properties
+
+# Ktlint jars
+ktlint-compose-*.jar
 
 #built application files
 *.apk
