@@ -27,3 +27,4 @@ jobs:
           github_token: ${{ secrets.GH__TOKEN }}
           publish_dir: _build/
           force_orphan: true
+          deployment_environment: pages
