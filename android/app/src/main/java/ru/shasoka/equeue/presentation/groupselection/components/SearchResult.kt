@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.groupselection.components
@@ -24,31 +24,33 @@ import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
 
 @Composable
 fun SearchResult(
-	text: String,
-	onClick: () -> Unit,
-	modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-	// Height is about 33.dp
-	Box(
-		modifier = modifier
-			.fillMaxWidth()
-			.padding(all = MediumPadding)
-			.clickable(
-				interactionSource = remember { MutableInteractionSource() },
-				indication = null
-			) { onClick() }
-			.horizontalScroll(rememberScrollState()),
-		contentAlignment = Alignment.CenterStart,
-	) {
-		Text(
-			text = text,
-			style = MaterialTheme.typography.bodyMedium.copy(
-				color = MaterialTheme.colorScheme.secondary,
-				fontWeight = FontWeight.SemiBold,
-			),
-			textAlign = TextAlign.Start,
-			overflow = TextOverflow.Ellipsis,
-			maxLines = 1,
-		)
-	}
+    // Height is about 33.dp
+    Box(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(all = MediumPadding)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { onClick() }
+                .horizontalScroll(rememberScrollState()),
+        contentAlignment = Alignment.CenterStart,
+    ) {
+        Text(
+            text = text,
+            style =
+                MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.SemiBold,
+                ),
+            textAlign = TextAlign.Start,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
+        )
+    }
 }

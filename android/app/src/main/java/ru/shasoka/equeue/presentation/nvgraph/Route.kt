@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.nvgraph
@@ -7,18 +7,18 @@ package ru.shasoka.equeue.presentation.nvgraph
 sealed class Route(
     val route: String,
 ) {
-    object OnBoardingScreen : Route(route = "onBoardingScreen")
+    data object OnBoardingScreen : Route(route = "onBoardingScreen")
 
-    object LogInScreen : Route(route = "logInScreen")
+    data object LogInScreen : Route(route = "logInScreen")
 
-    object GroupSelectionScreen : Route(route = "groupSelectionScreen")
+    data object GroupSelectionScreen : Route(route = "groupSelectionScreen")
 
-    object HomeScreen : Route(route = "homeScreen")
+    data object HomeScreen : Route(route = "homeScreen")
 
     // Subgraphs
-    object AppStartNavigation : Route(route = "appStartNavigation")
+    data object AppStartNavigation : Route(route = "appStartNavigation")
 
-    object LogInNavigation : Route(route = "logInNavigation")
+    data object LogInNavigation : Route(route = "logInNavigation")
 
-    object GroupSelectionNavigation : Route(route = "groupSelectionNavigation")
+    data object GroupSelectionNavigation : Route(route = "groupSelectionNavigation")
 }

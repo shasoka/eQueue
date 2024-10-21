@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.groupselection.components
@@ -23,38 +23,38 @@ import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 
 @Composable
 fun SelectionBackground(
-	text: String,
-	contentAlpha: Float,
-	modifier: Modifier = Modifier,
+    text: String,
+    contentAlpha: Float,
+    modifier: Modifier = Modifier,
 ) {
-	Column(
-		modifier = modifier,
-		horizontalAlignment = Alignment.CenterHorizontally,
-		verticalArrangement = Arrangement.Center,
-	) {
-		Image(
-			painter = painterResource(id = R.drawable.sfu_u),
-			contentDescription = null,
-			contentScale = ContentScale.Fit,
-			modifier =
-			Modifier
-				.padding(SmallPadding),
-			alpha = contentAlpha,
-		)
-		Text(
-			text = text,
-			style =
-			MaterialTheme.typography.bodyLarge.copy(
-				color =
-				MaterialTheme
-					.colorScheme.onBackground
-					.copy(alpha = contentAlpha),
-			),
-			textAlign = TextAlign.Center,
-			modifier =
-			Modifier
-				.fillMaxWidth()
-				.padding(all = MediumPadding),
-		)
-	}
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.sfu_u),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+            modifier =
+                Modifier
+                    .padding(SmallPadding),
+            alpha = contentAlpha,
+        )
+        Text(
+            text = text,
+            style =
+                MaterialTheme.typography.bodyLarge.copy(
+                    color =
+                        MaterialTheme
+                            .colorScheme.onBackground
+                            .copy(alpha = contentAlpha),
+                ),
+            textAlign = TextAlign.Center,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(all = MediumPadding),
+        )
+    }
 }

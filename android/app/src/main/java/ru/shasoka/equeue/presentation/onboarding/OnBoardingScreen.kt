@@ -1,10 +1,9 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.onboarding
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,7 +30,6 @@ import ru.shasoka.equeue.presentation.common.StartButton
 import ru.shasoka.equeue.presentation.onboarding.components.OnBoardingPage
 import ru.shasoka.equeue.presentation.onboarding.components.PageIndicator
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
     Column(
@@ -63,8 +61,8 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
 		
         Row(
             modifier =
-			Modifier
-				.fillMaxWidth()
+                Modifier
+                    .fillMaxWidth()
                     .padding(all = LargestPadding)
                     .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceBetween,

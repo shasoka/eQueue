@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.di
@@ -90,10 +90,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLogoutUserUseCases(
-        userDao: UserDao,
-    ): LogoutUseCases =
-        LogoutUseCases(logoutUser = LogoutUser(userDao = userDao))
+    fun provideLogoutUserUseCases(userDao: UserDao): LogoutUseCases = LogoutUseCases(logoutUser = LogoutUser(userDao = userDao))
 
     @Provides
     @Singleton

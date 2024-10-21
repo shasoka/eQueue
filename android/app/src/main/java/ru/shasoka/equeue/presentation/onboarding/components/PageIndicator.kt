@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
 package ru.shasoka.equeue.presentation.onboarding.components
@@ -32,11 +32,10 @@ fun PageIndicator(
         repeat(pageSize) { page ->
             Box(
                 modifier =
-                Modifier
-                    .size(
-                        IndicatorSize,
-                    )
-                    .clip(CircleShape)
+                    Modifier
+                        .size(
+                            IndicatorSize,
+                        ).clip(CircleShape)
                         .background(
                             color =
                                 if (page == selectedPage) {
@@ -44,7 +43,7 @@ fun PageIndicator(
                                 } else {
                                     unselectedColor
                                 },
-                    ),
+                        ),
             )
         }
     }
