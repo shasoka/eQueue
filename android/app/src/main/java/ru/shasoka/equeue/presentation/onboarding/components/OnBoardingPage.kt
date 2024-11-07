@@ -28,11 +28,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ru.shasoka.equeue.presentation.Dimensions.LargePadding
-import ru.shasoka.equeue.presentation.Dimensions.LargestPadding
 import ru.shasoka.equeue.presentation.onboarding.Page
 import ru.shasoka.equeue.presentation.onboarding.pages
 import ru.shasoka.equeue.ui.theme.EQueueTheme
+import ru.shasoka.equeue.util.Dimensions.LargePadding
+import ru.shasoka.equeue.util.Dimensions.LargestPadding
 
 @Composable
 fun OnBoardingPage(page: Page) {

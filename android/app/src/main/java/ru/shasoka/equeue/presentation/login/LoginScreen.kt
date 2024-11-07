@@ -46,11 +46,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.navigation.NavController
 import ru.shasoka.equeue.R
-import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.presentation.common.HyperlinkURL
 import ru.shasoka.equeue.presentation.common.StartButton
 import ru.shasoka.equeue.presentation.login.components.FormField
 import ru.shasoka.equeue.util.Constants.RESET_PASS
+import ru.shasoka.equeue.util.Dimensions.SmallPadding
 
 @Composable
 fun LoginScreen(

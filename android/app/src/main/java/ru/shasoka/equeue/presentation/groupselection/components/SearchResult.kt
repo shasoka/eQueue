@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
+import ru.shasoka.equeue.util.Dimensions.MediumPadding
 
 @Composable
 fun SearchResult(

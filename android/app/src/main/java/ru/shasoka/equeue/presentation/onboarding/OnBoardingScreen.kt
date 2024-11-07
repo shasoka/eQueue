@@ -23,12 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import ru.shasoka.equeue.presentation.Dimensions.LargestPadding
-import ru.shasoka.equeue.presentation.Dimensions.PageIndicatorWidth
 import ru.shasoka.equeue.presentation.common.BackTextButton
 import ru.shasoka.equeue.presentation.common.StartButton
 import ru.shasoka.equeue.presentation.onboarding.components.OnBoardingPage
 import ru.shasoka.equeue.presentation.onboarding.components.PageIndicator
+import ru.shasoka.equeue.util.Dimensions.LargestPadding
+import ru.shasoka.equeue.util.Dimensions.PageIndicatorWidth
 
 @Composable
 fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {

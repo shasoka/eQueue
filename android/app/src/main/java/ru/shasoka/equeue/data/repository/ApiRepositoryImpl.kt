@@ -6,6 +6,7 @@ package ru.shasoka.equeue.data.repository
 
 import ru.shasoka.equeue.data.remote.Api
 import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
+import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
@@ -14,7 +15,6 @@ import ru.shasoka.equeue.domain.repository.ApiRepository
 class ApiRepositoryImpl(
     private val api: Api,
 ) : ApiRepository {
-    @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun login(
         username: String,
         password: String,
@@ -46,6 +46,14 @@ class ApiRepositoryImpl(
                 header,
                 body,
             )
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun getExistingWorkspaces(header: String): ListOfWorkspaceRead {
+        try {
+            return api.getExistingWorkspaces(header)
         } catch (e: Exception) {
             throw e
         }

@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import ru.shasoka.equeue.presentation.Dimensions.IndicatorSize
+import ru.shasoka.equeue.util.Dimensions.IndicatorSize
 
 @Composable
 fun PageIndicator(

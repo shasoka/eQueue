@@ -41,9 +41,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.shasoka.equeue.R
-import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
-import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.ui.theme.EQueueTheme
+import ru.shasoka.equeue.util.Dimensions.MediumPadding
+import ru.shasoka.equeue.util.Dimensions.SmallPadding
 
 @Composable
 fun FormField(

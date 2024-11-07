@@ -18,8 +18,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import ru.shasoka.equeue.R
-import ru.shasoka.equeue.presentation.Dimensions.MediumPadding
-import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
+import ru.shasoka.equeue.util.Dimensions.MediumPadding
+import ru.shasoka.equeue.util.Dimensions.SmallPadding
 
 @Composable
 fun SelectionBackground(

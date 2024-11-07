@@ -49,13 +49,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GroupRead
-import ru.shasoka.equeue.presentation.Dimensions.SmallPadding
 import ru.shasoka.equeue.presentation.common.HyperlinkNAV
 import ru.shasoka.equeue.presentation.common.SearchBar
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
 import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
 import ru.shasoka.equeue.util.Alerts
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
+import ru.shasoka.equeue.util.Dimensions.SmallPadding
 import ru.shasoka.equeue.util.keyboardAsState
 
 @Composable

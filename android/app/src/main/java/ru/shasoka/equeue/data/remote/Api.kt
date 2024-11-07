@@ -12,6 +12,7 @@ import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
+import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
@@ -34,4 +35,9 @@ interface Api {
         @Header("Authorization") header: String,
         @Body userUpdate: UserUpdate,
     ): UserRead
+
+    @GET("workspaces")
+    suspend fun getExistingWorkspaces(
+        @Header("Authorization") header: String,
+    ): ListOfWorkspaceRead
 }
