@@ -54,7 +54,10 @@ import ru.shasoka.equeue.presentation.common.SearchBar
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
 import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
 import ru.shasoka.equeue.util.Alerts
+import ru.shasoka.equeue.util.ConnAlerts
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
+import ru.shasoka.equeue.util.DataAlerts
+import ru.shasoka.equeue.util.DbAlerts
 import ru.shasoka.equeue.util.Dimensions.SmallPadding
 import ru.shasoka.equeue.util.keyboardAsState
 
@@ -64,6 +67,7 @@ fun GroupSelectionScreen(
     isLoading: Boolean,
     showGroupsLoadingAlert: Boolean,
     showConnectionAlert: Boolean,
+    showDbErrorAlert: Boolean,
     event: (GroupSelectionEvent) -> Unit,
     navController: NavController,
     modifier: Modifier = Modifier,
@@ -92,10 +96,22 @@ fun GroupSelectionScreen(
 
     if (showGroupsLoadingAlert) {
         AlertDialog(
-            onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
+            onDismissRequest = {
+                event(
+                    GroupSelectionEvent.DisposeAlert(
+                        Alerts.Data(DataAlerts.DATA_LOADING),
+                    ),
+                )
+            },
             confirmButton = {
                 Button(
-                    onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.GROUPS_LOADING)) },
+                    onClick = {
+                        event(
+                            GroupSelectionEvent.DisposeAlert(
+                                Alerts.Data(DataAlerts.DATA_LOADING),
+                            ),
+                        )
+                    },
                 ) {
                     Text("Сэр, да, сэр! \uD83E\uDEE1")
                 }
@@ -118,10 +134,22 @@ fun GroupSelectionScreen(
 
     if (showConnectionAlert) {
         AlertDialog(
-            onDismissRequest = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
+            onDismissRequest = {
+                event(
+                    GroupSelectionEvent.DisposeAlert(
+                        Alerts.Connection(ConnAlerts.BASE_CONNECTION),
+                    ),
+                )
+            },
             confirmButton = {
                 Button(
-                    onClick = { event(GroupSelectionEvent.DisposeAlert(Alerts.BASE_CONNECTION)) },
+                    onClick = {
+                        event(
+                            GroupSelectionEvent.DisposeAlert(
+                                Alerts.Connection(ConnAlerts.BASE_CONNECTION),
+                            ),
+                        )
+                    },
                 ) {
                     Text("Печально... \uD83E\uDEE1")
                 }
@@ -130,6 +158,44 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE14 Произошла так называемая \"ошибка\"",
+                        style =
+                            MaterialTheme.typography.bodyMedium.copy(
+                                color = MaterialTheme.colorScheme.secondary,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                    )
+                }
+            },
+            shape = MaterialTheme.shapes.medium,
+        )
+    }
+
+    if (showDbErrorAlert) {
+        AlertDialog(
+            onDismissRequest = {
+                event(
+                    GroupSelectionEvent.DisposeAlert(
+                        Alerts.Db(DbAlerts.DB_ERROR),
+                    ),
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        event(
+                            GroupSelectionEvent.DisposeAlert(
+                                Alerts.Db(DbAlerts.DB_ERROR),
+                            ),
+                        )
+                    },
+                ) {
+                    Text("Жаль!.. \uD83E\uDEE1")
+                }
+            },
+            text = {
+                Box {
+                    Text(
+                        "\uD83D\uDE25 Не смог тебя разлогинить",
                         style =
                             MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.secondary,

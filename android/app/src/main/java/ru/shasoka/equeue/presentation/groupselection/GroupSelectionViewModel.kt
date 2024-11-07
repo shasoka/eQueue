@@ -19,6 +19,9 @@ import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCas
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
 import ru.shasoka.equeue.presentation.nvgraph.Route
 import ru.shasoka.equeue.util.Alerts
+import ru.shasoka.equeue.util.ConnAlerts
+import ru.shasoka.equeue.util.DataAlerts
+import ru.shasoka.equeue.util.DbAlerts
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,6 +38,9 @@ class GroupSelectionViewModel
             private set
 
         var showGroupsLoadingAlert: Boolean by mutableStateOf(false)
+            private set
+
+        var showDbErrorAlert: Boolean by mutableStateOf(false)
             private set
 	
         var groups by mutableStateOf<List<GroupRead>>(emptyList())
@@ -57,9 +63,22 @@ class GroupSelectionViewModel
         fun onEvent(event: GroupSelectionEvent) {
             when (event) {
                 is GroupSelectionEvent.DisposeAlert -> {
-                    when (event.alertType) {
-                        Alerts.GROUPS_LOADING -> showGroupsLoadingAlert = false
-                        Alerts.BASE_CONNECTION -> showConnectionAlert = false
+                    when (val type = event.alertType) {
+                        is Alerts.Connection -> {
+                            if (type.alert == ConnAlerts.BASE_CONNECTION) {
+                                showConnectionAlert = false
+                            }
+                        }
+                        is Alerts.Data -> {
+                            if (type.alert == DataAlerts.DATA_LOADING) {
+                                showGroupsLoadingAlert = false
+                            }
+                        }
+                        is Alerts.Db -> {
+                            if (type.alert == DbAlerts.DB_ERROR) {
+                                showDbErrorAlert = false
+                            }
+                        }
                     }
                 }
 

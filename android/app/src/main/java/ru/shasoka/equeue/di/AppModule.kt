@@ -26,6 +26,9 @@ import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUser
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUser
+import ru.shasoka.equeue.domain.usecases.api.workspaceselection.GetExistingWorkspaces
+import ru.shasoka.equeue.domain.usecases.api.workspaceselection.RequestJoinWorkspace
+import ru.shasoka.equeue.domain.usecases.api.workspaceselection.WorkspaceSelectionUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.ReadAppEntry
 import ru.shasoka.equeue.domain.usecases.appentry.SaveAppEntry
@@ -55,7 +58,7 @@ object AppModule {
     fun provideRetrofit(): Retrofit =
         Retrofit
             .Builder()
-            .baseUrl("https://equeue.onrender.com/api/v1/")
+            .baseUrl("https://muskox-direct-walleye.ngrok-free.app/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -86,6 +89,17 @@ object AppModule {
         GroupSelectionUseCases(
             getGroups = GetGroups(repository, userDao),
             joinGroup = JoinGroup(repository, userDao),
+        )
+
+    @Provides
+    @Singleton
+    fun provideWorkspaceSelectionUseCases(
+        repository: ApiRepository,
+        userDao: UserDao,
+    ): WorkspaceSelectionUseCases =
+        WorkspaceSelectionUseCases(
+            getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
+            requestJoinWorkspace = RequestJoinWorkspace(repository, userDao),
         )
 
     @Provides

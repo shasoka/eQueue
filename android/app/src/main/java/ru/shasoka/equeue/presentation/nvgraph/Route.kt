@@ -13,7 +13,7 @@ sealed class Route(
 
     data object GroupSelectionScreen : Route(route = "groupSelectionScreen")
 
-    data object HomeScreen : Route(route = "homeScreen")
+    data object WorkspaceSelectionScreen : Route(route = "workspaceSelectionScreen")
 
     // Subgraphs
     data object AppStartNavigation : Route(route = "appStartNavigation")
@@ -21,4 +21,6 @@ sealed class Route(
     data object LogInNavigation : Route(route = "logInNavigation")
 
     data object GroupSelectionNavigation : Route(route = "groupSelectionNavigation")
+
+    data object WorkspaceSelectionNavigation : Route(route = "workspaceSelectionNavigation")
 }

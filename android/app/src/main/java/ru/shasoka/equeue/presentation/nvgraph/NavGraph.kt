@@ -16,6 +16,8 @@ import ru.shasoka.equeue.presentation.login.LoginScreen
 import ru.shasoka.equeue.presentation.login.LoginViewModel
 import ru.shasoka.equeue.presentation.onboarding.OnBoardingScreen
 import ru.shasoka.equeue.presentation.onboarding.OnBoardingViewModel
+import ru.shasoka.equeue.presentation.workspaceselection.WorkspaceSelectionScreen
+import ru.shasoka.equeue.presentation.workspaceselection.WorkspaceSelectionViewModel
 
 @Composable
 fun NavGraph(startDestination: String) {
@@ -60,6 +62,25 @@ fun NavGraph(startDestination: String) {
                     isLoading = viewModel.isLoading,
                     showGroupsLoadingAlert = viewModel.showGroupsLoadingAlert,
                     showConnectionAlert = viewModel.showConnectionAlert,
+                    showDbErrorAlert = viewModel.showDbErrorAlert,
+                    event = viewModel::onEvent,
+                    navController = navController,
+                )
+            }
+        }
+
+        navigation(
+            route = Route.WorkspaceSelectionNavigation.route,
+            startDestination = Route.WorkspaceSelectionScreen.route,
+        ) {
+            composable(route = Route.WorkspaceSelectionScreen.route) {
+                val viewModel: WorkspaceSelectionViewModel = hiltViewModel()
+                WorkspaceSelectionScreen(
+                    workspaces = viewModel.workspaces,
+                    isLoading = viewModel.isLoading,
+                    showWorkspacesLoadingAlert = viewModel.showWorkspacesLoadingAlert,
+                    showConnectionAlert = viewModel.showConnectionAlert,
+                    showDbErrorAlert = viewModel.showDbErrorAlert,
                     event = viewModel::onEvent,
                     navController = navController,
                 )
