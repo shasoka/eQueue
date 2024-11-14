@@ -1,9 +1,8 @@
 FROM python:3.12.4
 
-# RUN goes on image build
-RUN mkdir /eQueue_server
+RUN mkdir /backend
 
-WORKDIR /eQueue_server
+WORKDIR /backend
 
 COPY pyproject.toml poetry.lock ./
 
@@ -19,11 +18,4 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 
 COPY . .
 
-RUN mv .env ./eQueue/
-
 WORKDIR ./eQueue
-
-RUN alembic upgrade head
-
-# CMD goes on image run
-CMD gunicorn main:app --workers 3 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000 --access-logfile -
