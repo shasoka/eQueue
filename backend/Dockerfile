@@ -19,3 +19,7 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 COPY . .
 
 WORKDIR ./eQueue
+
+RUN alembic upgrade head
+
+CMD gunicorn main:app --workers 3 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000 --access-logfile -
