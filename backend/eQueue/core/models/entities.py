@@ -191,7 +191,7 @@ class WorkspaceSubject(Base):
         "SubjectAssignment",
         cascade="all, delete-orphan",
     )
-
+    
 
 class SubjectAssignment(Base):
     workspace_id: Mapped[int] = mapped_column(

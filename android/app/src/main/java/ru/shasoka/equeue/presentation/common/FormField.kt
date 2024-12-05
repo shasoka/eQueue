@@ -2,7 +2,7 @@
  * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
-package ru.shasoka.equeue.presentation.login.components
+package ru.shasoka.equeue.presentation.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -48,7 +48,7 @@ import ru.shasoka.equeue.util.Dimensions.SmallPadding
 @Composable
 fun FormField(
     placeholder: String,
-    icon: ImageVector,
+    icon: ImageVector?,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     isSecret: Boolean = false,
@@ -84,11 +84,13 @@ fun FormField(
             horizontalArrangement = Arrangement.Start,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.secondary,
-            )
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary,
+                )
+            }
             BasicTextField(
                 value = text,
                 onValueChange = {

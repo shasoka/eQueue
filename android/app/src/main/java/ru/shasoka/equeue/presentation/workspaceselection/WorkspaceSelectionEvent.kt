@@ -11,4 +11,8 @@ sealed class WorkspaceSelectionEvent {
     data class ChangeAccount(
         val navController: NavController,
     ) : WorkspaceSelectionEvent()
+
+    data object DisposeModal : WorkspaceSelectionEvent()
+
+    data object InitModal : WorkspaceSelectionEvent()
 }

@@ -51,8 +51,8 @@ import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.presentation.common.HyperlinkNAV
 import ru.shasoka.equeue.presentation.common.SearchBar
+import ru.shasoka.equeue.presentation.common.SelectionBackground
 import ru.shasoka.equeue.presentation.groupselection.components.SearchResult
-import ru.shasoka.equeue.presentation.groupselection.components.SelectionBackground
 import ru.shasoka.equeue.util.Alerts
 import ru.shasoka.equeue.util.ConnAlerts
 import ru.shasoka.equeue.util.Constants.SEARCH_RESULT_HEIGHT
@@ -216,7 +216,12 @@ fun GroupSelectionScreen(
                     Button(
                         onClick = {
                             proceedDialog = false
-                            event(GroupSelectionEvent.JoinGroup(groups.first { it.name == searchQuery }))
+                            event(
+                                GroupSelectionEvent.JoinGroup(
+                                    groups.first { it.name == searchQuery },
+                                    navController,
+                                ),
+                            )
                         },
                     ) {
                         Text("Так точно \uD83E\uDEE1")

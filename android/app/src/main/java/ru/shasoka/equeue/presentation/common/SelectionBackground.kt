@@ -2,7 +2,7 @@
  * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
  */
 
-package ru.shasoka.equeue.presentation.groupselection.components
+package ru.shasoka.equeue.presentation.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

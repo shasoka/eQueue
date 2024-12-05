@@ -81,6 +81,7 @@ fun NavGraph(startDestination: String) {
                     showWorkspacesLoadingAlert = viewModel.showWorkspacesLoadingAlert,
                     showConnectionAlert = viewModel.showConnectionAlert,
                     showDbErrorAlert = viewModel.showDbErrorAlert,
+                    showWorkspaceCreationModal = viewModel.showWorkspaceCreationModal,
                     event = viewModel::onEvent,
                     navController = navController,
                 )

@@ -38,6 +38,9 @@ class WorkspaceSelectionViewModel
         var showDbErrorAlert: Boolean by mutableStateOf(false)
             private set
 
+        var showWorkspaceCreationModal: Boolean by mutableStateOf(false)
+            private set
+
         var workspaces by mutableStateOf<List<WorkspaceRead>>(emptyList())
             private set
 
@@ -47,6 +50,7 @@ class WorkspaceSelectionViewModel
                     isLoading = true
                     delay(500)
                     workspaces = getExistingWorkspaces()
+                    if (workspaces.isEmpty()) showWorkspaceCreationModal = true
                     isLoading = false
                 } catch (e: Exception) {
                     showWorkspacesLoadingAlert = true
@@ -91,6 +95,10 @@ class WorkspaceSelectionViewModel
                         }
                     }
                 }
+
+                WorkspaceSelectionEvent.DisposeModal -> showWorkspaceCreationModal = false
+
+                WorkspaceSelectionEvent.InitModal -> showWorkspaceCreationModal = true
             }
         }
 

@@ -15,6 +15,7 @@ sealed class GroupSelectionEvent {
 
     data class JoinGroup(
         val group: GroupRead,
+        val navController: NavController,
     ) : GroupSelectionEvent()
 
     data class ChangeAccount(

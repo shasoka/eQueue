@@ -89,7 +89,7 @@ class GroupSelectionViewModel
                             delay(300)
                             joinGroup(event.group.id)
                             isLoading = false
-                            // todo navigate next
+                            event.navController.navigate(Route.WorkspaceSelectionNavigation.route)
                         } catch (e: Exception) {
                             showConnectionAlert = true
                             isLoading = false
