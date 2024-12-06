@@ -11,6 +11,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
+import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
 import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserAuth
@@ -31,6 +33,12 @@ interface Api {
     suspend fun getGroups(
         @Header("Authorization") header: String,
     ): ListOfGroupRead
+
+    @GET("groups/{group_id}")
+    suspend fun getSingleGroup(
+        @Header("Authorization") header: String,
+        @Path("group_id") groupId: String,
+    ): GroupRead
 
     @PATCH("users")
     suspend fun patchUser(

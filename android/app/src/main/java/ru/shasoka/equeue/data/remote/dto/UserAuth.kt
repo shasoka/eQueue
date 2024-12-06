@@ -6,7 +6,6 @@ package ru.shasoka.equeue.data.remote.dto
 
 import ru.shasoka.equeue.domain.model.User
 
-// TODO на бэке поправить кодирование полей
 data class UserAuth(
     val access_token: String,
     val assigned_group_id: Int?,
