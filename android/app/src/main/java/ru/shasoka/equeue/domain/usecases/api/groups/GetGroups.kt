@@ -15,11 +15,10 @@ class GetGroups(
 ) {
     suspend operator fun invoke(): ListOfGroupRead {
         try {
-            val user =
-                userDao
-                    .getUsers() // Get Flow<List<User>>
-                    .first() // Get List<User>
-                    .firstOrNull() // Get User
+            val user = userDao
+                .getUsers() // Get Flow<List<User>>
+                .first() // Get List<User>
+                .firstOrNull() // Get User
             if (user == null) {
                 throw Exception("User not found")
             }

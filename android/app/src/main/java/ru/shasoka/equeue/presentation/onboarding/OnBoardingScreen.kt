@@ -36,21 +36,19 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
         modifier = Modifier.fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        val pagerState =
-            rememberPagerState(initialPage = 0) {
-                pages.size
-            }
+        val pagerState = rememberPagerState(initialPage = 0) {
+            pages.size
+        }
 
-        val buttonState =
-            remember {
-                derivedStateOf {
-                    when (pagerState.currentPage) {
-                        0 -> listOf("", "Далее")
-                        1 -> listOf("Назад", "К делу! \uD83D\uDC49\uD83C\uDFFB")
-                        else -> listOf("", "")
-                    }
+        val buttonState = remember {
+            derivedStateOf {
+                when (pagerState.currentPage) {
+                    0 -> listOf("", "Далее")
+                    1 -> listOf("Назад", "К делу! \uD83D\uDC49\uD83C\uDFFB")
+                    else -> listOf("", "")
                 }
             }
+        }
 
         HorizontalPager(
             contentPadding = PaddingValues(all = 0.dp),
@@ -60,8 +58,7 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
         }
 
         Row(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(all = LargestPadding)
                 .navigationBarsPadding(),

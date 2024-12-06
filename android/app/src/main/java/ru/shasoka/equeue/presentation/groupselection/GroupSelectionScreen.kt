@@ -119,8 +119,7 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE16 Не смогли загрузить список групп",
-                        style =
-                        MaterialTheme.typography.bodyMedium.copy(
+                        style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.secondary,
                             fontWeight = FontWeight.Bold,
                         ),
@@ -157,8 +156,7 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE14 Произошла так называемая \"ошибка\"",
-                        style =
-                        MaterialTheme.typography.bodyMedium.copy(
+                        style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.secondary,
                             fontWeight = FontWeight.Bold,
                         ),
@@ -195,8 +193,7 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE25 Не смог тебя разлогинить",
-                        style =
-                        MaterialTheme.typography.bodyMedium.copy(
+                        style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.secondary,
                             fontWeight = FontWeight.Bold,
                         ),
@@ -262,8 +259,7 @@ fun GroupSelectionScreen(
     }
 
     Box(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(WindowInsets.ime.asPaddingValues()),
         contentAlignment = Alignment.Center,
@@ -283,8 +279,7 @@ fun GroupSelectionScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier =
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth(0.7f)
                 .fillMaxHeight()
                 .alpha(globalAlpha),
@@ -302,13 +297,12 @@ fun GroupSelectionScreen(
                 this@Column.AnimatedVisibility(
                     visible = searchQuery.isNotEmpty() && keyboardOpen,
                 ) {
-                    filteredGroups =
-                        groups.filter {
-                            it.name.contains(
-                                searchQuery,
-                                ignoreCase = true,
-                            )
-                        }
+                    filteredGroups = groups.filter {
+                        it.name.contains(
+                            searchQuery,
+                            ignoreCase = true,
+                        )
+                    }
                     val visibleItems = filteredGroups.take(5)
                     val lazyColumnHeight = (visibleItems.size * SEARCH_RESULT_HEIGHT).dp
 
@@ -366,12 +360,10 @@ fun GroupSelectionScreen(
                     }
                 },
                 textState = searchQuery,
-                keyboardOptions =
-                KeyboardOptions.Default.copy(
+                keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Done,
                 ),
-                keyboardActions =
-                KeyboardActions(
+                keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
                     },

@@ -30,24 +30,22 @@ fun SearchResult(
 ) {
     // Height is about 33.dp
     Box(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(all = MediumPadding)
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                ) { onClick() }
-                .horizontalScroll(rememberScrollState()),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(all = MediumPadding)
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) { onClick() }
+            .horizontalScroll(rememberScrollState()),
         contentAlignment = Alignment.CenterStart,
     ) {
         Text(
             text = text,
-            style =
-                MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.secondary,
-                    fontWeight = FontWeight.SemiBold,
-                ),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.secondary,
+                fontWeight = FontWeight.SemiBold,
+            ),
             textAlign = TextAlign.Start,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,

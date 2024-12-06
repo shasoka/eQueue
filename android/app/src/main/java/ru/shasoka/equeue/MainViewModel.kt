@@ -21,49 +21,47 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel
-    @Inject
-    constructor(
-        private val appEntryUseCases: AppEntryUseCases,
-        private val userDao: UserDao,
-    ) : ViewModel() {
-        var splashCondition by mutableStateOf(true)
-            private set
-	
-        var startDestination by mutableStateOf(Route.AppStartNavigation.route)
-            private set
+@Inject
+constructor(
+    private val appEntryUseCases: AppEntryUseCases,
+    private val userDao: UserDao,
+) : ViewModel() {
+    var splashCondition by mutableStateOf(true)
+        private set
 
-        init {
-            viewModelScope.launch {
-                // Получаем список пользователей из базы данных
-                val users = userDao.getUsers().first()
-                val user = users.firstOrNull() // Получаем первого пользователя или null
+    var startDestination by mutableStateOf(Route.AppStartNavigation.route)
+        private set
 
-                if (user != null) {
-                    // Проверяем наличие группы у пользователя
-                    startDestination =
-                        if (user.assigned_group_id != null) {
-                            Route.WorkspaceSelectionNavigation.route
-                        } else {
-                            Route.GroupSelectionNavigation.route
-                        }
+    init {
+        viewModelScope.launch {
+            // Получаем список пользователей из базы данных
+            val users = userDao.getUsers().first()
+            val user = users.firstOrNull() // Получаем первого пользователя или null
+
+            if (user != null) {
+                // Проверяем наличие группы у пользователя
+                startDestination = if (user.assigned_group_id != null) {
+                    Route.WorkspaceSelectionNavigation.route
+                } else {
+                    Route.GroupSelectionNavigation.route
+                }
+                delay(300)
+                splashCondition = false
+                return@launch
+            }
+
+            // Читаем состояние приложения для определения начального маршрута
+            appEntryUseCases
+                .readAppEntry()
+                .collectLatest { shouldStartFromLoginScreen ->
+                    startDestination = if (shouldStartFromLoginScreen) {
+                        Route.LogInNavigation.route
+                    } else {
+                        Route.AppStartNavigation.route
+                    }
                     delay(300)
                     splashCondition = false
-                    return@launch
                 }
-
-                // Читаем состояние приложения для определения начального маршрута
-                appEntryUseCases
-                    .readAppEntry()
-                    .collectLatest { shouldStartFromLoginScreen ->
-                        startDestination =
-                            if (shouldStartFromLoginScreen) {
-                                Route.LogInNavigation.route
-                            } else {
-                                Route.AppStartNavigation.route
-                            }
-                        delay(300)
-                        splashCondition = false
-                    }
-            }
         }
     }
+}

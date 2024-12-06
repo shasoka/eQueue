@@ -88,8 +88,7 @@ fun LoginScreen(
                 Box {
                     Text(
                         "\uD83E\uDDD0 Неверный логин или пароль, попробуйте заново",
-                        style =
-                        MaterialTheme.typography.bodyMedium.copy(
+                        style = MaterialTheme.typography.bodyMedium.copy(
                             color = MaterialTheme.colorScheme.secondary,
                             fontWeight = FontWeight.Bold,
                         ),
@@ -101,8 +100,7 @@ fun LoginScreen(
     }
 
     Box(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(WindowInsets.ime.asPaddingValues()),
         contentAlignment = Alignment.Center,
@@ -118,8 +116,7 @@ fun LoginScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier =
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth(0.7f)
                 .fillMaxHeight()
                 .alpha(contentAlpha),
@@ -128,16 +125,14 @@ fun LoginScreen(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .fillMaxHeight(0.5f)
                     .padding(SmallPadding),
             )
             FormField(
                 placeholder = "Введите логин ... ",
                 icon = Icons.Default.Person,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .padding(vertical = SmallPadding)
                     .focusRequester(usernameFocusRequester),
                 onTextChange = { newText ->
@@ -149,12 +144,10 @@ fun LoginScreen(
                     }
                     username = newText
                 },
-                keyboardOptions =
-                KeyboardOptions.Default.copy(
+                keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Next,
                 ),
-                keyboardActions =
-                KeyboardActions(
+                keyboardActions = KeyboardActions(
                     onNext = { passwordFocusRequester.requestFocus() },
                 ),
             )
@@ -162,8 +155,7 @@ fun LoginScreen(
                 placeholder = "Введите пароль ...",
                 icon = Icons.Default.Lock,
                 isSecret = true,
-                modifier =
-                Modifier
+                modifier = Modifier
                     .padding(vertical = SmallPadding)
                     .focusRequester(passwordFocusRequester),
                 onTextChange = { newText ->
@@ -175,12 +167,10 @@ fun LoginScreen(
                     }
                     password = newText
                 },
-                keyboardOptions =
-                KeyboardOptions.Default.copy(
+                keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Done,
                 ),
-                keyboardActions =
-                KeyboardActions(
+                keyboardActions = KeyboardActions(
                     onDone = {
                         focusManager.clearFocus()
                     },

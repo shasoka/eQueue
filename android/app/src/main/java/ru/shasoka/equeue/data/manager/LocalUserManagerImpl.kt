@@ -26,11 +26,9 @@ class LocalUserManagerImpl(
         }
     }
 
-    override fun readAppEntry(): Flow<Boolean> =
-        // Returns true if app was opened at least ones. Otherwise there is null value
-        context.dataStore.data.map { preferences ->
-            preferences[PreferencesKeys.APP_ENTRY] ?: false
-        }
+    override fun readAppEntry(): Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.APP_ENTRY] ?: false
+    }
 }
 
 // Data store with name userSettings

@@ -44,10 +44,9 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideLocalUserManager(application: Application): LocalUserManager =
-        LocalUserManagerImpl(
-            application,
-        )
+    fun provideLocalUserManager(application: Application): LocalUserManager = LocalUserManagerImpl(
+        application,
+    )
 
     @Provides
     @Singleton
@@ -85,33 +84,30 @@ object AppModule {
     fun provideLoginUseCases(
         repository: ApiRepository,
         userDao: UserDao,
-    ): LoginUseCases =
-        LoginUseCases(
-            loginUser = LoginUser(repository, userDao),
-        )
+    ): LoginUseCases = LoginUseCases(
+        loginUser = LoginUser(repository, userDao),
+    )
 
     @Provides
     @Singleton
     fun provideGroupsUseCases(
         repository: ApiRepository,
         userDao: UserDao,
-    ): GroupsUseCases =
-        GroupsUseCases(
-            getGroups = GetGroups(repository, userDao),
-            joinGroup = JoinGroup(repository, userDao),
-            leaveGroup = LeaveGroup(repository, userDao)
-        )
+    ): GroupsUseCases = GroupsUseCases(
+        getGroups = GetGroups(repository, userDao),
+        joinGroup = JoinGroup(repository, userDao),
+        leaveGroup = LeaveGroup(repository, userDao)
+    )
 
     @Provides
     @Singleton
     fun provideWorkspacesUseCases(
         repository: ApiRepository,
         userDao: UserDao,
-    ): WorkspacesUseCases =
-        WorkspacesUseCases(
-            getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
-            requestJoinWorkspace = RequestJoinWorkspace(repository, userDao),
-        )
+    ): WorkspacesUseCases = WorkspacesUseCases(
+        getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
+        requestJoinWorkspace = RequestJoinWorkspace(repository, userDao),
+    )
 
     @Provides
     @Singleton
@@ -120,14 +116,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideEQueueDatabase(application: Application): EQueueDatabase =
-        Room
-            .databaseBuilder(
-                context = application,
-                klass = EQueueDatabase::class.java,
-                name = DB_NAME,
-            ).fallbackToDestructiveMigration()
-            .build()
+    fun provideEQueueDatabase(application: Application): EQueueDatabase = Room
+        .databaseBuilder(
+            context = application,
+            klass = EQueueDatabase::class.java,
+            name = DB_NAME,
+        ).fallbackToDestructiveMigration()
+        .build()
 
     @Provides
     @Singleton

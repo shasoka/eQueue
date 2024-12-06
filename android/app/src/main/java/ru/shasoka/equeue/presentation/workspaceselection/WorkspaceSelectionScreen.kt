@@ -101,7 +101,6 @@ fun WorkspaceSelectionScreen(
                 onConfirm = {},
             )
         }
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,

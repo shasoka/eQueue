@@ -15,28 +15,27 @@ class LeaveGroup(
     private val apiRepository: ApiRepository,
     private val userDao: UserDao,
 ) {
-    suspend operator fun invoke(): UserRead =
-        try {
-            val user = userDao
-                .getUsers()
-                .first()
-                .firstOrNull()
-            if (user == null) {
-                throw Exception("User not found")
-            }
-
-            if (user.workspace_chief) {
-                throw GroupLeaveException("User can't leave group while is worskpace chief")
-            }
-
-            val response = apiRepository.patchUser(
-                header = user.token_type + " " + user.access_token,
-                body = UserUpdate(assigned_group_id = null),
-            )
-
-            userDao.upsert(user.copy(assigned_group_id = response.assigned_group_id))
-            response
-        } catch (e: Exception) {
-            throw e
+    suspend operator fun invoke(): UserRead = try {
+        val user = userDao
+            .getUsers()
+            .first()
+            .firstOrNull()
+        if (user == null) {
+            throw Exception("User not found")
         }
+
+        if (user.workspace_chief) {
+            throw GroupLeaveException("User can't leave group while is worskpace chief")
+        }
+
+        val response = apiRepository.patchUser(
+            header = user.token_type + " " + user.access_token,
+            body = UserUpdate(assigned_group_id = null),
+        )
+
+        userDao.upsert(user.copy(assigned_group_id = response.assigned_group_id))
+        response
+    } catch (e: Exception) {
+        throw e
+    }
 }

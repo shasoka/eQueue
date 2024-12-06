@@ -34,13 +34,12 @@ class MainActivity : ComponentActivity() {
                 viewModel.splashCondition
             }
         }
-		
+
         enableEdgeToEdge(
-            statusBarStyle =
-                SystemBarStyle.auto(
-                    android.graphics.Color.TRANSPARENT,
-                    android.graphics.Color.TRANSPARENT,
-                ),
+            statusBarStyle = SystemBarStyle.auto(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT,
+            ),
         )
 
         setContent {

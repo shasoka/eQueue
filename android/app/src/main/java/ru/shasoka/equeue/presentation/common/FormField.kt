@@ -57,26 +57,26 @@ fun FormField(
 ) {
     var text by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
-	
-    val visualTransformation =
-        if (isSecret && !passwordVisible) {
-            PasswordVisualTransformation()
-        } else {
-            VisualTransformation.None
-        }
-	
+
+    val visualTransformation = if (isSecret && !passwordVisible) {
+        PasswordVisualTransformation()
+    } else {
+        VisualTransformation.None
+    }
+
     Box(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    shape = RoundedCornerShape(6.dp),
-                ).border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    shape = RoundedCornerShape(6.dp),
-                ).padding(all = MediumPadding),
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.inverseOnSurface,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.secondary,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .padding(all = MediumPadding),
         contentAlignment = Alignment.Center,
     ) {
         Row(
@@ -101,11 +101,10 @@ fun FormField(
                 keyboardActions = keyboardActions,
                 visualTransformation = visualTransformation,
                 maxLines = 1,
-                textStyle =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.Bold,
-                    ),
+                textStyle = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.Bold,
+                ),
                 decorationBox = { innerTextField ->
                     if (text.isEmpty()) {
                         Text(
@@ -116,11 +115,10 @@ fun FormField(
                     }
                     innerTextField()
                 },
-                modifier =
-                    Modifier
-                        .padding(horizontal = SmallPadding)
-                        .weight(1f)
-                        .horizontalScroll(rememberScrollState()),
+                modifier = Modifier
+                    .padding(horizontal = SmallPadding)
+                    .weight(1f)
+                    .horizontalScroll(rememberScrollState()),
             )
             if (isSecret) {
                 IconButton(
@@ -128,17 +126,15 @@ fun FormField(
                     onClick = { passwordVisible = !passwordVisible },
                 ) {
                     Icon(
-                        painter =
-                            if (passwordVisible) {
-                                painterResource(R.drawable.visibility_on)
-                            } else {
-                                painterResource(R.drawable.visibility_off)
-                            },
+                        painter = if (passwordVisible) {
+                            painterResource(R.drawable.visibility_on)
+                        } else {
+                            painterResource(R.drawable.visibility_off)
+                        },
                         contentDescription = if (passwordVisible) "Hide password" else "Show password",
-                        modifier =
-                            Modifier
-                                .size(24.dp)
-                                .padding(all = 0.dp),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .padding(all = 0.dp),
                         tint = MaterialTheme.colorScheme.secondary,
                     )
                 }
@@ -152,7 +148,7 @@ fun FormField(
 private fun FormFieldPreview() {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-	
+
     EQueueTheme(dynamicColor = false) {
         Column {
             FormField(

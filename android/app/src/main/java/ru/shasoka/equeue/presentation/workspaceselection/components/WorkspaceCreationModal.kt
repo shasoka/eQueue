@@ -27,7 +27,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import compose.icons.FeatherIcons
-import compose.icons.feathericons.Calendar
 import compose.icons.feathericons.Hash
 import compose.icons.feathericons.Info
 import ru.shasoka.equeue.presentation.common.CancelButton
@@ -65,21 +64,8 @@ fun WorkspaceCreationDialog(
                         placeholder = "Как назовем?",
                         icon = FeatherIcons.Hash,
                         onTextChange = { wsName = it },
-                        keyboardOptions =
-                        KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                        keyboardActions =
-                        KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) },
-                        ),
-                    )
-                    FormField(
-                        placeholder = "Семестр",
-                        icon = FeatherIcons.Calendar,
-                        onTextChange = { wsSemester = it },
-                        keyboardOptions =
-                        KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                        keyboardActions =
-                        KeyboardActions(
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                        keyboardActions = KeyboardActions(
                             onNext = { focusManager.moveFocus(FocusDirection.Down) },
                         ),
                     )
@@ -87,10 +73,8 @@ fun WorkspaceCreationDialog(
                         placeholder = "Описание",
                         icon = FeatherIcons.Info,
                         onTextChange = { wsAbout = it },
-                        keyboardOptions =
-                        KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        keyboardActions =
-                        KeyboardActions(
+                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(
                             onDone = { focusManager.clearFocus() },
                         ),
                     )
