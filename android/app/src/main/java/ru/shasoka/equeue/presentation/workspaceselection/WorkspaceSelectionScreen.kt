@@ -109,7 +109,7 @@ fun WorkspaceSelectionScreen(
             HyperlinkNAV(
                 text = "Сменить группу \uD83D\uDEAA",
                 modifier = Modifier.padding(vertical = SmallPadding),
-                onClick = { },
+                onClick = { event(WorkspaceSelectionEvent.ChangeGroup(navController)) },
             )
         }
     }

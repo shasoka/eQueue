@@ -6,6 +6,7 @@ package ru.shasoka.equeue.di
 
 import android.app.Application
 import androidx.room.Room
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,16 +20,17 @@ import ru.shasoka.equeue.data.remote.Api
 import ru.shasoka.equeue.data.repository.ApiRepositoryImpl
 import ru.shasoka.equeue.domain.manager.LocalUserManager
 import ru.shasoka.equeue.domain.repository.ApiRepository
-import ru.shasoka.equeue.domain.usecases.api.groupselection.GetGroups
-import ru.shasoka.equeue.domain.usecases.api.groupselection.GroupSelectionUseCases
-import ru.shasoka.equeue.domain.usecases.api.groupselection.JoinGroup
+import ru.shasoka.equeue.domain.usecases.api.groups.GetGroups
+import ru.shasoka.equeue.domain.usecases.api.groups.GroupsUseCases
+import ru.shasoka.equeue.domain.usecases.api.groups.JoinGroup
+import ru.shasoka.equeue.domain.usecases.api.groups.LeaveGroup
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUser
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUser
-import ru.shasoka.equeue.domain.usecases.api.workspaceselection.GetExistingWorkspaces
-import ru.shasoka.equeue.domain.usecases.api.workspaceselection.RequestJoinWorkspace
-import ru.shasoka.equeue.domain.usecases.api.workspaceselection.WorkspaceSelectionUseCases
+import ru.shasoka.equeue.domain.usecases.api.workspaces.GetExistingWorkspaces
+import ru.shasoka.equeue.domain.usecases.api.workspaces.RequestJoinWorkspace
+import ru.shasoka.equeue.domain.usecases.api.workspaces.WorkspacesUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.ReadAppEntry
 import ru.shasoka.equeue.domain.usecases.appentry.SaveAppEntry
@@ -55,12 +57,17 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit =
-        Retrofit
-            .Builder()
-            .baseUrl("https://muskox-direct-walleye.ngrok-free.app/api/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun provideRetrofit(): Retrofit = Retrofit
+        .Builder()
+        .baseUrl("https://muskox-direct-walleye.ngrok-free.app/api/v1/")
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder()
+                    .serializeNulls()
+                    .create()
+            )
+        )
+        .build()
 
     @Provides
     @Singleton
@@ -82,29 +89,31 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGroupSelectionUseCases(
+    fun provideGroupsUseCases(
         repository: ApiRepository,
         userDao: UserDao,
-    ): GroupSelectionUseCases =
-        GroupSelectionUseCases(
+    ): GroupsUseCases =
+        GroupsUseCases(
             getGroups = GetGroups(repository, userDao),
             joinGroup = JoinGroup(repository, userDao),
+            leaveGroup = LeaveGroup(repository, userDao)
         )
 
     @Provides
     @Singleton
-    fun provideWorkspaceSelectionUseCases(
+    fun provideWorkspacesUseCases(
         repository: ApiRepository,
         userDao: UserDao,
-    ): WorkspaceSelectionUseCases =
-        WorkspaceSelectionUseCases(
+    ): WorkspacesUseCases =
+        WorkspacesUseCases(
             getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
             requestJoinWorkspace = RequestJoinWorkspace(repository, userDao),
         )
 
     @Provides
     @Singleton
-    fun provideLogoutUserUseCases(userDao: UserDao): LogoutUseCases = LogoutUseCases(logoutUser = LogoutUser(userDao = userDao))
+    fun provideLogoutUserUseCases(userDao: UserDao): LogoutUseCases =
+        LogoutUseCases(logoutUser = LogoutUser(userDao = userDao))
 
     @Provides
     @Singleton

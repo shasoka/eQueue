@@ -1,15 +1,19 @@
-package ru.shasoka.equeue.domain.usecases.api.workspaceselection
+/*
+ * Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+ */
+
+package ru.shasoka.equeue.domain.usecases.api.groups
 
 import kotlinx.coroutines.flow.first
 import ru.shasoka.equeue.data.local.UserDao
-import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
+import ru.shasoka.equeue.data.remote.dto.ListOfGroupRead
 import ru.shasoka.equeue.domain.repository.ApiRepository
 
-class GetExistingWorkspaces(
+class GetGroups(
     private val apiRepository: ApiRepository,
     private val userDao: UserDao,
 ) {
-    suspend operator fun invoke(): ListOfWorkspaceRead {
+    suspend operator fun invoke(): ListOfGroupRead {
         try {
             val user =
                 userDao
@@ -19,9 +23,7 @@ class GetExistingWorkspaces(
             if (user == null) {
                 throw Exception("User not found")
             }
-            return apiRepository.getExistingWorkspaces(
-                user.token_type + " " + user.access_token,
-            )
+            return apiRepository.getGroups(user.token_type + " " + user.access_token)
         } catch (e: Exception) {
             throw e
         }

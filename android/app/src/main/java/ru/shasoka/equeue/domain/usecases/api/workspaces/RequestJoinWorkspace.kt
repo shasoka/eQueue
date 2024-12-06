@@ -1,4 +1,4 @@
-package ru.shasoka.equeue.domain.usecases.api.workspaceselection
+package ru.shasoka.equeue.domain.usecases.api.workspaces
 
 import ru.shasoka.equeue.data.local.UserDao
 import ru.shasoka.equeue.domain.repository.ApiRepository

@@ -8,7 +8,7 @@ sealed class WorkspaceSelectionEvent {
         val alertType: Alerts,
     ) : WorkspaceSelectionEvent()
 
-    data class ChangeAccount(
+    data class ChangeGroup(
         val navController: NavController,
     ) : WorkspaceSelectionEvent()
 

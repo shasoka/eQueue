@@ -1,6 +1,6 @@
-package ru.shasoka.equeue.domain.usecases.api.workspaceselection
+package ru.shasoka.equeue.domain.usecases.api.workspaces
 
-class WorkspaceSelectionUseCases(
+class WorkspacesUseCases(
     val getExistingWorkspaces: GetExistingWorkspaces,
     val requestJoinWorkspace: RequestJoinWorkspace,
 )
