@@ -1,6 +1,7 @@
 package ru.shasoka.equeue.presentation.workspaceselection
 
 import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,9 +27,11 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
+import ru.shasoka.equeue.presentation.common.HyperlinkNAV
 import ru.shasoka.equeue.presentation.common.SelectionBackground
 import ru.shasoka.equeue.presentation.common.SubmitButon
 import ru.shasoka.equeue.presentation.workspaceselection.components.WorkspaceCreationDialog
+import ru.shasoka.equeue.util.Dimensions.SmallPadding
 import ru.shasoka.equeue.util.keyboardAsState
 
 @Composable
@@ -65,44 +68,49 @@ fun WorkspaceSelectionScreen(
     val context = LocalContext.current
     val activity = context as? Activity
 
-
-
     Box(
-        modifier =
-        modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(WindowInsets.ime.asPaddingValues()),
         contentAlignment = Alignment.Center,
     ) {
-        if (showWorkspaceCreationModal) {
-            WorkspaceCreationDialog(onDismissRequest = {}, onConfirm = {})
+        BackHandler {
+            activity?.finish()
         }
 
-        if (workspaces.isEmpty()) {  // Если не найдено ни одного рабочего пространства
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-                modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-                    .alpha(globalAlpha),
-            ) {
+        if (showWorkspaceCreationModal) {
+            WorkspaceCreationDialog(
+                onDismissRequest = { event(WorkspaceSelectionEvent.DisposeModal) },
+                onConfirm = {},
+            )
+        }
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .alpha(globalAlpha),
+        ) {
+            if (workspaces.isEmpty()) {  // Если не найдено ни одного рабочего пространства
                 SelectionBackground(
                     contentAlpha = contentAlpha,
-                    text =
-                    "Похоже никто еще не создал рабочее пространство для вашей группы." +
+                    text = "Похоже никто еще не создал рабочее пространство для вашей группы." +
                             "\nВы можете стать первым!\n\uD83D\uDC51",
                     modifier = Modifier.fillMaxWidth(0.7f),
                 )
-
                 SubmitButon(
                     text = "Настало моё время...",
                     onClick = { event(WorkspaceSelectionEvent.InitModal) },
                 )
+            } else {  // Если рабочее пространство для группы пользователя найдено
             }
-        } else {
+            HyperlinkNAV(
+                text = "Сменить группу \uD83D\uDEAA",
+                modifier = Modifier.padding(vertical = SmallPadding),
+                onClick = { },
+            )
         }
     }
-
 }
