@@ -17,6 +17,8 @@ import ru.shasoka.equeue.data.local.EQueueDatabase
 import ru.shasoka.equeue.data.local.UserDao
 import ru.shasoka.equeue.data.manager.LocalUserManagerImpl
 import ru.shasoka.equeue.data.remote.Api
+import ru.shasoka.equeue.data.remote.dto.UserUpdate
+import ru.shasoka.equeue.data.remote.serializer.UserUpdateSerializer
 import ru.shasoka.equeue.data.repository.ApiRepositoryImpl
 import ru.shasoka.equeue.domain.manager.LocalUserManager
 import ru.shasoka.equeue.domain.repository.ApiRepository
@@ -64,6 +66,7 @@ object AppModule {
             GsonConverterFactory.create(
                 GsonBuilder()
                     .serializeNulls()
+                    .registerTypeAdapter(UserUpdate::class.java, UserUpdateSerializer())
                     .create()
             )
         )

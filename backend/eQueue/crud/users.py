@@ -41,25 +41,13 @@ async def update_user(
     user_upd: UserUpdate,
 ) -> User:
     user_upd = user_upd.model_dump(exclude_unset=True)
-    
+    if "assigned_group_id" in user_upd and user_upd["assigned_group_id"] is not None:
+        if await session.get(Group, user_upd["assigned_group_id"]) is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Группа id={user_upd['assigned_group_id']} не существует",
+            )
     for key, value in user_upd.items():
-        if key == "assigned_group_id":
-            if value == None:
-                setattr(user, key, value)
-            elif await session.get(Group, value) is None:
-                raise HTTPException(
-                    status_code=404,
-                    detail=f"Группа id={user_upd['assigned_group_id']} не существует",
-                )
-        elif key == "access_token":
-            if value != None:
-                setattr(user, key, value)
-        elif key == "status":
-            if value != None:
-                setattr(user, key, value)
-        elif key == "user_picture_url":
-            if value != None:
-                setattr(user, key, value)
-
+        setattr(user, key, value)
     await session.commit()
     return user

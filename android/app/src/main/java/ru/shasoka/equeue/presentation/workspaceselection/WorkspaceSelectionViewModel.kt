@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ru.shasoka.equeue.data.remote.GroupLeaveException
 import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
@@ -34,6 +35,9 @@ constructor(
         private set
 
     var showWorkspacesLoadingAlert: Boolean by mutableStateOf(false)
+        private set
+
+    var showGroupLeaveAlert: Boolean by mutableStateOf(false)
         private set
 
     var showDbErrorAlert: Boolean by mutableStateOf(false)
@@ -73,6 +77,8 @@ constructor(
                     is Alerts.Data -> {
                         if (type.alert == DataAlerts.DATA_LOADING) {
                             showWorkspacesLoadingAlert = false
+                        } else if (type.alert == DataAlerts.DATA_CONFLICT) {
+                            showGroupLeaveAlert = false
                         }
                     }
 
@@ -92,6 +98,9 @@ constructor(
                         leaveGroup()
                         isLoading = false
                         event.navController.navigate(Route.GroupSelectionNavigation.route)
+                    } catch (e: GroupLeaveException) {
+                        showGroupLeaveAlert = true
+                        isLoading = false
                     } catch (e: Exception) {
                         showDbErrorAlert = true
                         isLoading = false

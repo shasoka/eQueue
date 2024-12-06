@@ -27,18 +27,26 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
+import ru.shasoka.equeue.presentation.common.ExceptionAlert
 import ru.shasoka.equeue.presentation.common.HyperlinkNAV
 import ru.shasoka.equeue.presentation.common.SelectionBackground
 import ru.shasoka.equeue.presentation.common.SubmitButon
 import ru.shasoka.equeue.presentation.workspaceselection.components.WorkspaceCreationDialog
+import ru.shasoka.equeue.util.Alerts
+import ru.shasoka.equeue.util.DataAlerts
 import ru.shasoka.equeue.util.Dimensions.SmallPadding
 import ru.shasoka.equeue.util.keyboardAsState
+
+fun spawnDisposeAlertDataConflict(event: (WorkspaceSelectionEvent) -> Unit) {
+    event(WorkspaceSelectionEvent.DisposeAlert(Alerts.Data(DataAlerts.DATA_CONFLICT)))
+}
 
 @Composable
 fun WorkspaceSelectionScreen(
     workspaces: List<WorkspaceRead>,
     isLoading: Boolean,
     showWorkspacesLoadingAlert: Boolean,
+    showGroupLeaveAlert: Boolean,
     showConnectionAlert: Boolean,
     showDbErrorAlert: Boolean,
     showWorkspaceCreationModal: Boolean,
@@ -67,6 +75,15 @@ fun WorkspaceSelectionScreen(
 
     val context = LocalContext.current
     val activity = context as? Activity
+
+    if (showGroupLeaveAlert) {
+        ExceptionAlert(
+            onDismiss = { spawnDisposeAlertDataConflict(event) },
+            onConfirm = { spawnDisposeAlertDataConflict(event) },
+            alertContent = "Вы не можете покинуть группу, пока являетесь администратором " +
+                    "связанного с этой группой рабочего пространства"
+        )
+    }
 
     Box(
         modifier = modifier

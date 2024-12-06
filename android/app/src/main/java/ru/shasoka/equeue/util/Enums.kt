@@ -14,6 +14,7 @@ enum class DbAlerts {
 
 enum class DataAlerts {
     DATA_LOADING,
+    DATA_CONFLICT,
 }
 
 sealed class Alerts {
