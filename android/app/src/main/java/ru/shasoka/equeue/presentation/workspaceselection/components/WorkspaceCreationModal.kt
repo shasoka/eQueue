@@ -37,16 +37,17 @@ import ru.shasoka.equeue.presentation.common.SubmitButon
 fun WorkspaceCreationDialog(
     onDismissRequest: () -> Unit,
     onConfirm: () -> Unit,
+    onNameChange: (String) -> Unit,
+    onAboutChange: (String) -> Unit,
 ) {
     var wsName by remember { mutableStateOf("") }
-    var wsSemester by remember { mutableStateOf("") }
     var wsAbout by remember { mutableStateOf("") }
+    var isNameInvalid by remember { mutableStateOf(false) }
+
     val focusManager = LocalFocusManager.current
 
     Dialog(onDismissRequest = onDismissRequest) {
-        Box(
-            contentAlignment = Alignment.Center,
-        ) {
+        Box(contentAlignment = Alignment.Center) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
@@ -61,24 +62,31 @@ fun WorkspaceCreationDialog(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     FormField(
-                        placeholder = "Как назовем?",
+                        placeholder = if (!isNameInvalid) "Как назовем?" else "Ну, пожалуйста...",
                         icon = FeatherIcons.Hash,
-                        onTextChange = { wsName = it },
+                        onTextChange = {
+                            wsName = it
+                            isNameInvalid = it.isBlank()
+                            onNameChange(it)
+                        },
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
-                        keyboardActions = KeyboardActions(
-                            onNext = { focusManager.moveFocus(FocusDirection.Down) },
-                        ),
+                        keyboardActions = KeyboardActions(onNext = {
+                            focusManager.moveFocus(
+                                FocusDirection.Down
+                            )
+                        }),
+                        modifier = Modifier.background(MaterialTheme.colorScheme.background)
                     )
                     FormField(
                         placeholder = "Описание",
                         icon = FeatherIcons.Info,
-                        onTextChange = { wsAbout = it },
+                        onTextChange = {
+                            wsAbout = it
+                            onAboutChange(it)
+                        },
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(
-                            onDone = { focusManager.clearFocus() },
-                        ),
+                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                     )
-
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -89,7 +97,13 @@ fun WorkspaceCreationDialog(
                         )
                         SubmitButon(
                             text = "Ехала! 🧨",
-                            onClick = onConfirm,
+                            onClick = {
+                                if (wsName.isBlank()) {
+                                    isNameInvalid = true
+                                } else {
+                                    onConfirm()
+                                }
+                            },
                         )
                     }
                 }

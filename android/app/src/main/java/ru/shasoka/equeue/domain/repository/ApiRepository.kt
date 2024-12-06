@@ -9,6 +9,8 @@ import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
+import ru.shasoka.equeue.data.remote.dto.WorkspaceCreate
+import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
 
 interface ApiRepository {
     suspend fun login(
@@ -24,4 +26,6 @@ interface ApiRepository {
     ): UserRead
 
     suspend fun getExistingWorkspaces(header: String): ListOfWorkspaceRead
+
+    suspend fun createNewWorkspace(header: String, body: WorkspaceCreate): WorkspaceRead
 }

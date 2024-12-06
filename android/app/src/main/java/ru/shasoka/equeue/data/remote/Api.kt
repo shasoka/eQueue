@@ -16,6 +16,8 @@ import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
+import ru.shasoka.equeue.data.remote.dto.WorkspaceCreate
+import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
 
 interface Api {
     @FormUrlEncoded
@@ -40,4 +42,10 @@ interface Api {
     suspend fun getExistingWorkspaces(
         @Header("Authorization") header: String,
     ): ListOfWorkspaceRead
+
+    @POST("workspaces")
+    suspend fun createNewWorkspace(
+        @Header("Authorization") header: String,
+        @Body workspaceCreate: WorkspaceCreate,
+    ): WorkspaceRead
 }

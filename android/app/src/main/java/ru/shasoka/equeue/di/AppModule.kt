@@ -30,8 +30,8 @@ import ru.shasoka.equeue.domain.usecases.api.login.LoginUseCases
 import ru.shasoka.equeue.domain.usecases.api.login.LoginUser
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUseCases
 import ru.shasoka.equeue.domain.usecases.api.logout.LogoutUser
+import ru.shasoka.equeue.domain.usecases.api.workspaces.CreateNewWorkspace
 import ru.shasoka.equeue.domain.usecases.api.workspaces.GetExistingWorkspaces
-import ru.shasoka.equeue.domain.usecases.api.workspaces.RequestJoinWorkspace
 import ru.shasoka.equeue.domain.usecases.api.workspaces.WorkspacesUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.ReadAppEntry
@@ -106,7 +106,7 @@ object AppModule {
         userDao: UserDao,
     ): WorkspacesUseCases = WorkspacesUseCases(
         getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
-        requestJoinWorkspace = RequestJoinWorkspace(repository, userDao),
+        createNewWorkspace = CreateNewWorkspace(repository, userDao),
     )
 
     @Provides

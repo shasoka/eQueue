@@ -49,6 +49,18 @@ constructor(
     var workspaces by mutableStateOf<List<WorkspaceRead>>(emptyList())
         private set
 
+    private var newWsName by mutableStateOf("")
+
+    private var newWsAbout by mutableStateOf("")
+
+    fun setWsName(name: String) {
+        newWsName = name
+    }
+
+    fun setWsAbout(about: String) {
+        newWsAbout = about
+    }
+
     init {
         viewModelScope.launch {
             try {
@@ -108,9 +120,25 @@ constructor(
                 }
             }
 
-            WorkspaceSelectionEvent.DisposeModal -> showWorkspaceCreationModal = false
+            is WorkspaceSelectionEvent.DisposeModal -> showWorkspaceCreationModal = false
 
-            WorkspaceSelectionEvent.InitModal -> showWorkspaceCreationModal = true
+            is WorkspaceSelectionEvent.InitModal -> showWorkspaceCreationModal = true
+
+            is WorkspaceSelectionEvent.CreateWorkspace -> {
+                viewModelScope.launch {
+                    try {
+                        isLoading = true
+                        delay(300)
+                        createWorkspace()
+                        isLoading = false
+                        // TODO: nav next
+                    } catch (e: Exception) {
+                        // TODO custom error
+                        showConnectionAlert = true
+                        isLoading = false
+                    }
+                }
+            }
         }
     }
 
@@ -124,4 +152,16 @@ constructor(
             throw e
         }
     }
+
+    private suspend fun createWorkspace(): WorkspaceRead {
+        try {
+            return workspacesUseCases.createNewWorkspace(
+                name = newWsName,
+                about = newWsAbout,
+            )
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
 }

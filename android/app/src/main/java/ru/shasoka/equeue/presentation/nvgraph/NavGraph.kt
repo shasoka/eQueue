@@ -85,6 +85,8 @@ fun NavGraph(startDestination: String) {
                     showWorkspaceCreationModal = viewModel.showWorkspaceCreationModal,
                     event = viewModel::onEvent,
                     navController = navController,
+                    onNameChange = viewModel::setWsName,
+                    onAboutChange = viewModel::setWsAbout
                 )
             }
         }

@@ -10,6 +10,8 @@ import ru.shasoka.equeue.data.remote.dto.ListOfWorkspaceRead
 import ru.shasoka.equeue.data.remote.dto.UserAuth
 import ru.shasoka.equeue.data.remote.dto.UserRead
 import ru.shasoka.equeue.data.remote.dto.UserUpdate
+import ru.shasoka.equeue.data.remote.dto.WorkspaceCreate
+import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
 import ru.shasoka.equeue.domain.repository.ApiRepository
 
 class ApiRepositoryImpl(
@@ -54,6 +56,17 @@ class ApiRepositoryImpl(
     override suspend fun getExistingWorkspaces(header: String): ListOfWorkspaceRead {
         try {
             return api.getExistingWorkspaces(header)
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    override suspend fun createNewWorkspace(header: String, body: WorkspaceCreate): WorkspaceRead {
+        try {
+            return api.createNewWorkspace(
+                header,
+                body,
+            )
         } catch (e: Exception) {
             throw e
         }

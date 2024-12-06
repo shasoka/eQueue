@@ -15,4 +15,6 @@ sealed class WorkspaceSelectionEvent {
     data object DisposeModal : WorkspaceSelectionEvent()
 
     data object InitModal : WorkspaceSelectionEvent()
+
+    data object CreateWorkspace : WorkspaceSelectionEvent()
 }
