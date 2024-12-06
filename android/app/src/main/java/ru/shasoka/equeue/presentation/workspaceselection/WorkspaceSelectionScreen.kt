@@ -27,7 +27,7 @@ import androidx.navigation.NavController
 import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
 import ru.shasoka.equeue.presentation.common.SelectionBackground
-import ru.shasoka.equeue.presentation.common.StartButton
+import ru.shasoka.equeue.presentation.common.SubmitButon
 import ru.shasoka.equeue.presentation.workspaceselection.components.WorkspaceCreationDialog
 import ru.shasoka.equeue.util.keyboardAsState
 
@@ -58,46 +58,51 @@ fun WorkspaceSelectionScreen(
         label = "",
     )
     val globalAlpha by animateFloatAsState(
-        targetValue = if (isLoading) 0.1f else 1f,
+        targetValue = if (isLoading || showWorkspaceCreationModal) 0.1f else 1f,
         label = "",
     )
 
     val context = LocalContext.current
     val activity = context as? Activity
 
-    if (showWorkspaceCreationModal) {
-        WorkspaceCreationDialog(onDismissRequest = {})
-    }
 
-    if (workspaces.isEmpty()) {
-        Box(
-            modifier =
-                modifier
-                    .fillMaxSize()
-                    .padding(WindowInsets.ime.asPaddingValues()),
-            contentAlignment = Alignment.Center,
-        ) {
+
+    Box(
+        modifier =
+        modifier
+            .fillMaxSize()
+            .padding(WindowInsets.ime.asPaddingValues()),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (showWorkspaceCreationModal) {
+            WorkspaceCreationDialog(onDismissRequest = {}, onConfirm = {})
+        }
+
+        if (workspaces.isEmpty()) {  // Если не найдено ни одного рабочего пространства
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .alpha(globalAlpha),
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .alpha(globalAlpha),
             ) {
                 SelectionBackground(
                     contentAlpha = contentAlpha,
-                    text = "Похоже никто еще не создал рабочее пространство для вашей группы.\nВы можете стать первым!\n\uD83D\uDC51",
+                    text =
+                    "Похоже никто еще не создал рабочее пространство для вашей группы." +
+                            "\nВы можете стать первым!\n\uD83D\uDC51",
                     modifier = Modifier.fillMaxWidth(0.7f),
                 )
 
-                StartButton(
+                SubmitButon(
                     text = "Настало моё время...",
                     onClick = { event(WorkspaceSelectionEvent.InitModal) },
                 )
             }
+        } else {
         }
-    } else {
     }
+
 }

@@ -23,8 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import ru.shasoka.equeue.presentation.common.BackTextButton
-import ru.shasoka.equeue.presentation.common.StartButton
+import ru.shasoka.equeue.presentation.common.CancelButton
+import ru.shasoka.equeue.presentation.common.SubmitButon
 import ru.shasoka.equeue.presentation.onboarding.components.OnBoardingPage
 import ru.shasoka.equeue.presentation.onboarding.components.PageIndicator
 import ru.shasoka.equeue.util.Dimensions.LargestPadding
@@ -40,7 +40,7 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
             rememberPagerState(initialPage = 0) {
                 pages.size
             }
-		
+
         val buttonState =
             remember {
                 derivedStateOf {
@@ -51,20 +51,20 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
                     }
                 }
             }
-		
+
         HorizontalPager(
             contentPadding = PaddingValues(all = 0.dp),
             state = pagerState,
         ) { index ->
             OnBoardingPage(page = pages[index])
         }
-		
+
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(all = LargestPadding)
-                    .navigationBarsPadding(),
+            Modifier
+                .fillMaxWidth()
+                .padding(all = LargestPadding)
+                .navigationBarsPadding(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -77,9 +77,9 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 val coroutineScope = rememberCoroutineScope()
-				
+
                 if (buttonState.value[0].isNotEmpty()) {
-                    BackTextButton(
+                    CancelButton(
                         text = buttonState.value[0],
                         onClick = {
                             coroutineScope.launch {
@@ -88,8 +88,8 @@ fun OnBoardingScreen(event: (OnBoardingEvent) -> Unit) {
                         },
                     )
                 }
-				
-                StartButton(
+
+                SubmitButon(
                     text = buttonState.value[1],
                     onClick = {
                         coroutineScope.launch {

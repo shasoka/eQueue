@@ -6,10 +6,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-	
+
     id("kotlin-kapt")
     id("kotlin-parcelize")
-	
+
     id("com.google.dagger.hilt.android")
 }
 
@@ -24,7 +24,7 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-		
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -36,7 +36,7 @@ android {
             }
         }
     }
-	
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -67,7 +67,7 @@ android {
 }
 
 dependencies {
-	
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -83,33 +83,37 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-	
+
     // Splash Api
     implementation(libs.androidx.core.splashscreen)
-	
+
     // Datastore
     implementation(libs.androidx.datastore.preferences)
-	
+
     // Dagger Hilt for dependency injection
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
-	
+
     // Compose Foundation
     implementation(libs.androidx.foundation)
-	
+
     // Compose Navigation
     implementation(libs.androidx.navigation.compose)
-	
+
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-	
+
     // Room
     implementation(libs.androidx.room.runtime)
     //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    // Icons
+    implementation(libs.feather)
+
 }
 
 kapt {
