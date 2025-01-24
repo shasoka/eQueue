@@ -22,7 +22,7 @@ import ru.shasoka.equeue.presentation.workspaceselection.WorkspaceSelectionViewM
 @Composable
 fun NavGraph(startDestination: String) {
     val navController = rememberNavController()
-	
+
     NavHost(navController = navController, startDestination = startDestination) {
         navigation(
             route = Route.AppStartNavigation.route,
@@ -35,7 +35,7 @@ fun NavGraph(startDestination: String) {
                 )
             }
         }
-		
+
         navigation(
             route = Route.LogInNavigation.route,
             startDestination = Route.LogInScreen.route,
@@ -50,7 +50,7 @@ fun NavGraph(startDestination: String) {
                 )
             }
         }
-		
+
         navigation(
             route = Route.GroupSelectionNavigation.route,
             startDestination = Route.GroupSelectionScreen.route,
@@ -79,11 +79,14 @@ fun NavGraph(startDestination: String) {
                     workspaces = viewModel.workspaces,
                     isLoading = viewModel.isLoading,
                     showWorkspacesLoadingAlert = viewModel.showWorkspacesLoadingAlert,
+                    showGroupLeaveAlert = viewModel.showGroupLeaveAlert,
                     showConnectionAlert = viewModel.showConnectionAlert,
                     showDbErrorAlert = viewModel.showDbErrorAlert,
                     showWorkspaceCreationModal = viewModel.showWorkspaceCreationModal,
                     event = viewModel::onEvent,
                     navController = navController,
+                    onNameChange = viewModel::setWsName,
+                    onAboutChange = viewModel::setWsAbout
                 )
             }
         }

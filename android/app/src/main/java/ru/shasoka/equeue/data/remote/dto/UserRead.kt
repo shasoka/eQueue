@@ -20,19 +20,18 @@ data class UserRead(
     val workspace_chief: Boolean,
 )
 
-fun UserRead.toUser(): User =
-    User(
-        id = this.id,
-        access_token = "",
-        token_type = "",
-        talon = this.talon,
-        assigned_group_id = this.assigned_group_id,
-        assigned_workspace_id = this.assigned_workspace_id,
-        workspace_chief = this.workspace_chief,
-        first_name = this.first_name,
-        second_name = this.second_name,
-        ecourses_user_id = this.ecourses_user_id,
-        status = this.status,
-        user_picture_url = this.user_picture_url,
-        created_at = this.created_at,
-    )
+fun UserRead.toUser(): User = User(
+    id = this.id,
+    access_token = "",
+    token_type = "",
+    talon = this.talon,
+    assigned_group_id = this.assigned_group_id,
+    assigned_workspace_id = this.assigned_workspace_id,
+    workspace_chief = this.workspace_chief,
+    first_name = this.first_name,
+    second_name = this.second_name,
+    ecourses_user_id = this.ecourses_user_id,
+    status = this.status,
+    user_picture_url = this.user_picture_url,
+    created_at = this.created_at,
+)

@@ -1,4 +1,5 @@
 #  Copyright (c) 2024 Arkady Schoenberg <shasoka@yandex.ru>
+
 import json
 
 from fastapi import WebSocket

@@ -38,7 +38,7 @@ import ru.shasoka.equeue.util.Dimensions.LargestPadding
 fun OnBoardingPage(page: Page) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
-	
+
     Column(
         verticalArrangement = Arrangement.Top,
     ) {
@@ -46,16 +46,14 @@ fun OnBoardingPage(page: Page) {
             painter = painterResource(id = page.image),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
-            modifier =
-                Modifier
-                    .height(screenHeight / 2 - 5.dp)
-                    .fillMaxWidth(),
+            modifier = Modifier
+                .height(screenHeight / 2 - 5.dp)
+                .fillMaxWidth(),
         )
         Spacer(
-            modifier =
-                Modifier.height(
-                    LargePadding,
-                ),
+            modifier = Modifier.height(
+                LargePadding,
+            ),
         )
         Text(
             text = page.title,
@@ -63,20 +61,18 @@ fun OnBoardingPage(page: Page) {
             style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
             color = MaterialTheme.colorScheme.inverseSurface,
         )
-		
+
         val scrollState = rememberScrollState()
-        val lineHeightDp: Dp =
-            with(LocalDensity.current) {
-                MaterialTheme.typography.bodyMedium.lineHeight
-                    .toDp()
-            }
-		
+        val lineHeightDp: Dp = with(LocalDensity.current) {
+            MaterialTheme.typography.bodyMedium.lineHeight
+                .toDp()
+        }
+
         Box(
-            modifier =
-                Modifier
-                    .padding(horizontal = LargestPadding, vertical = LargePadding)
-                    .height(lineHeightDp * 5) // Set the maximum height for the text box
-                    .verticalScroll(scrollState),
+            modifier = Modifier
+                .padding(horizontal = LargestPadding, vertical = LargePadding)
+                .height(lineHeightDp * 5) // Set the maximum height for the text box
+                .verticalScroll(scrollState),
             contentAlignment = Alignment.Center,
         ) {
             Text(

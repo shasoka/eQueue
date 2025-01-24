@@ -1,4 +1,4 @@
-package ru.shasoka.equeue.domain.usecases.api.workspaceselection
+package ru.shasoka.equeue.domain.usecases.api.workspaces
 
 import kotlinx.coroutines.flow.first
 import ru.shasoka.equeue.data.local.UserDao
@@ -11,11 +11,10 @@ class GetExistingWorkspaces(
 ) {
     suspend operator fun invoke(): ListOfWorkspaceRead {
         try {
-            val user =
-                userDao
-                    .getUsers() // Get Flow<List<User>>
-                    .first() // Get List<User>
-                    .firstOrNull() // Get User
+            val user = userDao
+                .getUsers() // Get Flow<List<User>>
+                .first() // Get List<User>
+                .firstOrNull() // Get User
             if (user == null) {
                 throw Exception("User not found")
             }

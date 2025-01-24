@@ -45,17 +45,18 @@ fun SearchBar(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     Box(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .background(
-                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                    shape = RoundedCornerShape(6.dp),
-                ).border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                    shape = RoundedCornerShape(6.dp),
-                ).padding(all = MediumPadding),
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.inverseOnSurface,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.secondary,
+                shape = RoundedCornerShape(6.dp),
+            )
+            .padding(all = MediumPadding),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -76,10 +77,9 @@ fun SearchBar(
                 keyboardActions = keyboardActions,
                 visualTransformation = VisualTransformation.None,
                 maxLines = 1,
-                textStyle =
-                    MaterialTheme.typography.bodyMedium.copy(
-                        color = MaterialTheme.colorScheme.secondary,
-                    ),
+                textStyle = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.secondary,
+                ),
                 decorationBox = { innerTextField ->
                     if (textState.isEmpty()) {
                         Text(
@@ -90,11 +90,10 @@ fun SearchBar(
                     }
                     innerTextField()
                 },
-                modifier =
-                    Modifier
-                        .padding(horizontal = SmallPadding)
-                        .weight(1f)
-                        .horizontalScroll(rememberScrollState()),
+                modifier = Modifier
+                    .padding(horizontal = SmallPadding)
+                    .weight(1f)
+                    .horizontalScroll(rememberScrollState()),
             )
             IconButton(
                 modifier = Modifier.then(Modifier.size(24.dp)),
@@ -103,10 +102,9 @@ fun SearchBar(
                 Icon(
                     painter = painterResource(R.drawable.nav_next),
                     contentDescription = "Select this group and proceed",
-                    modifier =
-                        Modifier
-                            .size(24.dp)
-                            .padding(all = 0.dp),
+                    modifier = Modifier
+                        .size(24.dp)
+                        .padding(all = 0.dp),
                     tint = MaterialTheme.colorScheme.secondary,
                 )
             }

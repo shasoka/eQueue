@@ -72,7 +72,6 @@ fun GroupSelectionScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    // TODO move to viewModel
     var searchQuery by remember { mutableStateOf("") }
     var filteredGroups by remember { mutableStateOf<List<GroupRead>>(emptyList()) }
     var proceedDialog by remember { mutableStateOf(false) }
@@ -120,11 +119,10 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE16 Не смогли загрузить список групп",
-                        style =
-                            MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.secondary,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.Bold,
+                        ),
                     )
                 }
             },
@@ -158,11 +156,10 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE14 Произошла так называемая \"ошибка\"",
-                        style =
-                            MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.secondary,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.Bold,
+                        ),
                     )
                 }
             },
@@ -196,11 +193,10 @@ fun GroupSelectionScreen(
                 Box {
                     Text(
                         "\uD83D\uDE25 Не смог тебя разлогинить",
-                        style =
-                            MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.secondary,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.Bold,
+                        ),
                     )
                 }
             },
@@ -263,10 +259,9 @@ fun GroupSelectionScreen(
     }
 
     Box(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .padding(WindowInsets.ime.asPaddingValues()),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(WindowInsets.ime.asPaddingValues()),
         contentAlignment = Alignment.Center,
     ) {
         AnimatedVisibility(
@@ -276,7 +271,7 @@ fun GroupSelectionScreen(
         ) {
             CircularProgressIndicator()
         }
-		
+
         BackHandler {
             activity?.finish()
         }
@@ -284,11 +279,10 @@ fun GroupSelectionScreen(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier =
-                Modifier
-                    .fillMaxWidth(0.7f)
-                    .fillMaxHeight()
-                    .alpha(globalAlpha),
+            modifier = Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight()
+                .alpha(globalAlpha),
         ) {
             Box(
                 contentAlignment = Alignment.BottomCenter,
@@ -296,37 +290,37 @@ fun GroupSelectionScreen(
             ) {
                 SelectionBackground(
                     contentAlpha = contentAlpha,
-                    text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»\n\uD83E\uDD28",
+                    text = "Коллега спрашивает коллегу: «Какова твоя группа, коллега?»" +
+                            "\n\uD83E\uDD28",
                 )
 
                 this@Column.AnimatedVisibility(
                     visible = searchQuery.isNotEmpty() && keyboardOpen,
                 ) {
-                    filteredGroups =
-                        groups.filter {
-                            it.name.contains(
-                                searchQuery,
-                                ignoreCase = true,
-                            )
-                        }
+                    filteredGroups = groups.filter {
+                        it.name.contains(
+                            searchQuery,
+                            ignoreCase = true,
+                        )
+                    }
                     val visibleItems = filteredGroups.take(5)
                     val lazyColumnHeight = (visibleItems.size * SEARCH_RESULT_HEIGHT).dp
 
                     LazyColumn(
                         horizontalAlignment = Alignment.Start,
                         verticalArrangement = Arrangement.Bottom,
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(lazyColumnHeight)
-                                .background(
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    shape = RoundedCornerShape(6.dp),
-                                ).border(
-                                    width = 1.dp,
-                                    color = MaterialTheme.colorScheme.inverseOnSurface,
-                                    shape = RoundedCornerShape(6.dp),
-                                ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(lazyColumnHeight)
+                            .background(
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                shape = RoundedCornerShape(6.dp),
+                            )
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.inverseOnSurface,
+                                shape = RoundedCornerShape(6.dp),
+                            ),
                     ) {
                         if (filteredGroups.isEmpty()) {
                             item {
@@ -366,16 +360,14 @@ fun GroupSelectionScreen(
                     }
                 },
                 textState = searchQuery,
-                keyboardOptions =
-                    KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done,
-                    ),
-                keyboardActions =
-                    KeyboardActions(
-                        onDone = {
-                            keyboardController?.hide()
-                        },
-                    ),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                    },
+                ),
             )
 
             HyperlinkNAV(

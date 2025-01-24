@@ -36,25 +36,21 @@ fun SelectionBackground(
             painter = painterResource(id = R.drawable.sfu_u),
             contentDescription = null,
             contentScale = ContentScale.Fit,
-            modifier =
-                Modifier
-                    .padding(SmallPadding),
+            modifier = Modifier
+                .padding(SmallPadding),
             alpha = contentAlpha,
         )
         Text(
             text = text,
-            style =
-                MaterialTheme.typography.bodyLarge.copy(
-                    color =
-                        MaterialTheme
-                            .colorScheme.onBackground
-                            .copy(alpha = contentAlpha),
-                ),
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme
+                    .colorScheme.onBackground
+                    .copy(alpha = contentAlpha),
+            ),
             textAlign = TextAlign.Center,
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(all = MediumPadding),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = MediumPadding),
         )
     }
 }

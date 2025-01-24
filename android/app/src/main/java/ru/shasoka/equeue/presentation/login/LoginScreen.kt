@@ -48,7 +48,7 @@ import androidx.navigation.NavController
 import ru.shasoka.equeue.R
 import ru.shasoka.equeue.presentation.common.FormField
 import ru.shasoka.equeue.presentation.common.HyperlinkURL
-import ru.shasoka.equeue.presentation.common.StartButton
+import ru.shasoka.equeue.presentation.common.SubmitButon
 import ru.shasoka.equeue.util.Constants.RESET_PASS
 import ru.shasoka.equeue.util.Dimensions.SmallPadding
 
@@ -64,7 +64,7 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var prevUsername by remember { mutableStateOf("") }
     var prevPassword by remember { mutableStateOf("") }
-	
+
     val focusManager = LocalFocusManager.current
     val usernameFocusRequester = remember { FocusRequester() }
     val passwordFocusRequester = remember { FocusRequester() }
@@ -88,23 +88,21 @@ fun LoginScreen(
                 Box {
                     Text(
                         "\uD83E\uDDD0 Неверный логин или пароль, попробуйте заново",
-                        style =
-                            MaterialTheme.typography.bodyMedium.copy(
-                                color = MaterialTheme.colorScheme.secondary,
-                                fontWeight = FontWeight.Bold,
-                            ),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.Bold,
+                        ),
                     )
                 }
             },
             shape = MaterialTheme.shapes.medium,
         )
     }
-	
+
     Box(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .padding(WindowInsets.ime.asPaddingValues()),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(WindowInsets.ime.asPaddingValues()),
         contentAlignment = Alignment.Center,
     ) {
         AnimatedVisibility(
@@ -114,32 +112,29 @@ fun LoginScreen(
         ) {
             CircularProgressIndicator()
         }
-		
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier =
-                Modifier
-                    .fillMaxWidth(0.7f)
-                    .fillMaxHeight()
-                    .alpha(contentAlpha),
+            modifier = Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight()
+                .alpha(contentAlpha),
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
-                modifier =
-                    Modifier
-                        .fillMaxHeight(0.5f)
-                        .padding(SmallPadding),
+                modifier = Modifier
+                    .fillMaxHeight(0.5f)
+                    .padding(SmallPadding),
             )
             FormField(
                 placeholder = "Введите логин ... ",
                 icon = Icons.Default.Person,
-                modifier =
-                    Modifier
-                        .padding(vertical = SmallPadding)
-                        .focusRequester(usernameFocusRequester),
+                modifier = Modifier
+                    .padding(vertical = SmallPadding)
+                    .focusRequester(usernameFocusRequester),
                 onTextChange = { newText ->
                     if (newText != prevUsername) {
                         if (newText.length - prevUsername.length > 1) {
@@ -149,23 +144,20 @@ fun LoginScreen(
                     }
                     username = newText
                 },
-                keyboardOptions =
-                    KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Next,
-                    ),
-                keyboardActions =
-                    KeyboardActions(
-                        onNext = { passwordFocusRequester.requestFocus() },
-                    ),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Next,
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { passwordFocusRequester.requestFocus() },
+                ),
             )
             FormField(
                 placeholder = "Введите пароль ...",
                 icon = Icons.Default.Lock,
                 isSecret = true,
-                modifier =
-                    Modifier
-                        .padding(vertical = SmallPadding)
-                        .focusRequester(passwordFocusRequester),
+                modifier = Modifier
+                    .padding(vertical = SmallPadding)
+                    .focusRequester(passwordFocusRequester),
                 onTextChange = { newText ->
                     if (newText != prevPassword) {
                         if (newText.length - prevPassword.length > 1) {
@@ -175,16 +167,14 @@ fun LoginScreen(
                     }
                     password = newText
                 },
-                keyboardOptions =
-                    KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done,
-                    ),
-                keyboardActions =
-                    KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                        },
-                    ),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        focusManager.clearFocus()
+                    },
+                ),
             )
             HyperlinkURL(
                 fullText = "Забыли пароль? Вам сюда \uD83E\uDEA4",
@@ -192,9 +182,9 @@ fun LoginScreen(
                 hyperlinks = listOf(RESET_PASS),
                 modifier = Modifier.padding(vertical = SmallPadding),
             )
-            StartButton(
+            SubmitButon(
                 text = "Войти",
-                onClick = {	event(LoginEvent.LoginUser(username, password, navController)) },
+                onClick = { event(LoginEvent.LoginUser(username, password, navController)) },
             )
         }
     }

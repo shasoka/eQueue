@@ -16,12 +16,11 @@ class LoginUser(
     suspend operator fun invoke(
         username: String,
         password: String,
-    ): UserAuth =
-        try {
-            val response = apiRepository.login(username, password)
-            userDao.upsert(response.toUser())
-            response
-        } catch (e: Exception) {
-            throw e
-        }
+    ): UserAuth = try {
+        val response = apiRepository.login(username, password)
+        userDao.upsert(response.toUser())
+        response
+    } catch (e: Exception) {
+        throw e
+    }
 }

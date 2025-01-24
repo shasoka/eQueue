@@ -30,39 +30,36 @@ fun HyperlinkURL(
     hyperlinks: List<String>,
     modifier: Modifier = Modifier,
 ) {
-    val annotatedString =
-        buildAnnotatedString {
-            append(fullText)
-            linkText.forEachIndexed { index, text ->
-                val startIndex = fullText.indexOf(text)
-                val endIndex = startIndex + text.length
-                addStyle(
-                    style =
-                        SpanStyle(
-                            color = MaterialTheme.colorScheme.primary,
-                            textDecoration = TextDecoration.Underline,
-                        ),
-                    start = startIndex,
-                    end = endIndex,
-                )
-                addStringAnnotation(
-                    tag = "URL",
-                    annotation = hyperlinks[index],
-                    start = startIndex,
-                    end = endIndex,
-                )
-            }
+    val annotatedString = buildAnnotatedString {
+        append(fullText)
+        linkText.forEachIndexed { index, text ->
+            val startIndex = fullText.indexOf(text)
+            val endIndex = startIndex + text.length
+            addStyle(
+                style = SpanStyle(
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline,
+                ),
+                start = startIndex,
+                end = endIndex,
+            )
+            addStringAnnotation(
+                tag = "URL",
+                annotation = hyperlinks[index],
+                start = startIndex,
+                end = endIndex,
+            )
         }
-	
+    }
+
     val uriHandler = LocalUriHandler.current
 
     @Suppress("DEPRECATION")
     ClickableText(
         text = annotatedString,
-        style =
-            MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.secondary,
-            ),
+        style = MaterialTheme.typography.bodyMedium.copy(
+            color = MaterialTheme.colorScheme.secondary,
+        ),
         modifier = modifier,
         onClick = { offset ->
             annotatedString
@@ -82,22 +79,20 @@ fun HyperlinkNAV(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier =
-            modifier
-                .padding(WindowInsets.ime.asPaddingValues())
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                ) { onClick() },
+        modifier = modifier
+            .padding(WindowInsets.ime.asPaddingValues())
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+            ) { onClick() },
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text,
-            style =
-                MaterialTheme.typography.bodyMedium.copy(
-                    color = MaterialTheme.colorScheme.primary,
-                    textDecoration = TextDecoration.Underline,
-                ),
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline,
+            ),
         )
     }
 }

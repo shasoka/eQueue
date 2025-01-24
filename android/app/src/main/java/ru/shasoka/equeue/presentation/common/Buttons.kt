@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun StartButton(
+fun SubmitButon(
     text: String,
     onClick: () -> Unit,
 ) {
@@ -30,7 +30,7 @@ fun StartButton(
 }
 
 @Composable
-fun BackTextButton(
+fun CancelButton(
     text: String,
     onClick: () -> Unit,
 ) {

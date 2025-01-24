@@ -8,7 +8,8 @@ from core.models import Group
 
 
 async def get_group(session: AsyncSession, group_id: int) -> Group | None:
-    return await session.get(Group, group_id)
+    group = await session.execute(select(Group).where(Group.id == group_id).options(selectinload(Group.users)))
+    return group.scalar()
 
 
 # noinspection PyTypeChecker
