@@ -54,8 +54,7 @@ fun WorkspaceCreationDialog(
                     .background(
                         color = MaterialTheme.colorScheme.surface,
                         shape = MaterialTheme.shapes.medium,
-                    )
-                    .padding(16.dp),
+                    ).padding(16.dp),
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -72,10 +71,10 @@ fun WorkspaceCreationDialog(
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                         keyboardActions = KeyboardActions(onNext = {
                             focusManager.moveFocus(
-                                FocusDirection.Down
+                                FocusDirection.Down,
                             )
                         }),
-                        modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                        modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     )
                     FormField(
                         placeholder = "Описание",

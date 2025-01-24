@@ -62,7 +62,7 @@ fun WorkspaceSelectionScreen(
             onDismiss = { spawnDisposeAlertDataConflict(event) },
             onConfirm = { spawnDisposeAlertDataConflict(event) },
             alertContent = "Вы не можете покинуть группу, пока являетесь администратором " +
-                    "связанного с этой группой рабочего пространства"
+                "связанного с этой группой рабочего пространства",
         )
     }
 
@@ -92,18 +92,18 @@ fun WorkspaceSelectionScreen(
                 .fillMaxHeight()
                 .alpha(globalAlpha),
         ) {
-            if (workspaces.isEmpty()) {  // Если не найдено ни одного рабочего пространства
+            if (workspaces.isEmpty()) { // Если не найдено ни одного рабочего пространства
                 SelectionBackground(
                     contentAlpha = 0.5f,
                     text = "Похоже никто еще не создал рабочее пространство для вашей группы." +
-                            "\nВы можете стать первым!\n\uD83D\uDC51",
+                        "\nВы можете стать первым!\n\uD83D\uDC51",
                     modifier = Modifier.fillMaxWidth(0.7f),
                 )
                 SubmitButon(
                     text = "Настало моё время...",
                     onClick = { event(WorkspaceSelectionEvent.InitModal) },
                 )
-            } else {  // Если рабочее пространство для группы пользователя найдено
+            } else { // Если рабочее пространство для группы пользователя найдено
             }
             HyperlinkNAV(
                 text = "Сменить группу \uD83D\uDEAA",

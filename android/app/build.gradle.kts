@@ -15,7 +15,7 @@ plugins {
 
 android {
     namespace = "ru.shasoka.equeue"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ru.shasoka.equeue"
@@ -113,7 +113,6 @@ dependencies {
 
     // Icons
     implementation(libs.feather)
-
 }
 
 kapt {
