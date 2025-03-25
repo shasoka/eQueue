@@ -9,8 +9,8 @@ Create Date: 2024-07-07 03:10:31.326831
 from typing import Sequence, Union
 
 import requests
-from alembic import op
 import sqlalchemy as sa
+from alembic import op
 from sqlalchemy.dialects import postgresql
 
 from core.config import settings
@@ -48,7 +48,7 @@ def upgrade() -> None:
     )
     groups_t = op.create_table(
         "groups",
-        sa.Column("name", sa.String(length=100), nullable=False),
+        sa.Column("name", sa.String(length=128), nullable=False),
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
         sa.PrimaryKeyConstraint("id", name=op.f("pk_groups")),
         sa.UniqueConstraint("name", name=op.f("uq_groups_name")),

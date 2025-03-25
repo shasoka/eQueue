@@ -17,40 +17,41 @@ templates = Jinja2Templates(directory="templates")
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI) -> None:
-    # On __aenter__ do nothing
-    # After __aenter__ yield
-    yield
-    # On __aexit__ dispose
-    await db_helper.dispose()
+	# On __aenter__ do nothing
+	# After __aenter__ yield
+	yield
+	# On __aexit__ dispose
+	await db_helper.dispose()
 
 
 # noinspection PyTypeChecker
 app = FastAPI(
-    default_response_class=ORJSONResponse,
-    lifespan=lifespan,
+	default_response_class=ORJSONResponse,
+	lifespan=lifespan,
 )
 
 # noinspection PyTypeChecker
 app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+	CORSMiddleware,
+	allow_origins=["*"],
+	allow_credentials=True,
+	allow_methods=["*"],
+	allow_headers=["*"],
 )
 
 app.include_router(
-    api_router,
+	api_router,
 )
 
 
 @app.get("/", tags=["Test template for queue"])
 def get(request: Request):
-    return templates.TemplateResponse(
-        request=request,
-        name="queue_test.html",
-    )
+	return templates.TemplateResponse(
+		request=request,
+		name="queue_test.html",
+	)
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host=settings.run.host, port=settings.run.port, reload=True)
+	uvicorn.run("main:app", host=settings.run.host, port=settings.run.port,
+	            reload=True)
