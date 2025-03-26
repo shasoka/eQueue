@@ -6,21 +6,44 @@ package ru.shasoka.equeue.util
 
 import java.util.Calendar
 
-fun extractYearOfAssignmentFromGroupName(input: String): Int {
+fun extractSemesterFromGroupName(input: String): Int {
     val regex = Regex("[^0-9]*(\\d+)")
-    val yearOfAssignment = regex
-        .find(input)
-        ?.groupValues
-        ?.get(1)
-        ?.toIntOrNull() ?: return 0
+    val yearOfAssignment = regex.find(input)?.groupValues?.get(1)?.toIntOrNull() ?: return 0
 
-    val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+    val admissionYear = 2000 + yearOfAssignment
+    val calendar = Calendar.getInstance()
+    val currentYear = calendar.get(Calendar.YEAR)
+    val currentMonth = calendar.get(Calendar.MONTH)
 
-    val yearsPassed = currentYear - (2000 + yearOfAssignment)
+    // 1st september of admission year
+    val admissionDate = Calendar.getInstance().apply {
+        set(admissionYear, Calendar.SEPTEMBER, 1)
+    }
 
-    return if (yearsPassed < 0) {
-        0
+    // Number of full years
+    val fullYears = if (calendar.after(admissionDate)) {
+        currentYear - admissionYear - if (currentMonth < Calendar.SEPTEMBER) 1 else 0
     } else {
-        yearsPassed * 2 + if (Calendar.getInstance().get(Calendar.MONTH) >= 7) 1 else 2
+        -1
+    }
+
+    val firstSemesterMonths =
+        listOf(
+            Calendar.SEPTEMBER,
+            Calendar.OCTOBER,
+            Calendar.NOVEMBER,
+            Calendar.DECEMBER,
+            Calendar.JANUARY,
+            Calendar.FEBRUARY
+        )
+
+    return if (fullYears < 0) {
+        fullYears
+    } else {
+        if (currentMonth in firstSemesterMonths) {
+            fullYears * 2 + 1
+        } else {
+            fullYears * 2 + 2
+        }
     }
 }
