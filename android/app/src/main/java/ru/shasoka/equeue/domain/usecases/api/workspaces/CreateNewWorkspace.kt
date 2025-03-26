@@ -10,21 +10,15 @@ import ru.shasoka.equeue.data.remote.dto.GroupRead
 import ru.shasoka.equeue.data.remote.dto.WorkspaceCreate
 import ru.shasoka.equeue.data.remote.dto.WorkspaceRead
 import ru.shasoka.equeue.domain.repository.ApiRepository
-import ru.shasoka.equeue.util.extractYearOfAssignmentFromGroupName
+import ru.shasoka.equeue.util.extractSemesterFromGroupName
 
-class CreateNewWorkspace(
-    private val apiRepository: ApiRepository,
-    private val userDao: UserDao,
-) {
-    suspend operator fun invoke(
-        name: String,
-        about: String? = null
-    ): WorkspaceRead {
+class CreateNewWorkspace(private val apiRepository: ApiRepository, private val userDao: UserDao) {
+    suspend operator fun invoke(name: String, about: String? = null): WorkspaceRead {
         try {
             val user = userDao
-                .getUsers() // Get Flow<List<User>>
-                .first() // Get List<User>
-                .firstOrNull() // Get User
+                .getUsers()
+                .first()
+                .firstOrNull()
             if (user == null) {
                 throw Exception("User not found")
             }
@@ -33,11 +27,12 @@ class CreateNewWorkspace(
                 throw Exception("User not assigned to a group")
             }
 
-            // Получение группы для вычисления текущего семестра
             val header: String = user.token_type + " " + user.access_token
+
+            // Получение группы для вычисления текущего семестра
             val group: GroupRead = apiRepository.getSingleGroup(
                 header = header,
-                groupId = user.assigned_group_id.toString(),
+                groupId = user.assigned_group_id.toString()
             )
 
             // Отправка запроса на создание воркспейса
@@ -46,8 +41,8 @@ class CreateNewWorkspace(
                 body = WorkspaceCreate(
                     group_id = user.assigned_group_id,
                     name = name,
-                    about = if (about != "") about else null,  // about == "", если не было введено
-                    semester = extractYearOfAssignmentFromGroupName(group.name),
+                    about = if (about != "") about else null, // about == "", если не было введено
+                    semester = extractSemesterFromGroupName(group.name)
                 )
             )
 
@@ -66,13 +61,11 @@ class CreateNewWorkspace(
                     ecourses_user_id = user.ecourses_user_id,
                     status = user.status,
                     user_picture_url = user.user_picture_url,
-                    created_at = user.created_at,
+                    created_at = user.created_at
                 )
             )
 
             return newWs
-
-
         } catch (e: Exception) {
             throw e
         }

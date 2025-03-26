@@ -38,7 +38,7 @@ fun WorkspaceCreationDialog(
     onDismissRequest: () -> Unit,
     onConfirm: () -> Unit,
     onNameChange: (String) -> Unit,
-    onAboutChange: (String) -> Unit,
+    onAboutChange: (String) -> Unit
 ) {
     var wsName by remember { mutableStateOf("") }
     var wsAbout by remember { mutableStateOf("") }
@@ -53,12 +53,12 @@ fun WorkspaceCreationDialog(
                     .fillMaxWidth(0.8f)
                     .background(
                         color = MaterialTheme.colorScheme.surface,
-                        shape = MaterialTheme.shapes.medium,
-                    ).padding(16.dp),
+                        shape = MaterialTheme.shapes.medium
+                    ).padding(16.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     FormField(
                         placeholder = if (!isNameInvalid) "Как назовем?" else "Ну, пожалуйста...",
@@ -71,10 +71,10 @@ fun WorkspaceCreationDialog(
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
                         keyboardActions = KeyboardActions(onNext = {
                             focusManager.moveFocus(
-                                FocusDirection.Down,
+                                FocusDirection.Down
                             )
                         }),
-                        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+                        modifier = Modifier.background(MaterialTheme.colorScheme.background)
                     )
                     FormField(
                         placeholder = "Описание",
@@ -84,15 +84,15 @@ fun WorkspaceCreationDialog(
                             onAboutChange(it)
                         },
                         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         CancelButton(
                             text = "Отмена",
-                            onClick = onDismissRequest,
+                            onClick = onDismissRequest
                         )
                         SubmitButon(
                             text = "Ехала! 🧨",
@@ -100,9 +100,10 @@ fun WorkspaceCreationDialog(
                                 if (wsName.isBlank()) {
                                     isNameInvalid = true
                                 } else {
+                                    onDismissRequest()
                                     onConfirm()
                                 }
-                            },
+                            }
                         )
                     }
                 }
