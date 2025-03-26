@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.shasoka.equeue.data.local.EQueueDatabase
@@ -37,7 +38,6 @@ import ru.shasoka.equeue.domain.usecases.appentry.AppEntryUseCases
 import ru.shasoka.equeue.domain.usecases.appentry.ReadAppEntry
 import ru.shasoka.equeue.domain.usecases.appentry.SaveAppEntry
 import ru.shasoka.equeue.util.Constants.DB_NAME
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -45,7 +45,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideLocalUserManager(application: Application): LocalUserManager = LocalUserManagerImpl(
-        application,
+        application
     )
 
     @Provides
@@ -53,14 +53,14 @@ object AppModule {
     fun provideAppEntryUseCases(localUserManager: LocalUserManager): AppEntryUseCases =
         AppEntryUseCases(
             readAppEntry = ReadAppEntry(localUserManager),
-            saveAppEntry = SaveAppEntry(localUserManager),
+            saveAppEntry = SaveAppEntry(localUserManager)
         )
 
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit = Retrofit
         .Builder()
-        .baseUrl("https://muskox-direct-walleye.ngrok-free.app/api/v1/")
+        .baseUrl("https://eqapi.ru/api/v1/")
         .addConverterFactory(
             GsonConverterFactory.create(
                 GsonBuilder()
@@ -81,33 +81,27 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLoginUseCases(
-        repository: ApiRepository,
-        userDao: UserDao,
-    ): LoginUseCases = LoginUseCases(
-        loginUser = LoginUser(repository, userDao),
-    )
+    fun provideLoginUseCases(repository: ApiRepository, userDao: UserDao): LoginUseCases =
+        LoginUseCases(
+            loginUser = LoginUser(repository, userDao)
+        )
 
     @Provides
     @Singleton
-    fun provideGroupsUseCases(
-        repository: ApiRepository,
-        userDao: UserDao,
-    ): GroupsUseCases = GroupsUseCases(
-        getGroups = GetGroups(repository, userDao),
-        joinGroup = JoinGroup(repository, userDao),
-        leaveGroup = LeaveGroup(repository, userDao)
-    )
+    fun provideGroupsUseCases(repository: ApiRepository, userDao: UserDao): GroupsUseCases =
+        GroupsUseCases(
+            getGroups = GetGroups(repository, userDao),
+            joinGroup = JoinGroup(repository, userDao),
+            leaveGroup = LeaveGroup(repository, userDao)
+        )
 
     @Provides
     @Singleton
-    fun provideWorkspacesUseCases(
-        repository: ApiRepository,
-        userDao: UserDao,
-    ): WorkspacesUseCases = WorkspacesUseCases(
-        getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
-        createNewWorkspace = CreateNewWorkspace(repository, userDao),
-    )
+    fun provideWorkspacesUseCases(repository: ApiRepository, userDao: UserDao): WorkspacesUseCases =
+        WorkspacesUseCases(
+            getExistingWorkspaces = GetExistingWorkspaces(repository, userDao),
+            createNewWorkspace = CreateNewWorkspace(repository, userDao)
+        )
 
     @Provides
     @Singleton
@@ -120,7 +114,7 @@ object AppModule {
         .databaseBuilder(
             context = application,
             klass = EQueueDatabase::class.java,
-            name = DB_NAME,
+            name = DB_NAME
         ).fallbackToDestructiveMigration()
         .build()
 
