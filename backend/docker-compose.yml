@@ -16,13 +16,13 @@ services:
     image: postgres:16
     container_name: equeue_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: shpostgres
+      POSTGRES_PASSWORD: ity,thuFHRFLBQ-=
       POSTGRES_DB: equeue
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "6270:5432"
     networks:
       - backend
     healthcheck:
