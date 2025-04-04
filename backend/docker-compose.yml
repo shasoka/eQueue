@@ -16,8 +16,8 @@ services:
     image: postgres:16
     container_name: equeue_db
     environment:
-      POSTGRES_USER: shpostgres
-      POSTGRES_PASSWORD: ity,thuFHRFLBQ-=
+      POSTGRES_USER: shasoka
+      POSTGRES_PASSWORD: itythuFHRFLBQ3124234
       POSTGRES_DB: equeue
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -26,7 +26,7 @@ services:
     networks:
       - backend
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: [ "CMD-SHELL", "pg_isready -U shasoka -d equeue" ]
       interval: 5s
       timeout: 5s
       retries: 5
