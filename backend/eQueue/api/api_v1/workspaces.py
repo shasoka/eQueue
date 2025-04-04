@@ -24,7 +24,7 @@ from crud.workspaces import (
     leave_workspace,
     workspace_safe_delete,
     raise_user,
-    get_workspace_by_id,
+    get_workspace_by_id_without_selectinload,
 )
 from moodle.auth import (
     get_current_user,
@@ -33,22 +33,6 @@ from moodle.auth import (
 router = APIRouter(
 	tags=["Workspaces"],
 )
-
-
-@router.get("/{workspace_id}", response_model=WorkspaceRead)
-async def get_single_workspace(
-		workspace_id: int,
-		session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
-		_: Annotated[User, Depends(get_current_user)],
-):
-	if workspace := await get_workspace_by_id(
-			workspace_id=workspace_id,
-			session=session,
-	):
-		return workspace
-	raise HTTPException(
-		404, detail="Не найдено ни одно рабочее пространство c таким id"
-	)
 
 
 @router.get("", response_model=list[WorkspaceRead])
@@ -102,6 +86,22 @@ async def update_workspace_data(
 	raise HTTPException(
 		status_code=404,
 		detail="Не найдено ни одно рабочее пространство или пользователь уже подал заявку на вступление в группу",
+	)
+
+
+@router.get("/{workspace_id}", response_model=WorkspaceReadNoSelectInLoad)
+async def get_single_workspace(
+		workspace_id: int,
+		session: Annotated[AsyncSession, Depends(db_helper.session_getter)],
+		_: Annotated[User, Depends(get_current_user)],
+):
+	if workspace := await get_workspace_by_id_without_selectinload(
+			workspace_id=workspace_id,
+			session=session,
+	):
+		return workspace
+	raise HTTPException(
+		404, detail="Не найдено ни одно рабочее пространство c таким id"
 	)
 
 
